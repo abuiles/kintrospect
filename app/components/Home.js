@@ -1,17 +1,14 @@
 // @flow
 import React, { Component } from 'react';
-import { Link } from 'react-router';
-import styles from './Home.css';
-
+import Book, { BookObject } from './Book';
+import sample from './sample';
 
 export default class Home extends Component {
   render() {
+    const book = new BookObject(sample);
     return (
       <div>
-        <div className={styles.container} data-tid="container">
-          <h2>Home</h2>
-          <Link to="/counter">to Counter</Link>
-        </div>
+        <Book book={book} />
       </div>
     );
   }

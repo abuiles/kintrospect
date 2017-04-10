@@ -2,10 +2,10 @@
  * Build config for electron 'Main Process' file
  */
 
-import webpack from 'webpack';
-import merge from 'webpack-merge';
-import BabiliPlugin from 'babili-webpack-plugin';
-import baseConfig from './webpack.config.base';
+import webpack from 'webpack'
+import merge from 'webpack-merge'
+import BabiliPlugin from 'babili-webpack-plugin'
+import baseConfig from './webpack.config.base'
 
 export default merge(baseConfig, {
   devtool: 'source-map',
@@ -52,5 +52,5 @@ export default merge(baseConfig, {
   node: {
     __dirname: false,
     __filename: false
-  },
-});
+  }
+})

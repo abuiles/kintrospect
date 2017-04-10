@@ -46,7 +46,7 @@ module.exports = {
       file: 'app/store/configureStore.production.js',
       replace: [
         { pattern: /\?: counterStateType/, substitute: '' },
-        { pattern: /^.*import type.*$/, substitute: '' },
+        { pattern: /^.*import type.*$/, substitute: '' }
       ]
     },
     {
@@ -76,4 +76,4 @@ module.exports = {
     { file: 'test/reducers/.gitkeep' },
     { file: 'test/e2e/.gitkeep' }
   ]
-};
+}

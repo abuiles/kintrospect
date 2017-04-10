@@ -2,9 +2,9 @@
  * Base webpack config used across other specific configs
  */
 
-import path from 'path';
-import webpack from 'webpack';
-import { dependencies as externals } from './app/package.json';
+import path from 'path'
+import webpack from 'webpack'
+import { dependencies as externals } from './app/package.json'
 
 export default {
   module: {
@@ -29,13 +29,13 @@ export default {
     extensions: ['.js', '.jsx', '.json'],
     modules: [
       path.join(__dirname, 'app'),
-      'node_modules',
-    ],
+      'node_modules'
+    ]
   },
 
   plugins: [
-    new webpack.NamedModulesPlugin(),
+    new webpack.NamedModulesPlugin()
   ],
 
   externals: Object.keys(externals || {})
-};
+}
