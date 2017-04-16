@@ -1,18 +1,20 @@
 // @flow
 import React from 'react';
-import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import routes from '../routes';
+import {
+  BrowserRouter as Router,
+  Route,
+  // Link
+} from 'react-router-dom';
+// import App from './App';
+import HomePage from './HomePage';
 
-type RootType = {
-  store: {},
-  history: {}
-};
 
-export default function Root({ store, history }: RootType) {
-  return (
-    <Provider store={store}>
-      <Router history={history} routes={routes} />
-    </Provider>
-  );
+export default class Root extends React.Component {
+  render() {
+    return (
+      <Router>
+        <Route path="/" component={HomePage} />
+      </Router>
+    );
+  }
 }

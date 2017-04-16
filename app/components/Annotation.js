@@ -10,15 +10,29 @@ import {
 import TextField from 'material-ui/TextField';
 import AppBar from 'material-ui/AppBar';
 
-export class AnnotationObject {
+import { Sticky } from 'react-sticky';
+
+interface AnnotationObjectAttrs {
+  type: string,
+  name: string,
+  highlight: string,
+  location: number,
+  timestamp: number,
+  asin: string,
+  annotations: AnnotationObject[],
+  startLocation: number
+}
+
+export class AnnotationObject implements AnnotationObjectAttrs {
   type: string;
   name: string;
   highlight: string;
   location: number;
   timestamp: number;
   asin: string;
-  annotations: Array<AnnotationObject>;
+  annotations: AnnotationObject[];
   startLocation: number;
+  linkId: string;
 
   constructor(payload) {
     this.highlight = payload.highlight;
@@ -38,69 +52,60 @@ export class AnnotationObject {
       this.location = Math.ceil(payload.startLocation / 150);
     }
 
-    if (this.isChapter()) {
+    if (this.isChapter) {
+      this.linkId = `chapter-${this.location}`;
       this.annotations = payload.annotations.map((annotation) => new AnnotationObject(annotation));
     }
   }
 
-  isChapter(): boolean {
+  get isChapter(): boolean {
     return this.type === 'chapter';
   }
 }
 
-// annotations
-// annotations.type == 'chapter'
-// annotation.name
-// annotation.location
-// annotation.annotations
-// asin: asin,
-// highlight: highlight,
-// startLocation: startLocation,
-// endLocation: endLocation,
-// timestamp: timestamp,
-// location: location
-
-        // <div data-tid="container">
-        //   {annotations.map((annotation) =>
-        //     <Annotation
-        //       annotation={annotation}
-        //       key={annotation.location || annotation.timestamp}
-        //     />
-        //   )}
-        // </div>
-
-
 export default class Annotation extends React.Component {
   props: {
-    annotation: AnnotationObject
+    annotation: AnnotationObject,
+    updateLocation: (boolean, AnnotationObject) => void
   }
 
   render() {
     let content;
+    const { annotation, updateLocation } = this.props;
 
-    if (this.props.annotation.isChapter()) {
+    if (annotation.isChapter) {
       content = (
         <div>
-          <AppBar
-            title={this.props.annotation.name}
-            showMenuIconButton={false}
-          />
-          {this.props.annotation.annotations.map((annotation) =>
-            <Annotation annotation={annotation} key={annotation.timestamp} />
+          <Sticky
+            onStickyStateChange={(isCurrentChapter) => updateLocation(isCurrentChapter, annotation) }
+            style={{ zIndex: 2000 }}
+          >
+            <AppBar
+              title={annotation.name}
+              id={annotation.linkId}
+              showMenuIconButton={false}
+            />
+          </Sticky>
+          {annotation.annotations.map((annotation) =>
+            <Annotation
+              annotation={annotation}
+              key={annotation.timestamp}
+              updateLocation={(isSticky, chapter) => updateLocation(isSticky, chapter)}
+            />
           )}
         </div>
       );
     } else {
-      const location = this.props.annotation.location;
+      const location = annotation.location;
       content = (
         <Card>
           <CardTitle>
-            <a href={`kindle://book?action=open&asin=${this.props.annotation.asin}&location=${location}`}>
+            <a href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
               Read more at location {location}
             </a>;
           </CardTitle>
           <CardText>
-            {this.props.annotation.highlight}
+            {annotation.highlight}
             <TextField
               floatingLabelText="Your notes"
               multiLine

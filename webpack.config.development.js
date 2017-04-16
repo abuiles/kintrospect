@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000
 const publicPath = `http://localhost:${port}/dist`
 
 export default merge(baseConfig, {
-  devtool: 'inline-source-map',
+  devtool: 'source-map',
 
   entry: [
     'react-hot-loader/patch',
