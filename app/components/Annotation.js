@@ -75,14 +75,13 @@ export default class Annotation extends React.Component {
 
     if (annotation.isChapter) {
       content = (
-        <div>
+        <div id={annotation.linkId}>
           <Sticky
             onStickyStateChange={(isCurrentChapter) => updateLocation(isCurrentChapter, annotation) }
             style={{ zIndex: 2000 }}
           >
             <AppBar
               title={annotation.name}
-              id={annotation.linkId}
               showMenuIconButton={false}
             />
           </Sticky>

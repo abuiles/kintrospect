@@ -51,22 +51,18 @@ export default class Book extends React.Component {
     this.setState({ open: !this.state.open });
   }
 
-  updateLocation(isCurrent: boolean, chapter: AnnotationObject) {
+  updateLocation(isCurrent: boolean, { location }: AnnotationObject) {
     const { locations } = this.state;
     if (isCurrent) {
-      if (locations.indexOf(chapter.location) < 0) {
-        locations.unshift(chapter.location);
+      if (locations.indexOf(location) < 0) {
+        locations.unshift(location);
       }
 
       this.setState({
-        currentLocation: chapter.location,
+        currentLocation: location,
         locations
       });
-
-      return;
-    }
-
-    if (locations.length > 1 && locations[0] === chapter.location) {
+    } else if (locations.length) {
       locations.shift();
 
       this.setState({
@@ -75,12 +71,6 @@ export default class Book extends React.Component {
       });
     }
   }
-
-  // handleRequestChange(chapter: AnnotationObject) {
-  //   // this.setState({
-  //   //   currentLocation: chapter.location
-  //   // });
-  // }
 
   render() {
     const { book } = this.props;
