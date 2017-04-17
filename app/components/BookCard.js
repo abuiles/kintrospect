@@ -1,9 +1,7 @@
 // @flow
 import React from 'react';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 import books from './books'
-import FlatButton from 'material-ui/FlatButton';
 
 
 const styles = {
@@ -27,18 +25,24 @@ const styles = {
 export default class BookCard extends React.Component {
   render() {
     return (
-      <div>
+      <div className="fboard f0 flex flex-wrap">
         {books.map((book) => (
-          <Card style={{ width: '25%' }}>
-            <CardMedia>
-              <img src={`http://images.amazon.com/images/P/${book.asin}`} />
-            </CardMedia>
-            <CardActions>
-              <FlatButton label="Review highlights" />
-            </CardActions>
-          </Card>
+          <div key={book.asin} className="w-25-l w-50-m w-100 pa3-ns pb3 f5 v-top flex">
+            <div className="bg-white flex flex-auto flex-column shadow-1">
+              <a>
+                <img alt="book cover" className="img db bb b--light-gray w-100" src={`http://images.amazon.com/images/P/${book.asin}`} />
+              </a>
+              <div className="ph3 pt3 cf flex-auto">
+              </div>
+              <div className="ph3 pv2 mt3 cf bt b--light-gray black-40 normal f6 f--h ttu tracked">
+                <div className="fr">
+                  <i className="fa fa-comment" aria-hidden="true"></i> 6 highlights
+                </div>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
-    );
+    )
   }
 }

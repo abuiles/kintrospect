@@ -184,14 +184,15 @@
   "dependencies": {
     "electron-debug": "^1.1.0",
     "extract-text-webpack-plugin": "^2.0.0",
-    "font-awesome": "^4.7.0",
     "react": "^15.4.2",
     "react-desktop": "^0.2.19",
     "react-dom": "^15.4.2",
     "react-hot-loader": "3.0.0-beta.6",
     "react-redux": "^5.0.2",
     "react-router-dom": "^4.0.0",
-    "source-map-support": "^0.4.10"
+    "source-map-support": "^0.4.10",
+    "tachyons": "^4.7.0",
+    "tachyons-cli": "^1.0.11"
   },
   "devEngines": {
     "node": ">=6.x",

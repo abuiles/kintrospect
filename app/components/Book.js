@@ -103,11 +103,9 @@ export default class Book extends React.Component {
         </Drawer>
         <StickyContainer>
           <Sticky style={{ zIndex: 2000 }}>
-            <AppBar
-              title={book.title}
-              onTitleTouchTap={() => this.handleToggle()}
-              onLeftIconButtonTouchTap={() => this.handleToggle()}
-            />
+            <h2 onClick={() => this.handleToggle()}>
+              {book.title}
+            </h2>
           </Sticky>
           <StickyContainer>
             {book.annotations.map((annotation) =>
