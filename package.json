@@ -167,6 +167,7 @@
     "nightmare": "^2.10.0",
     "prop-types": "^15.5.6",
     "react-addons-test-utils": "^15.4.2",
+    "react-motion-drawer": "^2.1.5",
     "react-sticky": "^5.0.5",
     "react-tap-event-plugin": "^2.0.1",
     "react-test-renderer": "^15.4.2",

@@ -1,15 +1,5 @@
 // @flow
 import React from 'react';
-
-import {
-  Card,
-  CardTitle,
-  CardText
-} from 'material-ui/Card';
-
-import TextField from 'material-ui/TextField';
-import AppBar from 'material-ui/AppBar';
-
 import { Sticky } from 'react-sticky';
 
 interface AnnotationObjectAttrs {
@@ -79,39 +69,36 @@ export default class Annotation extends React.Component {
           <Sticky
             onStickyStateChange={(isCurrentChapter) => updateLocation(isCurrentChapter, annotation) }
             style={{ zIndex: 2000 }}
+            className="bg-washed-blue"
           >
-            <AppBar
-              title={annotation.name}
-              showMenuIconButton={false}
-            />
+            <h2>
+              {annotation.name}
+            </h2>
           </Sticky>
-          {annotation.annotations.map((annotation) =>
-            <Annotation
-              annotation={annotation}
-              key={annotation.timestamp}
-              updateLocation={(isSticky, chapter) => updateLocation(isSticky, chapter)}
-            />
-          )}
+          <div className="fboard f0 flex flex-wrap">
+            {annotation.annotations.map((annotation) =>
+              <Annotation
+                annotation={annotation}
+                key={annotation.timestamp}
+                updateLocation={(isSticky, chapter) => updateLocation(isSticky, chapter)}
+              />
+            )}
+          </div>
         </div>
       );
     } else {
       const location = annotation.location;
       content = (
-        <Card>
-          <CardTitle>
-            <a href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
-              Read more at location {location}
-            </a>;
-          </CardTitle>
-          <CardText>
-            {annotation.highlight}
-            <TextField
-              floatingLabelText="Your notes"
-              multiLine
-              fullWidth
-            />
-          </CardText>
-        </Card>
+        <article className="mw5 mw6-ns hidden ba mv4 m2 mr3">
+            <a className="db f4 bg-near-black white mv0 pv2 ph3 no-underline" href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
+              Read more at location {location}...
+            </a>
+            <div className="pa3 bt">
+              <p className="f6 f5-ns lh-copy measure mv0">
+                {annotation.highlight}
+              </p>
+            </div>
+        </article>
       );
     }
 

@@ -1,24 +1,21 @@
 // @flow
 import React from 'react';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import IconButton from 'material-ui/IconButton';
-import NavigationClose from 'material-ui/svg-icons/navigation/close';
-import { List, ListItem, makeSelectable } from 'material-ui/List';
 import { StickyContainer, Sticky } from 'react-sticky';
+import Drawer from 'react-motion-drawer';
+
 
 import Annotation, { AnnotationObject } from './Annotation';
-
-const SelectableList = makeSelectable(List);
 
 export class BookObject {
   bookCover: string;
   title: string;
+  asin: string;
   annotations: AnnotationObject[];
 
-  constructor({ bookCover, title, annotations }) {
+  constructor({ bookCover, title, asin, annotations }) {
     this.bookCover = bookCover;
     this.title = title;
+    this.asin = asin;
     this.annotations = annotations.map((annotation) => new AnnotationObject(annotation));
   }
 }
@@ -79,30 +76,21 @@ export default class Book extends React.Component {
 
     return (
       <div>
-        <Drawer open={open} containerStyle={{ zIndex: 4000 }}>
-          <AppBar
-            title="Table of contents"
-            iconElementRight={<IconButton><NavigationClose /></IconButton>}
-            showMenuIconButton={false}
-            onTitleTouchTap={() => this.handleToggle()}
-            onRightIconButtonTouchTap={() => this.handleToggle()}
-          />
-          <SelectableList
-            value={currentLocation}
-          >
+        <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
+          <h2 onClick={() => this.handleToggle()} >
+            Table of contents
+          </h2>
+          <ul className="list pl0 ml0 center mw6 ba b--light-silver br2" >
             {chapters.map((a) =>
-              <ListItem
-                key={a.location}
-                value={a.location}
-                primaryText={a.name}
-                href={`#${a.linkId}`}
-              />
+              <li className="ph3 pv3 bb b--light-silver" key={a.location}>
+                <a href={`#${a.linkId}`} >{a.name}</a>
+              </li>
             )}
-          </SelectableList>
-          <img alt="book cover" src={book.bookCover} />
+          </ul>
+          <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
         </Drawer>
         <StickyContainer>
-          <Sticky style={{ zIndex: 2000 }}>
+          <Sticky style={{ zIndex: 2000 }} className="bg-washed-blue" >
             <h2 onClick={() => this.handleToggle()}>
               {book.title}
             </h2>
