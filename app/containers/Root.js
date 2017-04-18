@@ -1,20 +1,22 @@
 // @flow
-import React from 'react';
+import React from 'react'
 import {
   BrowserRouter as Router,
   Route,
   // Link
-} from 'react-router-dom';
-// import App from './App';
-import HomePage from './HomePage';
+} from 'react-router-dom'
 
+import HomePage from './HomePage'
+// import BookPage from './BookPage'
 
 export default class Root extends React.Component {
   render() {
     return (
-      <Router>
-        <Route path="/" component={HomePage} />
-      </Router>
-    );
+     <Router>
+        <div>
+          <Route path="/" component={HomePage} />
+        </div>
+     </Router>
+    )
   }
 }

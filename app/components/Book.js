@@ -1,8 +1,10 @@
 // @flow
-import React from 'react';
-import { StickyContainer, Sticky } from 'react-sticky';
-import Drawer from 'react-motion-drawer';
-
+import React from 'react'
+import { StickyContainer, Sticky } from 'react-sticky'
+import Drawer from 'react-motion-drawer'
+import {
+  Link
+} from 'react-router-dom'
 
 import Annotation, { AnnotationObject } from './Annotation';
 
@@ -10,6 +12,7 @@ export class BookObject {
   bookCover: string;
   title: string;
   asin: string;
+  updatedAt: string;
   annotations: AnnotationObject[];
 
   constructor({ bookCover, title, asin, annotations }) {
@@ -94,6 +97,9 @@ export default class Book extends React.Component {
             <h2 onClick={() => this.handleToggle()}>
               {book.title}
             </h2>
+            <Link to="/" >
+              Home
+            </Link>
           </Sticky>
           <StickyContainer>
             {book.annotations.map((annotation) =>
