@@ -7,14 +7,15 @@ import {
 } from 'react-router-dom'
 
 import HomePage from './HomePage'
-// import BookPage from './BookPage'
+import BookPage from './BookPage'
 
 export default class Root extends React.Component {
   render() {
     return (
      <Router>
         <div>
-          <Route path="/" component={HomePage} />
+          <Route exact path="/" component={HomePage} />
+          <Route path="/book" component={BookPage} />
         </div>
      </Router>
     )
