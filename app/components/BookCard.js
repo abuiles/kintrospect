@@ -4,7 +4,7 @@ import {
   Link
 } from 'react-router-dom'
 
-// import books from './books'
+import books from './books'
 
 // {books.map((book) => (
 // http://images.amazon.com/images/P/${book.asin}`
