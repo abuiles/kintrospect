@@ -33,7 +33,12 @@ export default class Book extends React.Component {
   constructor(props: { book: BookObject }) {
     super(props);
     // assume annotations are sorted
-    const { location } = this.props.book.annotations[0];
+    let location: number = 0
+
+    if (this.props.book.annotations[0]) {
+      location  = this.props.book.annotations[0].location;
+    }
+
     this.state = {
       open: false,
       currentLocation: location,
@@ -77,6 +82,18 @@ export default class Book extends React.Component {
     const { open, currentLocation } = this.state;
     const chapters = book.annotations.filter((a) => a.isChapter);
 
+    const annotationsList = (
+      <StickyContainer>
+            {book.annotations.map((annotation) =>
+              <Annotation
+                annotation={annotation}
+                key={annotation.location || annotation.timestamp}
+                updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
+              />
+            )}
+      </StickyContainer>
+    )
+
     return (
       <div>
         <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
@@ -101,15 +118,7 @@ export default class Book extends React.Component {
               Home
             </Link>
           </Sticky>
-          <StickyContainer>
-            {book.annotations.map((annotation) =>
-              <Annotation
-                annotation={annotation}
-                key={annotation.location || annotation.timestamp}
-                updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
-              />
-            )}
-          </StickyContainer>
+          {book.annotations.length ? annotationsList : <h3>You don't have annotations</h3>}
         </StickyContainer>
       </div>
     );

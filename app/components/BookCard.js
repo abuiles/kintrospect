@@ -19,7 +19,7 @@ export default class BookCard extends React.Component {
         {books.map((book) => (
           <div key={book.asin} className="w-20-l w-50-m w-100 pa3-ns pb3 f5 v-top flex">
             <div className="bg-white flex flex-auto flex-column shadow-1">
-              <Link to={`/book`} >
+              <Link to={`/book/${book.asin}`} >
                 <img alt="book cover" className="img db bb b--light-gray w-100" src={`http://images.amazon.com/images/P/${book.asin}`} />
               </Link>
               <div className="ph3 pt3 cf flex-auto">

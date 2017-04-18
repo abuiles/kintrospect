@@ -1,7 +1,7 @@
 // @flow
 import React from 'react'
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
   // Link
 } from 'react-router-dom'
@@ -15,7 +15,7 @@ export default class Root extends React.Component {
      <Router>
         <div>
           <Route exact path="/" component={HomePage} />
-          <Route path="/book" component={BookPage} />
+          <Route path="/book/:asin" component={BookPage} />
         </div>
      </Router>
     )

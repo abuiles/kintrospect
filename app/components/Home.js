@@ -1,6 +1,5 @@
 // @flow
 import React, { Component } from 'react';
-import Book, { BookObject } from './Book';
 import BookCard from './BookCard';
 
 export default class Home extends Component {
