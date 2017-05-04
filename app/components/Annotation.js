@@ -23,7 +23,7 @@ const highlightSource = {
         `You dropped ${item.text} into ${dropResult.name}!`,
       );
     }
-  },
+  }
 }
 
 
@@ -93,7 +93,6 @@ class Annotation extends React.Component {
 
     const styles = {
       opacity: isDragging ? 0.4 : 1,
-      cursor: 'move'
     }
 
     if (annotation.isChapter) {
