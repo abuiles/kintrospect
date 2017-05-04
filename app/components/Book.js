@@ -92,15 +92,28 @@ export default class Book extends React.Component {
     const chapters = book.annotations.filter((a) => a.isChapter);
 
     const annotationsList = (
-      <StickyContainer>
+      <div>
         {book.annotations.map((annotation) =>
-          <Annotation
-            annotation={annotation}
-            key={annotation.location || annotation.timestamp}
-            updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
-          />
+          <div id={annotation.linkId}>
+            <Annotation
+              annotation={annotation}
+              key={annotation.location || annotation.timestamp}
+              updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
+            />
+            <div className="fboard f0 flex flex-wrap">
+              {annotation.annotations.map((hl) =>
+                <div key={hl.timestamp}>
+                  <Annotation
+                    annotation={hl}
+                    key={hl.timestamp}
+                    updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
+                  />
+                </div>
+            )}
+            </div>
+          </div>
         )}
-      </StickyContainer>
+      </div>
     )
 
     return (
@@ -130,7 +143,9 @@ export default class Book extends React.Component {
             </Link>
           </Sticky>
           <div className="absolute-fill">
-            {book.annotations.length ? annotationsList : <h3>{"You don't have annotations"}</h3>}
+            <StickyContainer>
+              {book.annotations.length ? annotationsList : <h3>{"You don't have annotations"}</h3>}
+            </StickyContainer>
           </div>
         </StickyContainer>
         <div className="w-60 relative">

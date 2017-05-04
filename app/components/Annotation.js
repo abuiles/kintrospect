@@ -16,7 +16,7 @@ const highlightSource = {
   endDrag(props, monitor) {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
-    console.log('end dragging', props.annotation);
+    console.log('dragging', props.annotation);
 
     if (dropResult) {
       window.alert( // eslint-disable-line no-alert
@@ -98,32 +98,15 @@ class Annotation extends React.Component {
 
     if (annotation.isChapter) {
       content = (
-        <div id={annotation.linkId}>
-          <Sticky
-            onStickyStateChange={(isCurrentChapter) => updateLocation(isCurrentChapter, annotation)}
-            style={{ zIndex: 2000 }}
-            className="bg-washed-blue"
-          >
-            <h2>
-              {annotation.name}
-            </h2>
-          </Sticky>
-          <div className="fboard f0 flex flex-wrap">
-            {annotation.annotations.map((annotation) =>
-              connectDragSource(
-                <div key={annotation.timestamp}>
-                <Annotation
-                annotation={annotation}
-                key={annotation.timestamp}
-                updateLocation={(isSticky, chapter) => updateLocation(isSticky, chapter)}
-                isDragging={isDragging}
-                connectDragSource={connectDragSource}
-                />
-                </div>
-              )
-            )}
-          </div>
-        </div>
+        <Sticky
+          onStickyStateChange={(isCurrentChapter) => updateLocation(isCurrentChapter, annotation)}
+          style={{ zIndex: 2000 }}
+          className="bg-washed-blue"
+        >
+          <h2>
+            {annotation.name}
+          </h2>
+        </Sticky>
       );
     } else {
       const location = annotation.location;
