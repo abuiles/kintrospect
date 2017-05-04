@@ -1,6 +1,6 @@
                 const books = [];
                 const kindleBooks = Array.from(document.getElementsByClassName('titleAndAuthor'))
-                kindleBooks.forEach(function(book) {
+                kindleBooks.forEach((book) => {
                   const meta = {}
                   const parent = book.parentElement
                   const link = book.getElementsByTagName('a')[0];

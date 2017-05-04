@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import CounterPage from '../../app/containers/CounterPage'
 import configureStore from '../../app/store/configureStore'
 
-function setup (initialState) {
+function setup(initialState) {
   const store = configureStore(initialState)
   const app = mount(
     <Provider store={store}>

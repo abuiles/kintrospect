@@ -6,7 +6,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000
 
 const delay = time => new Promise(resolve => setTimeout(resolve, time))
 
-describe('main window', function spec () {
+describe('main window', function spec() {
   beforeAll(async () => {
     this.app = new Application({
       path: electronPath,

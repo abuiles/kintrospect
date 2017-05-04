@@ -6,9 +6,6 @@ import {
 
 import books from './books'
 
-// {books.map((book) => (
-// http://images.amazon.com/images/P/${book.asin}`
-
 // http://stackoverflow.com/questions/33886418/how-to-get-book-cover-image-url-using-isbn
 // http://images.amazon.com/images/P/PASTE_ISBN_NUMBER_HERE.01.20TRZZZZ.jpg
 // http://helpful.knobs-dials.com/index.php/Amazon_notes#General
@@ -22,11 +19,10 @@ export default class BookCard extends React.Component {
               <Link to={`/book/${book.asin}`} >
                 <img alt="book cover" className="img db bb b--light-gray w-100" src={`http://images.amazon.com/images/P/${book.asin}`} />
               </Link>
-              <div className="ph3 pt3 cf flex-auto">
-              </div>
+              <div className="ph3 pt3 cf flex-auto" />
               <div className="ph3 pv2 mt3 cf bt b--light-gray black-40 normal f6 f--h ttu tracked">
                 <div className="fr">
-                  <i className="fa fa-comment" aria-hidden="true"></i> 6 highlights
+                  <i className="fa fa-comment" aria-hidden="true" /> 6 highlights
                 </div>
               </div>
             </div>

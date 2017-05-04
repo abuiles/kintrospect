@@ -4,7 +4,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import Counter from '../../app/components/Counter'
 
-function setup () {
+function setup() {
   const actions = {
     increment: spy(),
     incrementIfOdd: spy(),

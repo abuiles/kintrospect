@@ -1,11 +1,12 @@
 // @flow
-import React from 'react'
-import { StickyContainer, Sticky } from 'react-sticky'
-import Drawer from 'react-motion-drawer'
+import React from 'react';
+import { StickyContainer, Sticky } from 'react-sticky';
+import Drawer from 'react-motion-drawer';
 import {
   Link
-} from 'react-router-dom'
+} from 'react-router-dom';
 
+import NotesEditor from './NotesEditor';
 import Annotation, { AnnotationObject } from './Annotation';
 
 export class BookObject {
@@ -36,7 +37,7 @@ export default class Book extends React.Component {
     let location: number = 0
 
     if (this.props.book.annotations[0]) {
-      location  = this.props.book.annotations[0].location;
+      location = this.props.book.annotations[0].location
     }
 
     this.state = {
@@ -77,49 +78,64 @@ export default class Book extends React.Component {
     }
   }
 
+  scrollToChapter(chapter: AnnotationObject) {
+    const tag = document.getElementById(chapter.linkId);
+
+    if (tag) {
+      tag.scrollIntoView();
+    }
+  }
+
   render() {
     const { book } = this.props;
-    const { open, currentLocation } = this.state;
+    const { open } = this.state;
     const chapters = book.annotations.filter((a) => a.isChapter);
 
     const annotationsList = (
       <StickyContainer>
-            {book.annotations.map((annotation) =>
-              <Annotation
-                annotation={annotation}
-                key={annotation.location || annotation.timestamp}
-                updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
-              />
-            )}
+        {book.annotations.map((annotation) =>
+          <Annotation
+            annotation={annotation}
+            key={annotation.location || annotation.timestamp}
+            updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
+          />
+        )}
       </StickyContainer>
     )
 
     return (
-      <div>
+      <div className="flex ph3-ns">
         <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
-          <h2 onClick={() => this.handleToggle()} >
+          <button type="button" className="f3" onClick={() => this.handleToggle()} >
             Table of contents
-          </h2>
+          </button>
           <ul className="list pl0 ml0 center mw6 ba b--light-silver br2" >
             {chapters.map((a) =>
               <li className="ph3 pv3 bb b--light-silver" key={a.location}>
-                <a href={`#${a.linkId}`} >{a.name}</a>
+                <button type="button" onClick={() => this.scrollToChapter(a)}>
+                  {a.name}
+                </button>
               </li>
             )}
           </ul>
           <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
         </Drawer>
-        <StickyContainer>
+        <StickyContainer className="w-40 relative">
           <Sticky style={{ zIndex: 2000 }} className="bg-washed-blue" >
-            <h2 onClick={() => this.handleToggle()}>
+            <button onClick={() => this.handleToggle()}>
               {book.title}
-            </h2>
+            </button>
             <Link to="/" >
               Home
             </Link>
           </Sticky>
-          {book.annotations.length ? annotationsList : <h3>You don't have annotations</h3>}
+          <div className="absolute-fill">
+            {book.annotations.length ? annotationsList : <h3>{"You don't have annotations"}</h3>}
+          </div>
         </StickyContainer>
+        <div className="w-60 relative">
+          <NotesEditor />
+        </div>
       </div>
     );
   }

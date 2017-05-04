@@ -12,12 +12,12 @@ import BookPage from './BookPage'
 export default class Root extends React.Component {
   render() {
     return (
-     <Router>
-        <div>
+      <Router>
+        <div className="debug">
           <Route exact path="/" component={HomePage} />
           <Route path="/book/:asin" component={BookPage} />
         </div>
-     </Router>
+      </Router>
     )
   }
 }

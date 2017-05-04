@@ -1,6 +1,31 @@
-// @flow
 import React from 'react';
 import { Sticky } from 'react-sticky';
+import { DragSource } from 'react-dnd';
+
+import ItemTypes from './ItemTypes';
+
+
+const highlightSource = {
+  beginDrag(props) {
+    console.log('dragging', props.annotation);
+    return {
+      text: props.annotation.highlight,
+    };
+  },
+
+  endDrag(props, monitor) {
+    const item = monitor.getItem();
+    const dropResult = monitor.getDropResult();
+    console.log('end dragging', props.annotation);
+
+    if (dropResult) {
+      window.alert( // eslint-disable-line no-alert
+        `You dropped ${item.text} into ${dropResult.name}!`,
+      );
+    }
+  },
+}
+
 
 interface AnnotationObjectAttrs {
   type: string,
@@ -53,21 +78,29 @@ export class AnnotationObject implements AnnotationObjectAttrs {
   }
 }
 
-export default class Annotation extends React.Component {
+class Annotation extends React.Component {
   props: {
     annotation: AnnotationObject,
-    updateLocation: (boolean, AnnotationObject) => void
+    updateLocation: (boolean, AnnotationObject) => void,
+    connectDragSource: () => void,
+    isDragging: boolean
   }
 
   render() {
     let content;
     const { annotation, updateLocation } = this.props;
+    const { isDragging, connectDragSource } = this.props
+
+    const styles = {
+      opacity: isDragging ? 0.4 : 1,
+      cursor: 'move'
+    }
 
     if (annotation.isChapter) {
       content = (
         <div id={annotation.linkId}>
           <Sticky
-            onStickyStateChange={(isCurrentChapter) => updateLocation(isCurrentChapter, annotation) }
+            onStickyStateChange={(isCurrentChapter) => updateLocation(isCurrentChapter, annotation)}
             style={{ zIndex: 2000 }}
             className="bg-washed-blue"
           >
@@ -77,11 +110,17 @@ export default class Annotation extends React.Component {
           </Sticky>
           <div className="fboard f0 flex flex-wrap">
             {annotation.annotations.map((annotation) =>
-              <Annotation
+              connectDragSource(
+                <div key={annotation.timestamp}>
+                <Annotation
                 annotation={annotation}
                 key={annotation.timestamp}
                 updateLocation={(isSticky, chapter) => updateLocation(isSticky, chapter)}
-              />
+                isDragging={isDragging}
+                connectDragSource={connectDragSource}
+                />
+                </div>
+              )
             )}
           </div>
         </div>
@@ -90,22 +129,29 @@ export default class Annotation extends React.Component {
       const location = annotation.location;
       content = (
         <article className="mw5 mw6-ns hidden ba mv4 m2 mr3">
-            <a className="db f4 bg-near-black white mv0 pv2 ph3 no-underline" href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
+          <a className="db f4 bg-near-black white mv0 pv2 ph3 no-underline" href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
               Read more at location {location}...
             </a>
-            <div className="pa3 bt">
-              <p className="f6 f5-ns lh-copy measure mv0">
-                {annotation.highlight}
-              </p>
-            </div>
+          <div className="pa3 bt">
+            <p className="f6 f5-ns lh-copy measure mv0">
+              {annotation.highlight}
+            </p>
+          </div>
         </article>
       );
     }
 
     return (
-      <div>
-        {content}
-      </div>
+      connectDragSource(
+        <div style={styles}>
+          {content}
+        </div>
+      )
     );
   }
 }
+
+export default DragSource(ItemTypes.HIGHLIGHT, highlightSource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging()
+}))(Annotation)

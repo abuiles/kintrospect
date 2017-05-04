@@ -3,9 +3,9 @@ const nightmare = Nightmare({ show: true })
 const fs = require('fs')
 
 
-const KINDLE_LOGIN_PAGE = "http://kindle.amazon.com/login"
-const SIGNIN_FORM_IDENTIFIER = "signIn"
-const BATCH_SIZE  = 200;
+const KINDLE_LOGIN_PAGE = 'http://kindle.amazon.com/login'
+const SIGNIN_FORM_IDENTIFIER = 'signIn'
+const BATCH_SIZE = 200;
 
 
 class Client {
@@ -24,43 +24,40 @@ class Client {
       .wait('#ap_container')
   }
   loadBooks() {
-    const session =  this.createSession()
+    const session = this.createSession()
     nightmare
       .goto('https://kindle.amazon.com/your_reading')
       .wait('#yourReadingList')
     return nightmare
-      .evaluate(function() {
-        return new Promise(function(resolve) {
-          const pagination = document.querySelectorAll('.paginationLinks.bottomPagination')[0];
-          const nextLinks = Array.from(pagination.getElementsByTagName('a'))
-                .filter(function(link) {
+      .evaluate(() => new Promise((resolve) => {
+        const pagination = document.querySelectorAll('.paginationLinks.bottomPagination')[0];
+        const nextLinks = Array.from(pagination.getElementsByTagName('a'))
+                .filter((link) => {
                   console.log(link.text)
-                  return link.text.indexOf("Next") < 0
+                  return link.text.indexOf('Next') < 0
                 })
                 .map((link) => link.href)
 
-          const result = {}
+        const result = {}
 
-          if (nextLinks) {
-            result.nextLinks = nextLinks
-          }
+        if (nextLinks) {
+          result.nextLinks = nextLinks
+        }
 
-          resolve(result)
-        });
-      })
+        resolve(result)
+      }))
       .then((result) => {
         console.log(result)
         const urls = result.nextLinks
         urls.unshift('https://kindle.amazon.com/your_reading')
-        urls.reduce(function(accumulator, url) {
-          return accumulator.then(function(results) {
-            console.log('loading', url)
-            return nightmare.goto(url)
+        urls.reduce((accumulator, url) => accumulator.then((results) => {
+          console.log('loading', url)
+          return nightmare.goto(url)
               .wait('body')
-              .evaluate(function() {
+              .evaluate(() => {
                 const books = [];
                 const kindleBooks = Array.from(document.getElementsByClassName('titleAndAuthor'))
-                kindleBooks.forEach(function(book) {
+                kindleBooks.forEach((book) => {
                   const meta = {}
                   const link = book.getElementsByTagName('a')[0];
                   meta.url = link.href
@@ -80,17 +77,14 @@ class Client {
 
                 return books
               })
-              .then(function(result){
+              .then((result) => {
                 results.push(result);
                 return results;
               })
-          });
-        }, Promise.resolve([])).then(function(results) {
+        }), Promise.resolve([])).then((results) => {
           console.dir(results)
 
-          const books = results.reduce(function(accumulator, books) {
-            return [...accumulator, ...books]
-          }, []);
+          const books = results.reduce((accumulator, books) => [...accumulator, ...books], []);
           fs.writeFileSync('books.js', JSON.stringify(books))
 
           return nightmare.end();
