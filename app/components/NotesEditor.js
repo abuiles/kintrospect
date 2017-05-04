@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Editor } from 'react-mobiledoc-editor';
+import { Container, Editor, Toolbar } from 'react-mobiledoc-editor';
 import { DropTarget } from 'react-dnd';
 import PropTypes from 'prop-types';
 
@@ -31,6 +31,7 @@ class NotesEditor extends React.Component {
     return connectDropTarget(
       <div>
         <Container className={`absolute-fill ${backgroundColor} w-100 h-100`}>
+          <Toolbar />
           <Editor />
         </Container>
       </div>
