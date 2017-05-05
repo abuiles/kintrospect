@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import { StickyContainer, Sticky } from 'react-sticky';
 import Drawer from 'react-motion-drawer';
 import {
   Link
@@ -117,7 +116,7 @@ export default class Book extends React.Component {
     )
 
     return (
-      <div className="flex ph3-ns">
+      <div className="flex w-100 ph3-ns">
         <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
           <button type="button" className="f3" onClick={() => this.handleToggle()} >
             Table of contents
@@ -133,22 +132,21 @@ export default class Book extends React.Component {
           </ul>
           <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
         </Drawer>
-        <StickyContainer className="w-40 relative">
-          <Sticky style={{ zIndex: 2000 }} className="bg-washed-blue" >
-            <button onClick={() => this.handleToggle()}>
-              {book.title}
-            </button>
-            <Link to="/" >
-              Home
-            </Link>
-          </Sticky>
-          <div className="absolute-fill">
-            <StickyContainer>
-              {book.annotations.length ? annotationsList : <h3>{"You don't have annotations"}</h3>}
-            </StickyContainer>
-          </div>
-        </StickyContainer>
-        <div className="w-60 relative">
+        <div className="bg-washed-blue dib" >
+          <button onClick={() => this.handleToggle()}>
+            Table of contents
+          </button>
+          <Link to="/" >
+            Home
+          </Link>
+        </div>
+        <div style={{ height: 1000 }} className="w-40 pa1 ba overflow-y-auto">
+          <h2>
+            {book.title}
+          </h2>
+          {book.annotations.length ? annotationsList : <h3>{"You don't have annotations"}</h3>}
+        </div>
+        <div style={{ height: 1000 }} className="w-60 mr-2 ba pa1 overflow-y-auto">
           <NotesEditor book={book}/>
         </div>
       </div>

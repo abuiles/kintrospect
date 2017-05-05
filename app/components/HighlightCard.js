@@ -15,7 +15,7 @@ class HighlightCard extends React.Component {
       )
     } else {
       content = (
-        <article className="mw5 mw6-ns hidden ba mv4 m2 mr3">
+        <article className="mw5 mw6-ns hidden ba bw1 mv4 m2 mr3">
           <a className="db f4 bg-near-black white mv0 pv2 ph3 no-underline" href={`kindle://book?action=open&asin=${asin}&location=${location}`}>
             Read more at location {location}...
           </a>

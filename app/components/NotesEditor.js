@@ -1,8 +1,7 @@
 // @flow
 import React from 'react';
-import { Container, Editor, Toolbar } from 'react-mobiledoc-editor';
+import { Container, Editor, MarkupButton, SectionButton, LinkButton } from 'react-mobiledoc-editor';
 import { DropTarget } from 'react-dnd';
-import { AnnotationObject } from './Annotation';
 import { BookObject } from './Book';
 
 import ItemTypes from './ItemTypes';
@@ -34,14 +33,21 @@ class NotesEditor extends React.Component {
     super(props);
     const { book } = props;
 
+    const sections = [
+      [1, 'h1', [[0, [], 0, book.title]]], [1, 'h1', []]
+    ];
+
+    for (let i = 0; i < 100; i += 1) {
+      sections.push([1, 'p', []])
+    }
+
     this.state = {
       doc: {
         version: '0.3.0',
         markups: [],
         atoms: [],
         cards: [],
-        sections: [
-          [1, 'h1', [[0, [], 0, book.title]]], [1, 'h1', []]]
+        sections
       }
     }
   }
@@ -95,7 +101,51 @@ class NotesEditor extends React.Component {
           mobiledoc={doc}
           onChange={(mobiledoc) => this.onMobiledocChange(mobiledoc)}
         >
-          <Toolbar />
+          <ul className="list">
+            <li className="dib mr1">
+              <MarkupButton tag="strong">
+                Bold
+              </MarkupButton>
+            </li>
+            <li className="dib mr1">
+              <MarkupButton tag="em">
+                Italic
+              </MarkupButton>
+            </li>
+            <li className="dib mr1">
+              <LinkButton />
+            </li>
+            <li className="dib mr1">
+              <SectionButton tag="h1" >
+                Headline
+              </SectionButton>
+            </li>
+            <li className="dib mr1">
+              <SectionButton tag="h2" >
+                Subheadline
+              </SectionButton>
+            </li>
+            <li className="dib mr1">
+              <SectionButton tag="blockquote" >
+                Blockquote
+              </SectionButton>
+            </li>
+            <li className="dib mr1">
+              <SectionButton tag="pull-quote" >
+                Pull-quote
+              </SectionButton>
+            </li>
+            <li className="dib mr1">
+              <SectionButton tag="ul" >
+                List
+              </SectionButton>
+            </li>
+            <li className="dib mr1">
+              <SectionButton tag="ol" >
+                Numbered list
+              </SectionButton>
+            </li>
+          </ul>
           <Editor />
         </Container>
       </div>

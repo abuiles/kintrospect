@@ -93,19 +93,15 @@ class Annotation extends React.Component {
       opacity: isDragging ? 0.4 : 1,
       cursor: 'move'
     }
+    // console.log('wasSticky', wasSticky, 'IsSticky', isSticky)
+    // updateLocation(isSticky, annotation)
 
     if (annotation.isChapter) {
       content = (
-        <Sticky
-          onStickyStateChange={(isCurrentChapter) => updateLocation(isCurrentChapter, annotation)}
-          style={{ zIndex: 2000 }}
-          className="bg-washed-blue"
-        >
-          <h2>
-            {annotation.name}
-          </h2>
-        </Sticky>
-      );
+        <div className="bg-washed-blue ba bw1">
+          <h2>{annotation.name}</h2>
+        </div>
+      )
     } else {
       const location = annotation.location;
 

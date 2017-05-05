@@ -3105,7 +3105,7 @@ eslint-plugin-flowtype-errors@^3.0.0:
     shelljs "^0.7.7"
     slash "^1.0.0"
 
-eslint-plugin-flowtype@^2.30.0:
+eslint-plugin-flowtype@^2.32.1:
   version "2.32.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.32.1.tgz#bbee185dedf97e5f63ec975cdcddd199bd2a2501"
   dependencies:
@@ -6634,7 +6634,7 @@ radium@^0.18.1:
     inline-style-prefixer "^2.0.5"
     rimraf "^2.6.1"
 
-raf@^3.1.0:
+raf@^3.1.0, raf@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.3.0.tgz#93845eeffc773f8129039f677f80a36044eee2c3"
   dependencies:
@@ -6684,6 +6684,12 @@ react-desktop@^0.2.19:
   resolved "https://registry.yarnpkg.com/react-desktop/-/react-desktop-0.2.19.tgz#806335a20cbe005aadd3284660fe542c1f89b96c"
   dependencies:
     radium "^0.18.1"
+
+react-dnd-html5-backend@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-2.3.0.tgz#a45ce593f5c6944aa01114b368117c56c954804e"
+  dependencies:
+    lodash "^4.2.0"
 
 react-dnd@^2.3.0:
   version "2.3.0"
@@ -6779,11 +6785,12 @@ react-router@^4.1.1:
     prop-types "^15.5.4"
     warning "^3.0.0"
 
-react-sticky@^5.0.5:
-  version "5.0.8"
-  resolved "https://registry.yarnpkg.com/react-sticky/-/react-sticky-5.0.8.tgz#d5f85f96977f410081d792ab81886c622c5d8b14"
+react-sticky@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/react-sticky/-/react-sticky-6.0.1.tgz#356988bdcc6fc8cd2d89746d2302edce67d86687"
   dependencies:
     prop-types "^15.5.8"
+    raf "^3.3.0"
 
 react-tap-event-plugin@^2.0.1:
   version "2.0.1"
