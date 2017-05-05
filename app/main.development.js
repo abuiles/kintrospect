@@ -40,6 +40,16 @@ const installExtensions = async () => {
   }
 }
 
+const { ipcMain } = require('electron')
+
+ipcMain.on('asynchronous-message', (event, arg) => {
+  console.log(arg)  // prints "ping"
+
+  setTimeout(() => {
+    event.sender.send('asynchronous-reply', 'pong')
+  }, 4000);
+})
+
 app.on('ready', async () => {
   await installExtensions()
 
