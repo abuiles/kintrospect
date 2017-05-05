@@ -4,12 +4,12 @@ import { DragSource } from 'react-dnd';
 
 import ItemTypes from './ItemTypes';
 
-
 const highlightSource = {
   beginDrag(props) {
     console.log('dragging', props.annotation);
     return {
       text: props.annotation.highlight,
+      annotation: props.annotation
     };
   },
 
@@ -18,10 +18,8 @@ const highlightSource = {
     const dropResult = monitor.getDropResult();
     console.log('dragging', props.annotation);
 
-    if (dropResult) {
-      window.alert( // eslint-disable-line no-alert
-        `You dropped ${item.text} into ${dropResult.name}!`,
-      );
+    if (monitor.didDrop()) {
+      dropResult.component.addHighlight(item)
     }
   }
 }
@@ -93,6 +91,7 @@ class Annotation extends React.Component {
 
     const styles = {
       opacity: isDragging ? 0.4 : 1,
+      cursor: 'move'
     }
 
     if (annotation.isChapter) {
@@ -109,6 +108,7 @@ class Annotation extends React.Component {
       );
     } else {
       const location = annotation.location;
+
       content = (
         <article className="mw5 mw6-ns hidden ba mv4 m2 mr3">
           <a className="db f4 bg-near-black white mv0 pv2 ph3 no-underline" href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>

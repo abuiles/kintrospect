@@ -13,7 +13,7 @@ export default class Root extends React.Component {
   render() {
     return (
       <Router>
-        <div className="debug">
+        <div>
           <Route exact path="/" component={HomePage} />
           <Route path="/book/:asin" component={BookPage} />
         </div>

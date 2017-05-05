@@ -149,7 +149,7 @@ export default class Book extends React.Component {
           </div>
         </StickyContainer>
         <div className="w-60 relative">
-          <NotesEditor />
+          <NotesEditor book={book}/>
         </div>
       </div>
     );
