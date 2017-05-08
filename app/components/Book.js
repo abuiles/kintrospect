@@ -8,6 +8,13 @@ import {
 import NotesEditor from './NotesEditor';
 import Annotation, { AnnotationObject } from './Annotation';
 
+export interface BookMeta {
+  bookCover: string;
+  title: string;
+  asin: string;
+  url: string;
+}
+
 export class BookObject {
   bookCover: string;
   title: string;
@@ -93,10 +100,9 @@ export default class Book extends React.Component {
     const annotationsList = (
       <div>
         {book.annotations.map((annotation) =>
-          <div id={annotation.linkId}>
+          <div id={annotation.linkId} key={annotation.location || annotation.timestamp}>
             <Annotation
               annotation={annotation}
-              key={annotation.location || annotation.timestamp}
               updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
             />
             <div className="fboard f0 flex flex-wrap">
@@ -104,7 +110,6 @@ export default class Book extends React.Component {
                 <div key={hl.timestamp}>
                   <Annotation
                     annotation={hl}
-                    key={hl.timestamp}
                     updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
                   />
                 </div>

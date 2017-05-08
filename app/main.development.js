@@ -42,12 +42,18 @@ const installExtensions = async () => {
 
 const { ipcMain } = require('electron')
 
-ipcMain.on('asynchronous-message', (event, arg) => {
-  console.log(arg)  // prints "ping"
+const Config = require('electron-config');
+const config = new Config();
 
-  setTimeout(() => {
-    event.sender.send('asynchronous-reply', 'pong')
-  }, 4000);
+ipcMain.on('books-crawled', (event, books) => {
+  console.log(books)
+  config.set('books', books)
+  event.sender.send('books-saved', books)
+  event.sender.send('books-loaded', books)
+})
+
+ipcMain.on('load-books', (event) => {
+  event.sender.send('books-loaded', config.get('books') || [])
 })
 
 app.on('ready', async () => {

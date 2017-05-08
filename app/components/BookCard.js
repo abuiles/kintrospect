@@ -4,13 +4,25 @@ import {
   Link
 } from 'react-router-dom'
 
-import books from './books'
-
 // http://stackoverflow.com/questions/33886418/how-to-get-book-cover-image-url-using-isbn
 // http://images.amazon.com/images/P/PASTE_ISBN_NUMBER_HERE.01.20TRZZZZ.jpg
 // http://helpful.knobs-dials.com/index.php/Amazon_notes#General
+
+interface BookMeta {
+  bookCover: string;
+  title: string;
+  asin: string;
+  url: string;
+}
+
 export default class BookCard extends React.Component {
+  props: {
+    books: BookMeta[]
+  }
+
   render() {
+    const books = this.props.books || [];
+
     return (
       <div className="fboard f0 flex flex-wrap">
         {books.map((book) => (
