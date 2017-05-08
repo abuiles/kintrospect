@@ -3,29 +3,50 @@ import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContextProvider } from 'react-dnd';
 
-import Book, { BookObject } from '../components/Book';
-// import books from '../components/books';
-import sample from '../components/sample';
-
+import Book, { BookObject, BookMeta } from '../components/Book';
+import { ipcRenderer } from 'electron';
 
 export default class BookPage extends Component {
   props: {
     match: { params: { asin: string } }
   }
 
+  state: {
+    books: BookMeta[]
+  }
+
+  state = {
+    books: []
+  }
+
+  componentDidMount() {
+    ipcRenderer.on('books-loaded', (event, books) => {
+      this.setState({ books })
+    })
+    ipcRenderer.send('load-books')
+  }
+
   render() {
-    // const { asin } = this.props.match.params;
-    // const payload = books.find((book) => book.asin === asin);
+    const { match } = this.props
 
-    // if (!payload.annotations) {
-    //   payload.annotations = [];
-    // }
+    const { books } = this.state
 
-    const book = new BookObject(sample);
-    return (
-      <DragDropContextProvider backend={HTML5Backend}>
-        <Book book={book} />
-      </DragDropContextProvider>
-    );
+    const meta = books.find((book) => book.asin === match.params.asin)
+
+    if (meta) {
+      if (!meta.annotations) {
+        meta.annotations = [];
+      }
+
+      const book = new BookObject(meta);
+
+      return (
+        <DragDropContextProvider backend={HTML5Backend}>
+          <Book book={book} />
+        </DragDropContextProvider>
+      );
+    }
+
+    return <h1> loading </h1>
   }
 }

@@ -74,6 +74,14 @@ export class AnnotationObject implements AnnotationObjectAttrs {
   get isChapter(): boolean {
     return this.type === 'chapter';
   }
+
+  get uniqueKey(): string {
+    if (this.isChapter) {
+      return `${this.location}`
+    }
+
+    return `${this.location}-${this.timestamp}`
+  }
 }
 
 class Annotation extends React.Component {

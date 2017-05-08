@@ -52,6 +52,15 @@ ipcMain.on('books-crawled', (event, books) => {
   event.sender.send('books-loaded', books)
 })
 
+ipcMain.on('highlights-crawled', (event, asin, items) => {
+  const books = config.get('books')
+  const book = books.find((b) => b.asin === asin)
+  book.annotations = items
+  config.set('books', books)
+  event.sender.send('books-saved', books)
+  event.sender.send('books-loaded', books)
+})
+
 ipcMain.on('load-books', (event) => {
   event.sender.send('books-loaded', config.get('books') || [])
 })

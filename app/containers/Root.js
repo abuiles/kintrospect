@@ -6,7 +6,7 @@ import {
   // Link
 } from 'react-router-dom'
 import WebView from 'react-electron-web-view'
-import { ipcRenderer } from 'electron';
+// import { ipcRenderer } from 'electron';
 
 import HomePage from './HomePage'
 import BookPage from './BookPage'
@@ -49,12 +49,12 @@ export default class Root extends React.Component {
     this.setState(state)
   }
 
-  componentDidMount() {
-    ipcRenderer.on('books-loaded', (event, books) => {
-      this.setState({ books })
-    })
-    ipcRenderer.send('load-books')
-  }
+  // componentDidMount() {
+  //   ipcRenderer.on('books-loaded', (event, books) => {
+  //     this.setState({ books })
+  //   })
+  //   ipcRenderer.send('load-books')
+  // }
 
   render() {
     const { kindleSignIn, webview, books } = this.state
@@ -64,8 +64,8 @@ export default class Root extends React.Component {
       <Router>
         <div>
           <Crawler webview={webview}/>
-          <Route exact path="/" component={() => (<HomePage books={books} />)} />
-          <Route path="/book/:asin" component={() => ( <BookPage books={books} />)} />
+          <Route exact path="/" component={HomePage} />
+          <Route path="/book/:asin" component={BookPage} />
           <article className="mw7 center ph3 ph5-ns tc br2 pv5 bg-washed-green dark-green mb5 " style={styles} >
             <h2>Log into your kindle account first</h2>
 

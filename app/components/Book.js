@@ -9,10 +9,11 @@ import NotesEditor from './NotesEditor';
 import Annotation, { AnnotationObject } from './Annotation';
 
 export interface BookMeta {
-  bookCover: string;
-  title: string;
-  asin: string;
-  url: string;
+  bookCover: string,
+  title: string,
+  asin: string,
+  url: string,
+  highlightsUpdatedAt: ?Date
 }
 
 export class BookObject {
@@ -100,14 +101,14 @@ export default class Book extends React.Component {
     const annotationsList = (
       <div>
         {book.annotations.map((annotation) =>
-          <div id={annotation.linkId} key={annotation.location || annotation.timestamp}>
+          <div id={annotation.linkId} key={annotation.uniqueKey}>
             <Annotation
               annotation={annotation}
               updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
             />
             <div className="fboard f0 flex flex-wrap">
               {annotation.annotations.map((hl) =>
-                <div key={hl.timestamp}>
+                <div key={hl.uniqueKey}>
                   <Annotation
                     annotation={hl}
                     updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
@@ -128,7 +129,7 @@ export default class Book extends React.Component {
           </button>
           <ul className="list pl0 ml0 center mw6 ba b--light-silver br2" >
             {chapters.map((a) =>
-              <li className="ph3 pv3 bb b--light-silver" key={a.location}>
+              <li className="ph3 pv3 bb b--light-silver" key={a.uniqueKey}>
                 <button type="button" onClick={() => this.scrollToChapter(a)}>
                   {a.name}
                 </button>
@@ -138,6 +139,7 @@ export default class Book extends React.Component {
           <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
         </Drawer>
         <div className="bg-washed-blue dib" >
+          <h3>{book.annotations.length} annotations</h3>
           <button onClick={() => this.handleToggle()}>
             Table of contents
           </button>

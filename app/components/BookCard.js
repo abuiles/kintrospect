@@ -34,7 +34,7 @@ export default class BookCard extends React.Component {
               <div className="ph3 pt3 cf flex-auto" />
               <div className="ph3 pv2 mt3 cf bt b--light-gray black-40 normal f6 f--h ttu tracked">
                 <div className="fr">
-                  <i className="fa fa-comment" aria-hidden="true" /> 6 highlights
+                  <i className="fa fa-comment" aria-hidden="true" /> {book.annotations ? book.annotations.length : 0 } highlights
                 </div>
               </div>
             </div>

@@ -108,17 +108,58 @@ export default class Crawler extends Component {
     })
   }
 
+//   loadHighlights(asin: string) {
+//     return `
+//     'https://kindle.amazon.com/kcw/highlights?asin=${asin}&cursor=0&count=1000'
+// `
+//   }
+
   runCrawler() {
+    // document.location.hash
     if (!this.state.isRunning) {
       this.setState({
         isRunning: true
       })
       const { webview } =  this.props
 
-      webview.executeJavaScript(this.findPages(), false, (result) => {
-        result.nextLinks.unshift('https://kindle.amazon.com/your_reading')
-        this.getBooksData(result)
-      })
+      if (document.location.hash === '#/') {
+        webview.executeJavaScript(this.findPages(), false, (result) => {
+          result.nextLinks.unshift('https://kindle.amazon.com/your_reading')
+          this.getBooksData(result)
+        })
+      } else if (document.location.hash.match('#/book/')) {
+        const asin = document.location.hash.split('#/book/')[1]
+        console.log('load highlights', asin)
+
+        const loadHighlights = (highlights, cursor) => {
+          webview.addEventListener('did-finish-load', ({ currentTarget }) => {
+            webview.executeJavaScript("document.getElementsByTagName('pre')[0].textContent", false, function(result) {
+              const items = JSON.parse(result).items
+
+              if (items.length === 0) {
+                ipcRenderer.send('highlights-crawled', asin, highlights)
+              } else {
+                console.log('loading more items')
+                loadHighlights(highlights.concat(items), cursor += 200)
+              }
+
+            })
+          }, {once: true})
+
+          const url = `https://kindle.amazon.com/kcw/highlights?asin=${asin}&cursor=${cursor}&count=200`
+
+          webview.loadURL(url)
+        }
+
+        loadHighlights([], 0)
+
+        //     this.loadHighlights(asin)
+        //     .then(function(response) {
+        //   return response.json().then(function(json) {
+        //     console.log(json)
+        //   })
+        // })
+      }
     }
   }
 
