@@ -1,31 +1,24 @@
 // @flow
 import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react'
+
 import Home from '../components/Home';
-import { BookMeta } from '../components/Book'
-import { ipcRenderer } from 'electron';
+import BookStore from '../stores/Book'
 
+// https://wietse.loves.engineering/using-flowtype-with-decorators-in-react-af4fe69e66d6
+@inject('booksStore')
+@observer
 export default class HomePage extends Component {
-  state: {
-    books: BookMeta[]
-  }
-
-  state = {
-    books: []
-  }
-
-  componentDidMount() {
-    ipcRenderer.on('books-loaded', (event, books) => {
-      this.setState({ books })
-    })
-    ipcRenderer.send('load-books')
+  props: {
+    booksStore: BookStore
   }
 
   render() {
-    const { books } = this.state
+    const { booksStore } = this.props
 
     return (
       <div>
-        <Home books={books} />
+        <Home books={booksStore.all} />
       </div>
     );
   }

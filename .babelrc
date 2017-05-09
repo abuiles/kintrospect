@@ -5,7 +5,9 @@
     "react",
     "flow"
   ],
-  "plugins": ["add-module-exports"],
+  "plugins": [
+    "add-module-exports",
+  ],
   "env": {
     "production": {
       "presets": ["react-optimize"],
@@ -13,6 +15,7 @@
     },
     "development": {
       "plugins": [
+        "transform-decorators-legacy",
         "transform-class-properties",
         "transform-es2015-classes",
         "react-hot-loader/babel",

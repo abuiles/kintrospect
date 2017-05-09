@@ -1,11 +1,10 @@
 // @flow
 import React, { Component } from 'react'
 import BookCard from './BookCard'
-import { BookMeta } from './Book'
 
 export default class Home extends Component {
   props: {
-    books: BookMeta[]
+    books: ObservableArray<any>
   }
 
   render() {

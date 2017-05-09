@@ -8,16 +8,11 @@ import {
 // http://images.amazon.com/images/P/PASTE_ISBN_NUMBER_HERE.01.20TRZZZZ.jpg
 // http://helpful.knobs-dials.com/index.php/Amazon_notes#General
 
-interface BookMeta {
-  bookCover: string;
-  title: string;
-  asin: string;
-  url: string;
-}
+import { BookArray } from '../stores/Book'
 
 export default class BookCard extends React.Component {
   props: {
-    books: BookMeta[]
+    books: any
   }
 
   render() {

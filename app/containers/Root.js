@@ -1,38 +1,35 @@
 // @flow
 import React from 'react'
+import { Provider } from 'mobx-react'
 import {
   HashRouter as Router,
   Route,
   // Link
 } from 'react-router-dom'
 import WebView from 'react-electron-web-view'
-// import { ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron';
 
 import HomePage from './HomePage'
 import BookPage from './BookPage'
-import Crawler from '../Components/Crawler'
+import Crawler from '../components/Crawler'
+import BookStore from '../stores/Book'
 
-interface BookMeta {
-  bookCover: string;
-  title: string;
-  asin: string;
-  url: string;
-}
+const booksStore = new BookStore();
+
+ipcRenderer.on('books-loaded', (event, books) => {
+  booksStore.addBooks(books)
+})
+
+ipcRenderer.send('load-books')
 
 export default class Root extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   state: {
     kindleSignIn: boolean,
-    webview?: void,
-    books: BookMeta[]
+    webview?: void
   }
 
   state = {
-    kindleSignIn: false,
-    books: []
+    kindleSignIn: false
   }
 
   onDidFinishLoad({ currentTarget }) {
@@ -49,36 +46,31 @@ export default class Root extends React.Component {
     this.setState(state)
   }
 
-  // componentDidMount() {
-  //   ipcRenderer.on('books-loaded', (event, books) => {
-  //     this.setState({ books })
-  //   })
-  //   ipcRenderer.send('load-books')
-  // }
-
   render() {
-    const { kindleSignIn, webview, books } = this.state
+    const { kindleSignIn, webview } = this.state
     const styles = {};
 
     return (
-      <Router>
-        <div>
-          <Crawler webview={webview}/>
-          <Route exact path="/" component={HomePage} />
-          <Route path="/book/:asin" component={BookPage} />
-          <article className="mw7 center ph3 ph5-ns tc br2 pv5 bg-washed-green dark-green mb5 " style={styles} >
-            <h2>Log into your kindle account first</h2>
+      <Provider booksStore={booksStore}>
+        <Router>
+          <div>
+            <Crawler webview={webview} />
+            <Route exact path="/" component={HomePage} />
+            <Route path="/book/:asin" component={BookPage} />
+            <article className="mw7 center ph3 ph5-ns tc br2 pv5 bg-washed-green dark-green mb5 " style={styles} >
+              <h2>Log into your kindle account first</h2>
 
-            <WebView
-              src='https://kindle.amazon.com/your_reading/'
-              autosize
-              allowpopups
-              style={{ height: 400 }}
-              onDidFinishLoad={(a) => this.onDidFinishLoad(a) }
-            />
-          </article>
-        </div>
-      </Router>
+              <WebView
+                src='https://kindle.amazon.com/your_reading/'
+                autosize
+                allowpopups
+                style={{ height: 400 }}
+                onDidFinishLoad={(a) => this.onDidFinishLoad(a) }
+                />
+            </article>
+          </div>
+        </Router>
+      </Provider>
     )
   }
 }
