@@ -22,7 +22,12 @@ class BookPage extends Component {
     const book = booksStore.all.find((b) => b.asin === match.params.asin)
 
     if (book) {
-      return <BookView book={book} />
+      return (
+        <div>
+          {booksStore.loading && <h1> Downloading book highlights... </h1> }
+          <BookView book={book} />
+        </div>
+      )
     }
 
     return <h1> loading </h1>

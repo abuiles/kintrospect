@@ -105,12 +105,25 @@ export const BookArray = PropTypes.observableArray
 
 export default class BookStore {
   @observable items = []
+  @observable isLoading = false
 
   @computed get all() {
     return this.items
   }
 
+  @computed get loading() {
+    return this.isLoading
+  }
+
   @action addBooks(books): void {
     this.items = books.map((payload) => new Book(payload))
+  }
+
+  @action concatBooks(books): void {
+    this.items = this.items.concat(books.map((payload) => new Book(payload)))
+  }
+
+  @action setLoading(loading) {
+    this.isLoading = loading
   }
 }

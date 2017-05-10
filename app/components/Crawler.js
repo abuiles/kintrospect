@@ -1,7 +1,11 @@
 // @flow
 import React, { Component } from 'react';
 import { ipcRenderer } from 'electron';
+import { observer, inject } from 'mobx-react'
+import BookStore from '../stores/Book'
 
+@inject('booksStore')
+@observer
 export default class Crawler extends Component {
   constructor(props) {
     super(props)
@@ -26,7 +30,8 @@ export default class Crawler extends Component {
 
 
   props: {
-    webview: any
+    webview: any,
+    booksStore: BookStore
   }
 
   findPages() {
@@ -77,6 +82,8 @@ export default class Crawler extends Component {
   }
 
   getBooksData({ nextLinks }) {
+    const { booksStore } = this.props
+    booksStore.setLoading(true)
 
     const urls = nextLinks;
     const { webview } = this.props;
@@ -94,10 +101,12 @@ export default class Crawler extends Component {
         webview.loadURL(url)
       }).then((result) => {
         results.push(result);
+        booksStore.concatBooks(result)
         return results;
       })
     }), Promise.resolve([])).then((results) => {
       const books = results.reduce((accumulator, books) => [...accumulator, ...books], []);
+      booksStore.setLoading(false)
       ipcRenderer.send('books-crawled', books)
     })
   }
@@ -129,7 +138,10 @@ export default class Crawler extends Component {
         })
       } else if (document.location.hash.match('#/book/')) {
         const asin = document.location.hash.split('#/book/')[1]
+        const { booksStore } = this.props
+
         console.log('load highlights', asin)
+        booksStore.setLoading(true)
 
         const loadHighlights = (highlights, cursor) => {
           webview.addEventListener('did-finish-load', ({ currentTarget }) => {
@@ -137,6 +149,7 @@ export default class Crawler extends Component {
               const items = JSON.parse(result).items
 
               if (items.length === 0) {
+                booksStore.setLoading(false)
                 ipcRenderer.send('highlights-crawled', asin, highlights)
               } else {
                 console.log('loading more items')
