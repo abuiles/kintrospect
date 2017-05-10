@@ -22,6 +22,8 @@ ipcRenderer.on('books-loaded', (event, books) => {
 
 ipcRenderer.send('load-books')
 
+
+
 export default class Root extends React.Component {
   state: {
     kindleSignIn: boolean,
