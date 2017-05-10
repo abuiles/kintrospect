@@ -161,6 +161,7 @@
     "flow-bin": "^0.42.0",
     "flow-runtime": "^0.8.0",
     "flow-typed": "^2.0.0",
+    "he": "^1.1.1",
     "html-webpack-plugin": "^2.26.0",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^19.0.2",

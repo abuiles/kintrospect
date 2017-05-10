@@ -45,6 +45,8 @@ const { ipcMain } = require('electron')
 const Config = require('electron-config');
 const config = new Config();
 
+const he = require('he');
+
 ipcMain.on('books-crawled', (event, books) => {
   console.log(books)
   config.set('books', books)
@@ -55,7 +57,14 @@ ipcMain.on('books-crawled', (event, books) => {
 ipcMain.on('highlights-crawled', (event, asin, items) => {
   const books = config.get('books')
   const book = books.find((b) => b.asin === asin)
-  book.annotations = items
+
+  book.annotations = items.map((item) => {
+    const copy = Object.assign({}, item)
+    copy.highlight = he.decode(item.highlight)
+
+    return copy
+  })
+
   config.set('books', books)
   event.sender.send('books-saved', books)
   event.sender.send('books-loaded', books)
