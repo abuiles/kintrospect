@@ -1,8 +1,6 @@
 // @flow
 import { observable, action, computed } from 'mobx';
 import { PropTypes } from 'mobx-react'
-import { BooksType } from '../types'
-
 
 interface AnnotationObjectAttrs {
   type: string,

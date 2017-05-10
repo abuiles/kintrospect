@@ -19,7 +19,8 @@ const highlightSource = {
     console.log('dragging', props.annotation);
 
     if (monitor.didDrop()) {
-      dropResult.component.addHighlight(item)
+      // do this in the notes store
+      dropResult.component.wrappedInstance.addHighlight(item)
     }
   }
 }

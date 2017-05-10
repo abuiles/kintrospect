@@ -1,8 +1,10 @@
 // @flow
 import React from 'react';
 import { Container, Editor, MarkupButton, SectionButton, LinkButton } from 'react-mobiledoc-editor';
+import { observer, inject } from 'mobx-react'
 import { DropTarget } from 'react-dnd';
-import { BookObject } from './Book';
+import { Book } from '../stores/Book';
+import NoteStore from '../stores/Note';
 
 import ItemTypes from './ItemTypes';
 import HighlightCard from './HighlightCard';
@@ -28,51 +30,34 @@ const boxTarget = {
   }
 }
 
+@inject('notesStore')
+@observer
 class NotesEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    const { book } = props;
-
-    const sections = [
-      [1, 'h1', [[0, [], 0, book.title]]], [1, 'h1', []]
-    ];
-
-    for (let i = 0; i < 100; i += 1) {
-      sections.push([1, 'p', []])
-    }
-
-    this.state = {
-      doc: {
-        version: '0.3.0',
-        markups: [],
-        atoms: [],
-        cards: [],
-        sections
-      }
-    }
+  state: {
+    editor: any
   }
 
-  state: {
-    doc: any,
-    editor: any
+  state = {
+    editor: null
   }
 
   onMobiledocChange(mobiledoc) {
     console.log('doc changed', mobiledoc)
-    this.setState({
-      doc: mobiledoc
-    })
-  }
+    const { notesStore, book } = this.props
 
-  addHighlight(highlight) {
-    imageToCardParser(this.state.editor, highlight.annotation)
+    notesStore.saveNotes(book.asin, mobiledoc)
   }
 
   props: {
     connectDropTarget: () => void,
     isOver: boolean,
     canDrop: boolean,
-    book: BookObject
+    book: Book,
+    notesStore: NoteStore
+  }
+
+  addHighlight(highlight) {
+    imageToCardParser(this.state.editor, highlight.annotation)
   }
 
   didCreateEditor(editor) {
@@ -81,12 +66,13 @@ class NotesEditor extends React.Component {
   }
 
   render() {
-    const { canDrop, isOver, connectDropTarget } = this.props
+    const { canDrop, isOver, connectDropTarget, notesStore, book } = this.props
     const isActive = canDrop && isOver
 
     let backgroundColor = ''
 
-    const { doc } = this.state
+
+    const doc = notesStore.all[book.asin] || notesStore.initialNotes(book)
 
     if (isActive) {
       backgroundColor = 'bg-yellow'

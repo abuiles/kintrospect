@@ -13,16 +13,17 @@ import HomePage from './HomePage'
 import BookPage from './BookPage'
 import Crawler from '../components/Crawler'
 import BookStore from '../stores/Book'
+import NoteStore from '../stores/Note'
 
 const booksStore = new BookStore();
+
+const notesStore = new NoteStore();
 
 ipcRenderer.on('books-loaded', (event, books) => {
   booksStore.addBooks(books)
 })
 
 ipcRenderer.send('load-books')
-
-
 
 export default class Root extends React.Component {
   state: {
@@ -53,7 +54,7 @@ export default class Root extends React.Component {
     const styles = {};
 
     return (
-      <Provider booksStore={booksStore}>
+      <Provider booksStore={booksStore} notesStore={notesStore}>
         <Router>
           <div>
             <Crawler webview={webview} />
