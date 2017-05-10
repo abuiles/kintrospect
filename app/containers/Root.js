@@ -25,7 +25,7 @@ ipcRenderer.send('load-books')
 export default class Root extends React.Component {
   state: {
     kindleSignIn: boolean,
-    webview?: void
+    webview: any
   }
 
   state = {

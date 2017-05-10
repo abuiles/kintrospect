@@ -22,7 +22,7 @@ export default class BookList extends React.Component {
     this.setState({ open: !this.state.open });
   }
 
-  updateLocation(isCurrent: boolean, { location }: AnnotationObject) {
+  updateLocation(isCurrent: boolean, { location }: Annotation) {
     const { locations } = this.state;
     if (isCurrent) {
       if (locations.indexOf(location) < 0) {

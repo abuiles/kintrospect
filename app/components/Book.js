@@ -6,30 +6,8 @@ import {
 } from 'react-router-dom';
 
 import NotesEditor from './NotesEditor';
-import Annotation, { AnnotationObject } from './Annotation';
-
-export interface BookMeta {
-  bookCover: string,
-  title: string,
-  asin: string,
-  url: string,
-  highlightsUpdatedAt: ?Date
-}
-
-export class BookObject {
-  bookCover: string;
-  title: string;
-  asin: string;
-  updatedAt: string;
-  annotations: AnnotationObject[];
-
-  constructor({ bookCover, title, asin, annotations }) {
-    this.bookCover = bookCover;
-    this.title = title;
-    this.asin = asin;
-    this.annotations = annotations.map((annotation) => new AnnotationObject(annotation));
-  }
-}
+import AnnotationView from './Annotation';
+import { Book, Annotation } from '../stores/Book'
 
 interface BookState {
   open: boolean,
@@ -37,8 +15,8 @@ interface BookState {
   locations: number[]
 }
 
-export default class Book extends React.Component {
-  constructor(props: { book: BookObject }) {
+export default class BookView extends React.Component {
+  constructor(props: { book: Book }) {
     super(props);
     // assume annotations are sorted
     let location: number = 0
@@ -57,14 +35,14 @@ export default class Book extends React.Component {
   state: BookState
 
   props: {
-    book: BookObject
+    book: Book
   }
 
   handleToggle() {
     this.setState({ open: !this.state.open });
   }
 
-  updateLocation(isCurrent: boolean, { location }: AnnotationObject) {
+  updateLocation(isCurrent: boolean, { location }: Annotation) {
     const { locations } = this.state;
     if (isCurrent) {
       if (locations.indexOf(location) < 0) {
@@ -85,7 +63,7 @@ export default class Book extends React.Component {
     }
   }
 
-  scrollToChapter(chapter: AnnotationObject) {
+  scrollToChapter(chapter: Annotation) {
     const tag = document.getElementById(chapter.linkId);
 
     if (tag) {
@@ -102,14 +80,14 @@ export default class Book extends React.Component {
       <div>
         {book.annotations.map((annotation) =>
           <div id={annotation.linkId} key={annotation.uniqueKey}>
-            <Annotation
+            <AnnotationView
               annotation={annotation}
               updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
             />
             <div className="fboard f0 flex flex-wrap">
               {annotation.annotations.map((hl) =>
                 <div key={hl.uniqueKey}>
-                  <Annotation
+                  <AnnotationView
                     annotation={hl}
                     updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
                   />

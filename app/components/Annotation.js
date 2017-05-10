@@ -24,85 +24,23 @@ const highlightSource = {
   }
 }
 
-
-interface AnnotationObjectAttrs {
-  type: string,
-  name: string,
-  highlight: string,
-  location: number,
-  timestamp: number,
-  asin: string,
-  annotations: AnnotationObject[],
-  startLocation: number
-}
-
-export class AnnotationObject implements AnnotationObjectAttrs {
-  type: string;
-  name: string;
-  highlight: string;
-  location: number;
-  timestamp: number;
-  asin: string;
-  annotations: AnnotationObject[];
-  startLocation: number;
-  linkId: string;
-
-  constructor(payload) {
-    this.highlight = payload.highlight;
-    this.location = payload.location;
-    this.timestamp = payload.timestamp;
-    this.name = payload.name;
-    this.type = payload.type;
-    this.annotations = [];
-    this.startLocation = 0;
-
-    if (payload.asin) {
-      this.asin = payload.asin;
-    }
-
-    if (payload.startLocation) {
-      // https://www.amazon.com/forum/kindle/Tx2S4K44LSXEWRI?_encoding=UTF8&cdForum=Fx1D7SY3BVSESG
-      this.location = Math.ceil(payload.startLocation / 150);
-    }
-
-    if (this.isChapter) {
-      this.linkId = `chapter-${this.location}`;
-      this.annotations = payload.annotations.map((annotation) => new AnnotationObject(annotation));
-    }
-  }
-
-  get isChapter(): boolean {
-    return this.type === 'chapter';
-  }
-
-  get uniqueKey(): string {
-    if (this.isChapter) {
-      return `${this.location}`
-    }
-
-    return `${this.location}-${this.timestamp}`
-  }
-}
-
-class Annotation extends React.Component {
+class AnnotationView extends React.Component {
   props: {
-    annotation: AnnotationObject,
-    updateLocation: (boolean, AnnotationObject) => void,
+    annotation: any,
+    updateLocation: (boolean, any) => void,
     connectDragSource: () => void,
     isDragging: boolean
   }
 
   render() {
     let content;
-    const { annotation, updateLocation } = this.props;
+    const { annotation } = this.props;
     const { isDragging, connectDragSource } = this.props
 
     const styles = {
       opacity: isDragging ? 0.4 : 1,
       cursor: 'move'
     }
-    // console.log('wasSticky', wasSticky, 'IsSticky', isSticky)
-    // updateLocation(isSticky, annotation)
 
     if (annotation.isChapter) {
       content = (
@@ -140,4 +78,4 @@ class Annotation extends React.Component {
 export default DragSource(ItemTypes.HIGHLIGHT, highlightSource, (connect, monitor) => ({
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging()
-}))(Annotation)
+}))(AnnotationView)

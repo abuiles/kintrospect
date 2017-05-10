@@ -53,8 +53,8 @@ class NotesEditor extends React.Component {
   }
 
   state: {
-    doc?: void,
-    editor?: void
+    doc: any,
+    editor: any
   }
 
   onMobiledocChange(mobiledoc) {
