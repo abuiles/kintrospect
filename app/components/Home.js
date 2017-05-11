@@ -18,7 +18,7 @@ export default class Home extends Component {
     searchTerm: ''
   }
 
-  searchUpdated (term) {
+  searchUpdated(term) {
     this.setState({ searchTerm: term })
   }
 
