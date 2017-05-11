@@ -5,6 +5,10 @@ import {
   Link
 } from 'react-router-dom';
 
+import SearchInput, { createFilter } from 'react-search-input'
+
+const KEYS_TO_FILTERS = ['highlight', 'name']
+
 import NotesEditor from './NotesEditor';
 import AnnotationView from './Annotation';
 import { Book, Annotation } from '../stores/Book'
@@ -12,7 +16,8 @@ import { Book, Annotation } from '../stores/Book'
 interface BookState {
   open: boolean,
   currentLocation: number,
-  locations: number[]
+  locations: number[],
+  searchTerm: string
 }
 
 export default class BookView extends React.Component {
@@ -28,7 +33,8 @@ export default class BookView extends React.Component {
     this.state = {
       open: false,
       currentLocation: location,
-      locations: [location]
+      locations: [location],
+      searchTerm: ''
     };
   }
 
@@ -71,21 +77,27 @@ export default class BookView extends React.Component {
     }
   }
 
+  searchUpdated(term: string) {
+    this.setState({ searchTerm: term })
+  }
+
   render() {
     const { book } = this.props;
     const { open } = this.state;
     const chapters = book.annotations.filter((a) => a.isChapter);
 
+    const filteredAnnotations = book.annotations.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
+
     const annotationsList = (
       <div>
-        {book.annotations.map((annotation) =>
+        {filteredAnnotations.map((annotation) =>
           <div id={annotation.linkId} key={annotation.uniqueKey}>
             <AnnotationView
               annotation={annotation}
               updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
             />
             <div className="fboard f0 flex flex-wrap">
-              {annotation.annotations.map((hl) =>
+              {annotation.annotations.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).map((hl) =>
                 <div key={hl.uniqueKey}>
                   <AnnotationView
                     annotation={hl}
@@ -129,6 +141,7 @@ export default class BookView extends React.Component {
           <h2>
             {book.title}
           </h2>
+          <SearchInput className="search-input" onChange={(term) => this.searchUpdated(term)} />
           {book.annotations.length ? annotationsList : <h3>{"You don't have annotations"}</h3>}
         </div>
         <div style={{ height: 1000 }} className="w-60 mr-2 ba pa1 overflow-y-auto">
