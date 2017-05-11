@@ -23,6 +23,10 @@ ipcRenderer.on('books-loaded', (event, books) => {
   booksStore.addBooks(books)
 })
 
+ipcRenderer.on('notes-loaded', (event, notes) => {
+  notesStore.addNotes(notes)
+})
+
 ipcRenderer.send('load-books')
 
 export default class Root extends React.Component {

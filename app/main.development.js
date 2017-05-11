@@ -54,6 +54,14 @@ ipcMain.on('books-crawled', (event, books) => {
   event.sender.send('books-loaded', books)
 })
 
+ipcMain.on('save-notes', (event, asin, doc) => {
+  const notes = config.get('notes') || {}
+
+  notes[asin] = doc
+
+  config.set('notes', notes)
+})
+
 ipcMain.on('highlights-crawled', (event, asin, items) => {
   const books = config.get('books')
   const book = books.find((b) => b.asin === asin)
@@ -72,6 +80,7 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
 
 ipcMain.on('load-books', (event) => {
   event.sender.send('books-loaded', config.get('books') || [])
+  event.sender.send('notes-loaded', config.get('notes') || {})
 })
 
 app.on('ready', async () => {

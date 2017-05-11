@@ -74,6 +74,16 @@ export class Annotation implements AnnotationObjectAttrs {
 
     return `${this.location}-${this.timestamp}`
   }
+
+  get card(): any {
+    if (this.isChapter) {
+      return { name: this.name }
+    } else {
+      const { isChapter, location, asin, highlight } = this
+
+      return { isChapter, location, asin, highlight };
+    }
+  }
 }
 
 export interface BookMeta {

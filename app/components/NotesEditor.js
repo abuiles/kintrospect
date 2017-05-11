@@ -14,7 +14,7 @@ const CARDS = [
 ]
 
 function imageToCardParser(editor, annotation) {
-  const payload = { annotation };
+  const payload = { annotation: annotation.card };
 
   editor.run((postEditor) => {
     postEditor.editor.insertCard('HighlightCard', payload)
