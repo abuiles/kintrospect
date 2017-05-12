@@ -14,10 +14,13 @@ import BookPage from './BookPage'
 import Crawler from '../components/Crawler'
 import BookStore from '../stores/Book'
 import NoteStore from '../stores/Note'
+import AmazonStore from '../stores/Amazon'
 
 const booksStore = new BookStore();
-
 const notesStore = new NoteStore();
+const amazonStore = new AmazonStore();
+
+amazonStore.setBookStore(booksStore)
 
 ipcRenderer.on('books-loaded', (event, books) => {
   booksStore.addBooks(books)
@@ -31,8 +34,7 @@ ipcRenderer.send('load-books')
 
 export default class Root extends React.Component {
   state: {
-    kindleSignIn: boolean,
-    webview: any
+    kindleSignIn: boolean
   }
 
   state = {
@@ -41,9 +43,8 @@ export default class Root extends React.Component {
 
   onDidFinishLoad({ currentTarget }) {
     currentTarget.style.height = '400px'
-    const state = {
-      webview: currentTarget
-    }
+    const state = {}
+    amazonStore.setWebview(currentTarget)
 
     if (!currentTarget.getURL().match('www.amazon.com/ap/signin')) {
       console.log('signed in')
@@ -54,14 +55,14 @@ export default class Root extends React.Component {
   }
 
   render() {
-    const { kindleSignIn, webview } = this.state
+    const { kindleSignIn } = this.state
     const styles = {};
 
     return (
-      <Provider booksStore={booksStore} notesStore={notesStore}>
+      <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} >
         <Router>
           <div>
-            <Crawler webview={webview} />
+            <Crawler />
             <Route exact path="/" component={HomePage} />
             <Route path="/book/:asin" component={BookPage} />
             <article className="mw7 center ph3 ph5-ns tc br2 pv5 bg-washed-green dark-green mb5 " style={styles} >
