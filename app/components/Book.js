@@ -5,6 +5,8 @@ import {
   Link
 } from 'react-router-dom';
 
+import { observer, inject } from 'mobx-react'
+
 import SearchInput, { createFilter } from 'react-search-input'
 
 const KEYS_TO_FILTERS = ['highlight', 'name']
@@ -12,6 +14,7 @@ const KEYS_TO_FILTERS = ['highlight', 'name']
 import NotesEditor from './NotesEditor';
 import AnnotationView from './Annotation';
 import { Book, Annotation } from '../stores/Book'
+import AmazonStore from '../stores/Amazon'
 
 interface BookState {
   open: boolean,
@@ -20,6 +23,8 @@ interface BookState {
   searchTerm: string
 }
 
+@inject('amazonStore')
+@observer
 export default class BookView extends React.Component {
   constructor(props: { book: Book }) {
     super(props);
@@ -41,7 +46,8 @@ export default class BookView extends React.Component {
   state: BookState
 
   props: {
-    book: Book
+    book: Book,
+    amazonStore: AmazonStore
   }
 
   handleToggle() {
@@ -82,7 +88,7 @@ export default class BookView extends React.Component {
   }
 
   render() {
-    const { book } = this.props;
+    const { book, amazonStore } = this.props;
     const { open } = this.state;
     const chapters = book.annotations.filter((a) => a.isChapter);
 
@@ -141,8 +147,9 @@ export default class BookView extends React.Component {
           <h2>
             {book.title}
           </h2>
+          <p>Highlights updated on: {book.highlightsUpdatedAt} </p>
           <SearchInput className="search-input" onChange={(term) => this.searchUpdated(term)} />
-          {book.annotations.length ? annotationsList : <h3>{"You don't have annotations"}</h3>}
+          {book.annotations.length ? annotationsList : <h3>{amazonStore.isRunning ? "Downloading your highlights" : "You don't have annotations"}</h3>}
         </div>
         <div style={{ height: 1000 }} className="w-60 mr-2 ba pa1 overflow-y-auto">
           <NotesEditor book={book}/>

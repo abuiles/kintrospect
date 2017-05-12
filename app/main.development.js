@@ -73,6 +73,8 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
     return copy
   })
 
+  book.highlightsUpdatedAt = new Date()
+
   config.set('books', books)
   event.sender.send('books-saved', books)
   event.sender.send('books-loaded', books)

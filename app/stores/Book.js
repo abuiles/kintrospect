@@ -91,7 +91,7 @@ export interface BookMeta {
   title: string,
   asin: string,
   url: string,
-  highlightsUpdatedAt: ?Date
+  highlightsUpdatedAt: ?string
 }
 
 export class Book {
@@ -100,11 +100,13 @@ export class Book {
   asin: string
   updatedAt: string
   annotations: Annotation[]
+  highlightsUpdatedAt: ?string
 
-  constructor({ bookCover, title, asin, annotations }) {
+  constructor({ bookCover, title, asin, annotations, highlightsUpdatedAt }) {
     this.bookCover = bookCover;
     this.title = title;
     this.asin = asin;
+    this.highlightsUpdatedAt = highlightsUpdatedAt
     this.annotations = annotations ? annotations.map((annotation) => new Annotation(annotation)) : []
   }
 }

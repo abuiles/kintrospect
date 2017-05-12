@@ -6,14 +6,25 @@ import { observer, inject } from 'mobx-react'
 
 import BookView from '../components/Book'
 import BookStore from '../stores/Book'
+import AmazonStore from '../stores/Amazon'
 import withDragDropContext from './withDragDropContext'
 
-@inject('booksStore')
+@inject('booksStore', 'amazonStore')
 @observer
 class BookPage extends Component {
   props: {
     match: { params: { asin: string } },
-    booksStore: BookStore
+    booksStore: BookStore,
+    amazonStore: AmazonStore
+  }
+
+  componentDidMount() {
+    const { match, booksStore, amazonStore } = this.props
+    const book = booksStore.all.find((b) => b.asin === match.params.asin)
+
+    if (book && !book.highlightsUpdatedAt && amazonStore.hasWebview) {
+      amazonStore.runCrawler()
+    }
   }
 
   render() {
