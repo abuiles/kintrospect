@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import Drawer from 'react-motion-drawer';
+
 import {
   Link
 } from 'react-router-dom';
@@ -14,6 +15,7 @@ const KEYS_TO_FILTERS = ['highlight', 'name']
 import NotesEditor from './NotesEditor';
 import AnnotationView from './Annotation';
 import { Book, Annotation } from '../stores/Book'
+import Crawler from '../components/Crawler'
 import AmazonStore from '../stores/Amazon'
 
 interface BookState {
@@ -90,7 +92,8 @@ export default class BookView extends React.Component {
   render() {
     const { book, amazonStore } = this.props;
     const { open } = this.state;
-    const chapters = book.annotations.filter((a) => a.isChapter);
+    const chapters = book.annotations.filter((a) => a.isChapter)
+    const { isRunning } = amazonStore
 
     const filteredAnnotations = book.annotations.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
 
@@ -118,7 +121,7 @@ export default class BookView extends React.Component {
     )
 
     return (
-      <div className="flex w-100 ph3-ns">
+      <div className={ `flex w-100 ${isRunning ? 'o-40':''}` }>
         <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
           <button type="button" className="f3" onClick={() => this.handleToggle()} >
             Table of contents
@@ -134,24 +137,25 @@ export default class BookView extends React.Component {
           </ul>
           <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
         </Drawer>
-        <div className="bg-washed-blue dib" >
-          <h3>{book.annotations.length} annotations</h3>
-          <button onClick={() => this.handleToggle()}>
-            Table of contents
-          </button>
-          <Link to="/" >
-            Home
+        <div className="bg-blue pa3 dib">
+          <Link className="db mb2" to="/" >
+            <i className="fa fa-home white" aria-hidden="true"></i>
           </Link>
+          <button className="db mb4 bn pa0 bg-inherit" onClick={() => this.handleToggle()}>
+            <i className="fa fa-th-list white" aria-hidden="true"></i>
+          </button>
+          <Crawler />
         </div>
-        <div style={{ height: 1000 }} className="w-40 pa1 ba overflow-y-auto">
+        <div style={{ height: 1000 }} className="w-40 pa3 bl b--near-white bg-light-gray overflow-y-auto">
           <h2>
             {book.title}
           </h2>
+          <h3>{book.annotations.length} annotations</h3>
           <p>Highlights updated on: {book.highlightsUpdatedAt} </p>
-          <SearchInput className="search-input" onChange={(term) => this.searchUpdated(term)} />
+          <SearchInput className="search-input mb3 w-100" onChange={(term) => this.searchUpdated(term)} />
           {book.annotations.length ? annotationsList : <h3>{amazonStore.isRunning ? "Downloading your highlights" : "You don't have annotations"}</h3>}
         </div>
-        <div style={{ height: 1000 }} className="w-60 mr-2 ba pa1 overflow-y-auto">
+        <div style={{ height: 1000 }} className="w-60 bg-light-gray overflow-y-auto pa3">
           <NotesEditor book={book}/>
         </div>
       </div>

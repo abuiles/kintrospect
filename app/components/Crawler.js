@@ -24,8 +24,8 @@ export default class Crawler extends Component {
           <button disabled>Fetching book data</button>
         }
         {!isRunning &&
-          <button onClick={() => amazonStore.runCrawler()}>
-            Refresh
+          <button className="bn pa0 bg-inherit" onClick={() => amazonStore.runCrawler()}>
+            <i className="fa fa-refresh white" aria-hidden="true"></i>
           </button>
         }
       </div>

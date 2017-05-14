@@ -11,7 +11,6 @@ import { ipcRenderer } from 'electron';
 
 import HomePage from './HomePage'
 import BookPage from './BookPage'
-import Crawler from '../components/Crawler'
 import BookStore from '../stores/Book'
 import NoteStore from '../stores/Note'
 import AmazonStore from '../stores/Amazon'
@@ -62,7 +61,6 @@ export default class Root extends React.Component {
       <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} >
         <Router>
           <div>
-            <Crawler />
             <Route exact path="/" component={HomePage} />
             <Route path="/book/:asin" component={BookPage} />
             <article className="mw7 center ph3 ph5-ns tc br2 pv5 bg-washed-green dark-green mb5 " style={styles} >

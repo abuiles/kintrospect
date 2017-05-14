@@ -81,58 +81,58 @@ class NotesEditor extends React.Component {
     return connectDropTarget(
       <div>
         <Container
-          className={`absolute-fill ${backgroundColor} w-100 h-100`}
+          className={`absolute-fill ${backgroundColor} w-100 h-100 bg-white pa1`}
           cards={CARDS}
           didCreateEditor={(e) => this.didCreateEditor(e)}
           mobiledoc={doc}
           onChange={(mobiledoc) => this.onMobiledocChange(mobiledoc)}
         >
-          <ul className="list">
-            <li className="dib mr1">
-              <MarkupButton tag="strong">
-                Bold
+          <ul className="list bb b--light-gray pb2 ph4 mb4">
+            <li className="dib mr3">
+              <MarkupButton tag="strong" className="bn pa0 bg-inherit">
+                <i className="silver fa fa-bold" aria-hidden="true"></i>
               </MarkupButton>
             </li>
-            <li className="dib mr1">
-              <MarkupButton tag="em">
-                Italic
+            <li className="dib mr3">
+              <MarkupButton tag="em" className="bn pa0 bg-inherit">
+                <i className="silver fa fa-italic" aria-hidden="true"></i>
               </MarkupButton>
             </li>
-            <li className="dib mr1">
+            <li className="dib mr3">
               <LinkButton />
             </li>
-            <li className="dib mr1">
-              <SectionButton tag="h1" >
-                Headline
+            <li className="dib mr3">
+              <SectionButton tag="h1" className="bn pa0 bg-inherit">
+                <i className="silver fa fa-header" aria-hidden="true"></i>
               </SectionButton>
             </li>
-            <li className="dib mr1">
-              <SectionButton tag="h2" >
-                Subheadline
+            <li className="dib mr3">
+              <SectionButton tag="h2" className="bn pa0 bg-inherit">
+                <i className="silver fa fa-header f7" aria-hidden="true"></i>
               </SectionButton>
             </li>
-            <li className="dib mr1">
-              <SectionButton tag="blockquote" >
-                Blockquote
+            <li className="dib mr3">
+              <SectionButton tag="blockquote" className="bn pa0 bg-inherit">
+                <i className="silver fa fa-quote-right" aria-hidden="true"></i>
               </SectionButton>
             </li>
-            <li className="dib mr1">
-              <SectionButton tag="pull-quote" >
+            <li className="dib mr3">
+              <SectionButton tag="pull-quote" className="bn pa0 bg-inherit">
                 Pull-quote
               </SectionButton>
             </li>
-            <li className="dib mr1">
-              <SectionButton tag="ul" >
-                List
+            <li className="dib mr3">
+              <SectionButton tag="ul" className="bn pa0 bg-inherit">
+                <i className="silver fa fa-list" aria-hidden="true"></i>
               </SectionButton>
             </li>
-            <li className="dib mr1">
-              <SectionButton tag="ol" >
-                Numbered list
+            <li className="dib mr3">
+              <SectionButton tag="ol" className="bn pa0 bg-inherit">
+                <i className="silver fa fa-o-list" aria-hidden="true"></i>
               </SectionButton>
             </li>
           </ul>
-          <Editor />
+          <Editor className="ph4 outline-0" />
         </Container>
       </div>
     )
