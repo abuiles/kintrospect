@@ -60,7 +60,7 @@ export default class Root extends React.Component {
     return (
       <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} >
         <Router>
-          <div>
+          <div className="sans-serif">
             <Route exact path="/" component={HomePage} />
             <Route path="/book/:asin" component={BookPage} />
             <article className="mw7 center ph3 ph5-ns tc br2 pv5 bg-washed-green dark-green mb5 " style={styles} >

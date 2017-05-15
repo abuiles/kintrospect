@@ -13,16 +13,14 @@ class HighlightCard extends React.Component {
       )
     } else {
       return (
-        <article className="mw5 mw6-ns hidden ba bw1">
-          <a className="db f4 bg-near-black white mv0 pv2 ph3 no-underline" href={`kindle://book?action=open&asin=${asin}&location=${location}`}>
+        <blockquote className="serif pl4 bl bw2 b--blue ma0">
+          <p className="f4 lh-copy measure mb3">
+            {highlight}
+          </p>
+          <a className="f5" href={`kindle://book?action=open&asin=${asin}&location=${location}`}>
             Read more at location {location}...
           </a>
-          <div className="pa3 bt">
-            <p className="f6 f5-ns lh-copy measure mv0">
-              {highlight}
-            </p>
-          </div>
-        </article>
+        </blockquote>
       )
     }
   }
