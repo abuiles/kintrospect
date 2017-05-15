@@ -12,6 +12,7 @@ import SearchInput, { createFilter } from 'react-search-input'
 
 const KEYS_TO_FILTERS = ['highlight', 'name']
 
+import Spinner from './Spinner'
 import NotesEditor from './NotesEditor';
 import AnnotationView from './Annotation';
 import { Book, Annotation } from '../stores/Book'
@@ -159,7 +160,7 @@ export default class BookView extends React.Component {
           </div>
 
           <div className="overflow-y-auto h-100 ph3">
-            {book.annotations.length ? annotationsList : <h3>{amazonStore.isRunning ? "Downloading your highlights" : "You don't have annotations"}</h3>}
+            {book.annotations.length ? annotationsList : <h3>Create some annotations first</h3>}
           </div>
 
         </div>

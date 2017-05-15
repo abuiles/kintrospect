@@ -63,7 +63,7 @@ export default class Root extends React.Component {
           <div className="sans-serif">
             <Route exact path="/" component={HomePage} />
             <Route path="/book/:asin" component={BookPage} />
-            <article className="mw7 center ph3 ph5-ns tc br2 pv5 bg-washed-green dark-green mb5 " style={styles} >
+            <article className={`mw7 center ph3 ph5-ns tc br2 pv5 bg-washed-green dark-green mb5 ${kindleSignIn ? 'dn' : ''}`} style={styles} >
               <h2>Log into your kindle account first</h2>
 
               <WebView
@@ -71,7 +71,6 @@ export default class Root extends React.Component {
                 autosize
                 allowpopups
                 style={{ height: 0 }}
-                className="dn"
                 onDidFinishLoad={(a) => this.onDidFinishLoad(a) }
                 />
             </article>

@@ -1,6 +1,8 @@
 // @flow
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
+
+import Spinner from './Spinner'
 import AmazonStore from '../stores/Amazon'
 
 @inject('amazonStore')
@@ -21,7 +23,7 @@ export default class Crawler extends Component {
     return (
       <div>
         {isRunning &&
-          <button disabled>Fetching book data</button>
+          <Spinner />
         }
         {!isRunning &&
           <button className="bn pa0 bg-inherit" onClick={() => amazonStore.runCrawler()}>

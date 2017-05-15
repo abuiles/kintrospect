@@ -35,7 +35,6 @@ class BookPage extends Component {
     if (book) {
       return (
         <div>
-          {booksStore.loading && <h1> Downloading book highlights... </h1> }
           <BookView book={book} />
         </div>
       )

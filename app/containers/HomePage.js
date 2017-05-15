@@ -19,7 +19,6 @@ export default class HomePage extends Component {
 
     return (
       <div>
-        {booksStore.loading && <h1> Downloading your books...  </h1> }
         <Crawler />
         <Home books={booksStore.all} />
       </div>

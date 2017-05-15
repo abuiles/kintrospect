@@ -3,3 +3,8 @@
 .yourReadings {
   visibility: hidden;
 }
+
+
+.search-input input {
+  padding: 0.5rem 2rem
+}

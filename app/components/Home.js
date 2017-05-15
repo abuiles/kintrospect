@@ -29,9 +29,9 @@ export default class Home extends Component {
     return (
       <div>
         <header className="tc pv4 pv5-ns">
-          <h1 className="f5 f4-ns fw6 mid-gray">Kintrospect</h1>
+          <h1 className="f2">Kintrospect</h1>
+          <SearchInput className="search-input center mw-100 f4" style={{ width: 700 }} onChange={(term) => this.searchUpdated(term)} />
         </header>
-        <SearchInput className="search-input" onChange={(term) => this.searchUpdated(term)} />
         <BookCard books={filteredBooks} />
       </div>
     );
