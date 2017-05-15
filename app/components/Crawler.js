@@ -15,7 +15,7 @@ export default class Crawler extends Component {
     const { isRunning } = amazonStore
 
     if (!amazonStore.hasWebview) {
-      return <div><p>Setting up</p></div>
+      return <div><i className="fa fa-refresh white" aria-hidden="true"></i></div>
     }
 
     return (

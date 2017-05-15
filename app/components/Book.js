@@ -121,7 +121,7 @@ export default class BookView extends React.Component {
     )
 
     return (
-      <div className={ `fixed absolute--fill flex w-100 ${isRunning ? 'o-40':''}` }>
+      <div className={ `fixed absolute--fill flex ${isRunning ? 'o-40':''}` }>
         <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
           <button type="button" className="f3" onClick={() => this.handleToggle()} >
             Table of contents
@@ -138,7 +138,7 @@ export default class BookView extends React.Component {
           <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
         </Drawer>
 
-        <div className="bg-blue pa3 dib">
+        <div className="bg-blue pa3">
           <Link className="db mb2" to="/" >
             <i className="fa fa-home white" aria-hidden="true"></i>
           </Link>

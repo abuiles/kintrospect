@@ -87,7 +87,7 @@ class NotesEditor extends React.Component {
           mobiledoc={doc}
           onChange={(mobiledoc) => this.onMobiledocChange(mobiledoc)}
         >
-          <ul className="list bb b--light-gray pb2 ph4 mb4">
+          <ul className="list bb b--light-gray pb2 ph4">
             <li className="dib mr3">
               <MarkupButton tag="strong" className="bn pa0 bg-inherit">
                 <i className="silver fa fa-bold" aria-hidden="true"></i>
@@ -133,7 +133,7 @@ class NotesEditor extends React.Component {
             </li>
           </ul>
           <div className="h-100 overflow-y-auto">
-            <Editor className="ph4 outline-0 h-100" />
+            <Editor className="pa4 outline-0 h-100" />
           </div>
         </Container>
       </div>
