@@ -5,9 +5,9 @@ import { PulseLoader } from 'halogen'
 export default class Spinner extends Component {
   render() {
     // try change me to a custom color like "red" or "#000000"
-    var color = '#4DAF7C';
+    const color = '#4DAF7C';
 
-    var style = {
+    const style = {
       display: '-webkit-flex',
       display: 'flex',
       WebkitFlex: '0 1 auto',

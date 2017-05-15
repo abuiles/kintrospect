@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 
 import BookView from '../components/Book'
+import Spinner from '../components/Spinner'
 import BookStore from '../stores/Book'
 import AmazonStore from '../stores/Amazon'
 import withDragDropContext from './withDragDropContext'
@@ -40,7 +41,7 @@ class BookPage extends Component {
       )
     }
 
-    return <h1> loading </h1>
+    return <Spinner />
   }
 }
 
