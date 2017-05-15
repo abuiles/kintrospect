@@ -105,7 +105,7 @@ export default class BookView extends React.Component {
               annotation={annotation}
               updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
             />
-            <div className="fboard f0 flex flex-wrap">
+            <div>
               {annotation.annotations.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).map((hl) =>
                 <div key={hl.uniqueKey}>
                   <AnnotationView
@@ -121,7 +121,7 @@ export default class BookView extends React.Component {
     )
 
     return (
-      <div className={ `flex w-100 ${isRunning ? 'o-40':''}` }>
+      <div className={ `fixed absolute--fill flex w-100 ${isRunning ? 'o-40':''}` }>
         <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
           <button type="button" className="f3" onClick={() => this.handleToggle()} >
             Table of contents
@@ -137,6 +137,7 @@ export default class BookView extends React.Component {
           </ul>
           <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
         </Drawer>
+
         <div className="bg-blue pa3 dib">
           <Link className="db mb2" to="/" >
             <i className="fa fa-home white" aria-hidden="true"></i>
@@ -146,17 +147,25 @@ export default class BookView extends React.Component {
           </button>
           <Crawler />
         </div>
-        <div style={{ height: 1000 }} className="w-40 pa3 bl b--near-white bg-light-gray overflow-y-auto">
-          <h2>
-            {book.title}
-          </h2>
-          <h3>{book.annotations.length} annotations</h3>
-          <p>Highlights updated on: {book.highlightsUpdatedAt} </p>
-          <SearchInput className="search-input mb3 w-100" onChange={(term) => this.searchUpdated(term)} />
-          {book.annotations.length ? annotationsList : <h3>{amazonStore.isRunning ? "Downloading your highlights" : "You don't have annotations"}</h3>}
+
+        <div className="w-40 bl b--near-white bg-light-gray flex flex-column pv3">
+          <div className="ph3 mb3">
+            <h2>
+              {book.title}
+            </h2>
+            <h3>{book.annotations.length} annotations</h3>
+            <p>Highlights updated on: {book.highlightsUpdatedAt} </p>
+            <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
+          </div>
+
+          <div className="overflow-y-auto h-100 ph3">
+            {book.annotations.length ? annotationsList : <h3>{amazonStore.isRunning ? "Downloading your highlights" : "You don't have annotations"}</h3>}
+          </div>
+
         </div>
-        <div style={{ height: 1000 }} className="w-60 bg-light-gray overflow-y-auto pa3">
-          <NotesEditor book={book}/>
+
+        <div className="w-60 bg-light-gray">
+          <NotesEditor book={book} />
         </div>
       </div>
     );

@@ -70,7 +70,8 @@ export default class Root extends React.Component {
                 src='https://kindle.amazon.com/your_reading/'
                 autosize
                 allowpopups
-                style={{ height: 400 }}
+                style={{ height: 0 }}
+                className="dn"
                 onDidFinishLoad={(a) => this.onDidFinishLoad(a) }
                 />
             </article>

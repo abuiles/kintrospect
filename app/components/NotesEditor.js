@@ -79,9 +79,9 @@ class NotesEditor extends React.Component {
     }
 
     return connectDropTarget(
-      <div>
+      <div className="h-100 pa3">
         <Container
-          className={`absolute-fill ${backgroundColor} w-100 h-100 bg-white pa1`}
+          className="flex flex-column w-100 h-100 bg-white pa2"
           cards={CARDS}
           didCreateEditor={(e) => this.didCreateEditor(e)}
           mobiledoc={doc}
@@ -132,7 +132,9 @@ class NotesEditor extends React.Component {
               </SectionButton>
             </li>
           </ul>
-          <Editor className="ph4 outline-0" />
+          <div className="h-100 overflow-y-auto">
+            <Editor className="ph4 outline-0 h-100" />
+          </div>
         </Container>
       </div>
     )
