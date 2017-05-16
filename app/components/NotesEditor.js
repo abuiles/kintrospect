@@ -17,7 +17,15 @@ function imageToCardParser(editor, annotation) {
   const payload = { annotation: annotation.card };
 
   editor.run((postEditor) => {
-    postEditor.editor.insertCard('HighlightCard', payload)
+    const { builder } = postEditor
+    const m1 = builder.createMarker(annotation.highlight)
+    const m2 = builder.createMarkup('a', { href: 'blah' })
+    const s = builder.createMarkupSection('blockquote', [m1,m2]);
+    // m1.addMarkup(builder.createMarkup('p'));
+    // m1.addMarkup(builder.createMarkup('blockquote'));
+
+    // const s2 = builder.createMarkupSection('blockquote', [s]);
+    postEditor.insertSection(s)
   })
 }
 

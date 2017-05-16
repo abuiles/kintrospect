@@ -125,7 +125,7 @@ export default class BookStore {
     return this.isLoading
   }
 
-  @action addBooks(books): void {
+  @action addBooks(books: BookMeta[]): void {
     this.items = books.map((payload) => new Book(payload))
   }
 
