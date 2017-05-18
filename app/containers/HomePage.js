@@ -27,7 +27,7 @@ export default class HomePage extends Component {
 
   render() {
     const { booksStore, amazonStore } = this.props
-    const { kindleSignedIn, hasWebview } = amazonStore
+    const { kindleSignedIn, hasWebview, isRunning } = amazonStore
 
     const signInPage = (
       <article className={`mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${kindleSignedIn ? '' : ''}`} >
@@ -47,8 +47,12 @@ export default class HomePage extends Component {
     )
 
     return (
-      <div>
-        {kindleSignedIn && <Crawler />}
+      <div className={`fixed absolute--fill flex ${isRunning ? 'o-40':''}`}>
+        {kindleSignedIn && (
+          <div className="bg-blue pa3">
+            {kindleSignedIn && <Crawler />}
+          </div>)
+        }
         {kindleSignedIn && <Home books={booksStore.all} />}
         {!kindleSignedIn && signInPage }
       </div>
