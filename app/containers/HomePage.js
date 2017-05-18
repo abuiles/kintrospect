@@ -29,24 +29,28 @@ export default class HomePage extends Component {
     const { booksStore, amazonStore } = this.props
     const { kindleSignedIn, hasWebview } = amazonStore
 
-    return (
-      <div>
-        {kindleSignedIn && <Crawler />}
-        {kindleSignedIn && <Home books={booksStore.all} />}
-        <article className={`mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${kindleSignedIn ? '' : ''}`} >
-          {!kindleSignedIn && <h2>{"Welcome to Kintrospect! Let's start by connecting your Amazon account"}</h2>}
-          {!hasWebview && <Spinner />}
-          <WebView
-            src="https://kindle.amazon.com/your_reading/"
-            autosize
-            allowpopups
-            style={{ height: 0 }}
-            onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
+    const signInPage = (
+      <article className={`mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${kindleSignedIn ? '' : ''}`} >
+        {!kindleSignedIn && <h2>{"Welcome to Kintrospect! Let's start by connecting your Amazon account"}</h2>}
+        {!hasWebview && <Spinner />}
+        <WebView
+          src="https://kindle.amazon.com/your_reading/"
+          autosize
+          allowpopups
+          style={{ height: 0 }}
+          onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
           />
           <div className="lh-copy mt3">
             {hasWebview && <p>{"We don't store your email or password."}</p>}
           </div>
-        </article>
+      </article>
+    )
+
+    return (
+      <div>
+        {kindleSignedIn && <Crawler />}
+        {kindleSignedIn && <Home books={booksStore.all} />}
+        {!kindleSignedIn && signInPage }
       </div>
     );
   }
