@@ -5,26 +5,31 @@ import BookStore from './Book'
 
 export default class AmazonStore {
   @observable running = false
+  @observable kindleSignedIn = false
   @observable webview = null
   @observable booksStore: ?BookStore = null
 
-  @computed get isRunning() {
+  @computed get isRunning(): boolean {
     return this.running
   }
 
-  @computed get hasWebview() {
-    return this.webview
+  @computed get hasWebview(): boolean {
+    return !!this.webview
   }
 
   @action setWebview(webview) {
     this.webview = webview
+    if (!webview.getURL().match('www.amazon.com/ap/signin')) {
+      console.log('signed in')
+      this.kindleSignedIn = true
+    }
   }
 
-  @action toggleRunning() {
+  @action toggleRunning(): void {
     this.running = !this.isRunning
   }
 
-  setBookStore(store) {
+  setBookStore(store: BookStore): void {
     this.booksStore = store
   }
 
