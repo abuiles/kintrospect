@@ -22,6 +22,10 @@ export default class AmazonStore {
     if (!webview.getURL().match('www.amazon.com/ap/signin')) {
       console.log('signed in')
       this.kindleSignedIn = true
+
+      if (!this.booksStore.all.length) {
+        this.runCrawler()
+      }
     }
   }
 

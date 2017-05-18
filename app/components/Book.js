@@ -94,7 +94,7 @@ export default class BookView extends React.Component {
     const { book, amazonStore } = this.props;
     const { open } = this.state;
     const chapters = book.annotations.filter((a) => a.isChapter)
-    const { isRunning } = amazonStore
+    const { isRunning, kindleSignedIn } = amazonStore
 
     const filteredAnnotations = book.annotations.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
 
@@ -146,7 +146,7 @@ export default class BookView extends React.Component {
           <button className="db mb4 bn pa0 bg-inherit" onClick={() => this.handleToggle()}>
             <i className="fa fa-th-list white" aria-hidden="true"></i>
           </button>
-          <Crawler />
+          {kindleSignedIn && <Crawler />}
         </div>
 
         <div className="w-40 bl b--near-white bg-light-gray flex flex-column pv3">
@@ -155,12 +155,13 @@ export default class BookView extends React.Component {
               {book.title}
             </h2>
             <h3>{book.annotations.length} annotations</h3>
+            {isRunning && <h3>Loading highlights</h3>}
             <p>Highlights updated on: {book.highlightsUpdatedAt} </p>
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
           </div>
 
           <div className="overflow-y-auto h-100 ph3">
-            {book.annotations.length ? annotationsList : <h3>Create some annotations first</h3>}
+            {book.annotations.length ? annotationsList : !isRunning && <h3>Create some highlights first</h3>}
           </div>
 
         </div>
