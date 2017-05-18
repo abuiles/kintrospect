@@ -3,20 +3,11 @@ import React, { Component } from 'react';
 import { PulseLoader } from 'halogen'
 
 export default class Spinner extends Component {
-  props: {
-    containerClass: string
-  }
-
-  props = {
-    containerClass: ''
-  }
-
   render() {
     // try change me to a custom color like "red" or "#000000"
     const color = '#4DAF7C';
 
     const style = {
-      display: '-webkit-flex',
       display: 'flex',
       WebkitFlex: '0 1 auto',
       flex: '0 1 auto',
@@ -36,10 +27,8 @@ export default class Spinner extends Component {
       justifyContent: 'center'
     };
 
-    const { containerClass } = this.props
-
     return (
-      <div className={containerClass} style={{
+      <div style={{
              boxSizing: 'border-box',
              display: '-webkit-flex',
              display: 'flex',

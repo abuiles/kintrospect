@@ -35,7 +35,7 @@ export default class HomePage extends Component {
         {kindleSignedIn && <Home books={booksStore.all} />}
         <article className={`mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${kindleSignedIn ? '' : ''}`} >
           {!kindleSignedIn && <h2>{"Welcome to Kintrospect! Let's start by connecting your Amazon account"}</h2>}
-          {!hasWebview && <Spinner containerClass="measure center" />}
+          {!hasWebview && <Spinner />}
           <WebView
             src="https://kindle.amazon.com/your_reading/"
             autosize
