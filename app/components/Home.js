@@ -32,8 +32,10 @@ export default class Home extends Component {
           <h1 className="f2">Kintrospect</h1>
           <SearchInput className="search-input center mw-100 f4" style={{ width: 700 }} onChange={(term) => this.searchUpdated(term)} />
         </header>
-        <div>
-          <BookCard books={filteredBooks} />
+        <div className="fboard f0 flex flex-wrap">
+          {filteredBooks.map((book) => (
+            <BookCard book={book} key={book.asin} />
+          ))}
         </div>
       </div>
     );

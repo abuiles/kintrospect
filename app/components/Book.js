@@ -53,9 +53,9 @@ export default class BookView extends React.Component {
     amazonStore: AmazonStore
   }
 
-  handleToggle() {
-    this.setState({ open: !this.state.open });
-  }
+  // handleToggle() {
+  //   // this.setState({ open: !this.state.open });
+  // }
 
   updateLocation(isCurrent: boolean, { location }: Annotation) {
     const { locations } = this.state;
@@ -121,10 +121,9 @@ export default class BookView extends React.Component {
       </div>
     )
 
-    return (
-      <div className={ `fixed absolute--fill flex ${isRunning ? 'o-40':''}` }>
-        <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
-          <button type="button" className="f3" onClick={() => this.handleToggle()} >
+    const drawer = (
+      <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
+          <button type="button" className="f3" >
             Table of contents
           </button>
           <ul className="list pl0 ml0 center mw6 ba b--light-silver br2" >
@@ -138,14 +137,14 @@ export default class BookView extends React.Component {
           </ul>
           <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
         </Drawer>
+    )
 
+    return (
+      <div className={ `fixed absolute--fill flex ${isRunning ? 'o-40':''}` }>
         <div className="bg-blue pa3">
           <Link className="db mb2" to="/" >
             <i className="fa fa-home white" aria-hidden="true"></i>
           </Link>
-          <button className="db mb4 bn pa0 bg-inherit" onClick={() => this.handleToggle()}>
-            <i className="fa fa-th-list white" aria-hidden="true"></i>
-          </button>
           {kindleSignedIn && <Crawler />}
         </div>
 
