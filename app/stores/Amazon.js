@@ -3,9 +3,11 @@ import { observable, action, computed } from 'mobx';
 import { ipcRenderer } from 'electron';
 import BookStore from './Book'
 
+const HOMEURL = 'https://kindle.amazon.com/your_reading/'
+
 export default class AmazonStore {
   @observable running = false
-  @observable kindleSignedIn = false
+  @observable kindleSignedIn = true
   @observable webview = null
   @observable booksStore: ?BookStore = null
 
@@ -26,6 +28,8 @@ export default class AmazonStore {
       if (!this.booksStore.all.length) {
         this.runCrawler()
       }
+    } else {
+      this.kindleSignedIn = false
     }
   }
 
@@ -65,6 +69,7 @@ export default class AmazonStore {
                 booksStore.setLoading(false)
                 store.toggleRunning()
                 ipcRenderer.send('highlights-crawled', asin, highlights)
+                webview.loadURL(HOMEURL)
               } else {
                 console.log('loading more items')
                 loadHighlights(highlights.concat(items), cursor += 200)
@@ -85,6 +90,17 @@ export default class AmazonStore {
 
   @action crawlerDidFinish() {
     this.runnnig = false
+  }
+  @action signOut() {
+    const clearSession = 'document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });'
+
+    if (this.webview) {
+      this.webview.executeJavaScript(clearSession, false, () => {
+        if (this.webview) {
+          this.webview.loadURL(HOMEURL)
+        }
+      })
+    }
   }
 
   findPages() {

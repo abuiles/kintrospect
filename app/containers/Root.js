@@ -1,6 +1,5 @@
 // @flow
 import React from 'react'
-import { Provider } from 'mobx-react'
 import {
   HashRouter as Router,
   Route,
@@ -8,7 +7,7 @@ import {
 } from 'react-router-dom'
 import { ipcRenderer } from 'electron';
 import WebView from 'react-electron-web-view'
-import { observer } from 'mobx-react'
+import { observer, Provider } from 'mobx-react'
 
 import HomePage from './HomePage'
 import BookPage from './BookPage'
@@ -59,9 +58,9 @@ export default class Root extends React.Component {
       <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} >
         <Router>
           <div className="sans-serif">
-            {(kindleSignedIn || booksStore.all.length) && <Route exact path="/" component={HomePage} />}
+            {kindleSignedIn && <Route exact path="/" component={HomePage} />}
             <Route path="/book/:asin" component={BookPage} />
-            <article className={`mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${kindleSignedIn ? 'dn' : ''}`} >
+            <article className={`paola-revisar mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${(kindleSignedIn && hasWebview) ? 'o-0' : 'db'}`} >
               {!kindleSignedIn && hasWebview && <h2>{"Welcome to Kintrospect! Let's start by connecting your Amazon account"}</h2>}
               {!hasWebview && !booksStore.all && <Spinner />}
               <WebView
