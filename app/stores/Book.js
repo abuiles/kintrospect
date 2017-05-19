@@ -116,6 +116,9 @@ export const BookArray = PropTypes.observableArray
 export default class BookStore {
   @observable items = []
   @observable isLoading = false
+  @observable appExpired = false
+
+  @observable appVersion = 1280127600
 
   @computed get all() {
     return this.items
@@ -135,5 +138,10 @@ export default class BookStore {
 
   @action setLoading(loading) {
     this.isLoading = loading
+  }
+
+  @action checkAppVersion(version) {
+    // to test out expired version just set the value for this.appExpired = false
+    this.appExpired = version > 1280127600
   }
 }

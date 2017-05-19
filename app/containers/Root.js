@@ -32,6 +32,16 @@ ipcRenderer.on('notes-loaded', (event, notes) => {
   notesStore.setLoading(false)
 })
 
+ipcRenderer.on('notes-loaded', (event, notes) => {
+  notesStore.addNotes(notes)
+  notesStore.setLoading(false)
+})
+
+ipcRenderer.on('app-version', (event, version) => {
+  console.log('version', version)
+  booksStore.checkAppVersion(version)
+})
+
 notesStore.setLoading(true)
 ipcRenderer.send('load-books')
 

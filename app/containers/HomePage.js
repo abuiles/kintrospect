@@ -20,13 +20,29 @@ export default class HomePage extends Component {
   render() {
     const { booksStore, amazonStore } = this.props
     const { kindleSignedIn, hasWebview, isRunning } = amazonStore
+    let content = <Home books={booksStore.all} />
+
+    if (booksStore.appExpired) {
+      content = (
+        <header className="sans-serif">
+          <div className="cover bg-left bg-center-l">
+            <div className="bg-black-80 pb5 pb6-m pb7-l">
+              <div className="tc-l mt4 mt5-m mt6-l ph3">
+                <h1 className="f2 f1-l fw2 white-90 mb0 lh-title">This version has expired, please download the latest version of the app by visiting the link below:</h1>
+                <a className="f6 no-underline grow dib v-mid bg-blue white ba b--blue ph3 pv2 mb3" href="https://kintrospect.com/downloads" target="_blank" rel="noopener noreferrer">https://kintrospect.com/downloads</a>
+              </div>
+            </div>
+          </div>
+        </header>
+      )
+    }
 
     return (
       <div className={`${kindleSignedIn && 'fixed absolute--fill'} flex ${isRunning ? 'o-40':''}`}>
-        <div className="bg-blue pa3">
-          {kindleSignedIn && <Crawler />}
+        <div className={`bg-blue pa3 ${!booksStore.appExpired ? 'dn' : ''}`}>
+          {kindleSignedIn && !booksStore.appExpired && <Crawler />}
         </div>
-        <Home books={booksStore.all} />
+        {content}
       </div>
     );
   }

@@ -1,6 +1,7 @@
 // @flow
 import { app, BrowserWindow } from 'electron'
 import MenuBuilder from './menu'
+import nodeFetch from 'node-fetch'
 
 let mainWindow = null
 
@@ -80,6 +81,10 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
 ipcMain.on('load-books', (event) => {
   event.sender.send('books-loaded', config.get('books') || [])
   event.sender.send('notes-loaded', config.get('notes') || {})
+
+  nodeFetch('https://kintrospect.com/version.json').then((response) => {
+    response.json().then(({ epoch }) => event.sender.send('app-version', epoch))
+  })
 })
 
 app.on('ready', async () => {
