@@ -22,7 +22,7 @@ export default class HomePage extends Component {
     const { kindleSignedIn, hasWebview, isRunning } = amazonStore
 
     return (
-      <div className={`fixed absolute--fill flex ${isRunning ? 'o-40':''}`}>
+      <div className={`${kindleSignedIn && 'fixed absolute--fill'} flex ${isRunning ? 'o-40':''}`}>
         <div className="bg-blue pa3">
           {kindleSignedIn && <Crawler />}
         </div>

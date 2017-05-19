@@ -47,7 +47,7 @@ export default class Root extends React.Component {
       <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} >
         <Router>
           <div className="sans-serif">
-            <Route exact path="/" component={HomePage} />
+            {(kindleSignedIn || booksStore.all.length) && <Route exact path="/" component={HomePage} />}
             <Route path="/book/:asin" component={BookPage} />
             <article className={`mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${kindleSignedIn ? 'dn' : ''}`} >
               {!kindleSignedIn && hasWebview && <h2>{"Welcome to Kintrospect! Let's start by connecting your Amazon account"}</h2>}
