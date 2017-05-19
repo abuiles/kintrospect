@@ -8,9 +8,11 @@ import NoteStore from '../stores/Note';
 
 import ItemTypes from './ItemTypes';
 import HighlightCard from './HighlightCard';
+import LinkCard from './LinkCard';
 
 const CARDS = [
-  HighlightCard
+  HighlightCard,
+  LinkCard
 ]
 
 function imageToCardParser(editor, annotation) {
@@ -18,6 +20,14 @@ function imageToCardParser(editor, annotation) {
 
   editor.run((postEditor) => {
     postEditor.editor.insertCard('HighlightCard', payload)
+  })
+}
+
+function linkToCardParser(editor) {
+  const payload = { href: '' };
+
+  editor.run((postEditor) => {
+    postEditor.editor.insertCard('LinkCard', payload)
   })
 }
 
@@ -60,6 +70,10 @@ class NotesEditor extends React.Component {
     imageToCardParser(this.state.editor, highlight.annotation)
   }
 
+  addLink() {
+    linkToCardParser(this.state.editor)
+  }
+
   didCreateEditor(editor) {
     console.log('created editor:', editor);
     this.setState({ editor })
@@ -99,7 +113,12 @@ class NotesEditor extends React.Component {
               </MarkupButton>
             </li>
             <li className="dib mr3">
-              <LinkButton />
+              <button
+                className="bn pa0 bg-inherit"
+                onClick={() => this.addLink()}
+              >
+                Link
+              </button>
             </li>
             <li className="dib mr3">
               <SectionButton tag="h1" className="bn pa0 bg-inherit">
@@ -114,11 +133,6 @@ class NotesEditor extends React.Component {
             <li className="dib mr3">
               <SectionButton tag="blockquote" className="bn pa0 bg-inherit">
                 <i className="silver fa fa-quote-right" aria-hidden="true"></i>
-              </SectionButton>
-            </li>
-            <li className="dib mr3">
-              <SectionButton tag="pull-quote" className="bn pa0 bg-inherit">
-                Pull-quote
               </SectionButton>
             </li>
             <li className="dib mr3">
