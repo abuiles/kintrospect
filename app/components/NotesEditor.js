@@ -83,10 +83,7 @@ class NotesEditor extends React.Component {
     const { canDrop, isOver, connectDropTarget, notesStore, book } = this.props
     const isActive = canDrop && isOver
 
-    let backgroundColor = ''
-
-
-    const doc = notesStore.all[book.asin] || notesStore.initialNotes(book)
+    const doc = notesStore.findNotes(book)
 
     if (isActive) {
       backgroundColor = 'bg-yellow'

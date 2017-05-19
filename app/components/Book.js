@@ -18,6 +18,7 @@ import AnnotationView from './Annotation';
 import { Book, Annotation } from '../stores/Book'
 import Crawler from '../components/Crawler'
 import AmazonStore from '../stores/Amazon'
+import NoteStore from '../stores/Note'
 
 interface BookState {
   open: boolean,
@@ -26,7 +27,7 @@ interface BookState {
   searchTerm: string
 }
 
-@inject('amazonStore')
+@inject('amazonStore', 'notesStore')
 @observer
 export default class BookView extends React.Component {
   constructor(props: { book: Book }) {
@@ -50,7 +51,8 @@ export default class BookView extends React.Component {
 
   props: {
     book: Book,
-    amazonStore: AmazonStore
+    amazonStore: AmazonStore,
+    notesStore: NoteStore
   }
 
   // handleToggle() {
@@ -91,7 +93,7 @@ export default class BookView extends React.Component {
   }
 
   render() {
-    const { book, amazonStore } = this.props;
+    const { book, amazonStore, notesStore } = this.props;
     const { open } = this.state;
     const chapters = book.annotations.filter((a) => a.isChapter)
     const { isRunning, kindleSignedIn } = amazonStore
@@ -166,7 +168,7 @@ export default class BookView extends React.Component {
         </div>
 
         <div className="w-60 bg-light-gray">
-          <NotesEditor book={book} />
+          {!notesStore.loading && <NotesEditor book={book} />}
         </div>
       </div>
     );

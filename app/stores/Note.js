@@ -30,7 +30,11 @@ export default class NoteStore {
     this.isLoading = loading
   }
 
-  initialNotes(book) {
+  findNotes(book) {
+    if (this.all[book.asin]) {
+      return this.all[book.asin]
+    }
+
     const sections = [
       [1, 'h1', [[0, [], 0, book.title]]], [1, 'h1', []]
     ];

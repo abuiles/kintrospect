@@ -27,7 +27,7 @@ class LinkCard extends React.Component {
     let editMode = (
       <div>
         <a href={payload.href} target="_blank" rel="noopener noreferrer">{payload.href}</a>
-        <i className="ml1 fa fa-icon-edit" aria-hidden="true" onClick={() => edit()}/>
+        <i className="ml1 fa fa-edit" aria-hidden="true" onClick={() => edit()}/>
       </div>
     )
 

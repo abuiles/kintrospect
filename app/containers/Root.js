@@ -29,8 +29,10 @@ ipcRenderer.on('books-loaded', (event, books) => {
 
 ipcRenderer.on('notes-loaded', (event, notes) => {
   notesStore.addNotes(notes)
+  notesStore.setLoading(false)
 })
 
+notesStore.setLoading(true)
 ipcRenderer.send('load-books')
 
 @observer
