@@ -1,7 +1,10 @@
 // @flow
 import { app, BrowserWindow } from 'electron'
-import MenuBuilder from './menu'
+import fs from 'fs'
+import path from 'path'
 import nodeFetch from 'node-fetch'
+
+import MenuBuilder from './menu'
 
 let mainWindow = null
 
@@ -85,6 +88,17 @@ ipcMain.on('load-books', (event) => {
   nodeFetch('https://kintrospect.com/version.json').then((response) => {
     response.json().then(({ epoch }) => event.sender.send('app-version', epoch))
   })
+})
+
+ipcMain.on('download-notes', (event, title, text) => {
+  const dir = app.getPath('downloads')
+  const filePath = path.join(dir, title);
+
+  fs.writeFileSync(filePath, text)
+
+  if (process.platform === 'darwin') {
+    app.dock.downloadFinished(filePath);
+  }
 })
 
 app.on('ready', async () => {

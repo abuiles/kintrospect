@@ -21,8 +21,9 @@ export default class NoteStore {
     this.notes = notes
   }
 
-  @action saveNotes(asin, notes): void {
-    ipcRenderer.send('save-notes', asin, notes)
+  @action saveNotes(book, notes): void {
+    ipcRenderer.send('save-notes', book.asin, notes)
+    ipcRenderer.send('download-notes', `${asin}.json`, notes)
     this.notes[asin] = notes
   }
 

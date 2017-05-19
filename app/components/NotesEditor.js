@@ -55,7 +55,7 @@ class NotesEditor extends React.Component {
     console.log('doc changed', mobiledoc)
     const { notesStore, book } = this.props
 
-    notesStore.saveNotes(book.asin, mobiledoc)
+    notesStore.saveNotes(book, mobiledoc)
   }
 
   props: {
