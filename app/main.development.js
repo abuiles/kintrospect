@@ -42,13 +42,10 @@ const installExtensions = async () => {
 
 const { ipcMain } = require('electron')
 
-const Config = require('electron-config');
-const config = new Config();
-
+const config = require('electron-settings');
 const he = require('he');
 
 ipcMain.on('books-crawled', (event, books) => {
-  console.log(books)
   config.set('books', books)
   event.sender.send('books-saved', books)
   event.sender.send('books-loaded', books)
