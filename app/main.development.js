@@ -1,5 +1,5 @@
 // @flow
-import { app, BrowserWindow } from 'electron'
+import { app, dialog, BrowserWindow } from 'electron'
 import fs from 'fs'
 import path from 'path'
 import nodeFetch from 'node-fetch'
@@ -91,14 +91,21 @@ ipcMain.on('load-books', (event) => {
   })
 })
 
-ipcMain.on('download-notes', (event, title, mobiledoc) => {
+ipcMain.on('download-notes', (event, title, asin) => {
   const dir = app.getPath('downloads')
   const filePath = path.join(dir, title);
+
+  const mobiledoc = config.get('notes')[asin]
 
   fs.writeFileSync(filePath, toHtml(mobiledoc))
 
   if (process.platform === 'darwin') {
-    app.dock.downloadFinished(filePath);
+    dialog.showMessageBox(
+      {
+        message: 'The file has been saved in your Downloads folder.',
+        buttons: ['OK']
+      }
+    );
   }
 })
 
