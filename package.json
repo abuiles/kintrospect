@@ -189,7 +189,6 @@
     "sinon": "^1.17.7",
     "spectron": "^3.4.1",
     "style-loader": "^0.15.0",
-    "to-markdown": "^3.0.4",
     "url-loader": "^0.5.7",
     "webpack": "^2.2.1",
     "webpack-dev-server": "^2.4.1",
