@@ -1,7 +1,8 @@
 // @flow
-import { observable, action, computed } from 'mobx';
+import { observable, action, computed } from 'mobx'
 import { PropTypes } from 'mobx-react'
-import { ipcRenderer } from 'electron';
+import { ipcRenderer } from 'electron'
+import parameterize from 'parameterize'
 
 export const BookArray = PropTypes.observableArray
 
@@ -23,8 +24,8 @@ export default class NoteStore {
 
   @action saveNotes(book, notes): void {
     ipcRenderer.send('save-notes', book.asin, notes)
-    ipcRenderer.send('download-notes', `${asin}.json`, notes)
-    this.notes[asin] = notes
+    ipcRenderer.send('download-notes', `${parameterize(book.title)}.html`, notes)
+    this.notes[book.asin] = notes
   }
 
   @action setLoading(loading) {

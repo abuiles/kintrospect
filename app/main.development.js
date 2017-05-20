@@ -5,6 +5,7 @@ import path from 'path'
 import nodeFetch from 'node-fetch'
 
 import MenuBuilder from './menu'
+import toHtml from './markdown'
 
 let mainWindow = null
 
@@ -91,10 +92,10 @@ ipcMain.on('load-books', (event) => {
 })
 
 ipcMain.on('download-notes', (event, title, text) => {
-  const dir = app.getPath('downloads')
-  const filePath = path.join(dir, title);
+  let dir = app.getPath('downloads')
+  let filePath = path.join(dir, title);
 
-  fs.writeFileSync(filePath, text)
+  fs.writeFileSync(filePath, toHtml(text))
 
   if (process.platform === 'darwin') {
     app.dock.downloadFinished(filePath);

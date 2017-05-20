@@ -1,65 +1,57 @@
-config = require('electron-settings')
-mobiledoc = config.get('notes.B003V1WXKU')
-dr = require('mobiledoc-dom-renderer')
-SimpleDOM = require('simple-dom')
-simpleHtmlTokenizer  = require('simple-html-tokenizer')
-MobiledocDOMRenderer = dr.default
-document = new SimpleDOM.Document
+const config = require('electron-settings')
+const MobiledocDOMRenderer = require('mobiledoc-dom-renderer')
+const SimpleDOM = require('simple-dom')
+const simpleHtmlTokenizer = require('simple-html-tokenizer')
+const toMarkdown = require('to-markdown')
+
+const document = new SimpleDOM.Document
 
 const HighlightCard = {
  name: 'HighlightCard',
  type: 'dom',
   render({env, options, payload}) {
     const { isChapter, location, asin, highlight } = payload.annotation
-    let x = document.createElement("BLOCKQUOTE");
-    let t = document.createTextNode(highlight)
-    let cite = `kindle://book?action=open&asin=${asin}&location=${location}`
-    x.setAttribute("cite", cite)
+    const blockquote = document.createElement("BLOCKQUOTE");
+    const text = document.createTextNode(highlight)
+    const href = `kindle://book?action=open&asin=${asin}&location=${location}`
+    blockquote.setAttribute('cite', href)
+    blockquote.appendChild(text)
 
-    x.appendChild(t)
+    const cite = document.createElement('CITE');
 
-    var m = document.createElement("CITE");
-
-    let a = document.createElement('a');
-    a.setAttribute('href', cite)
-    let content = document.createTextNode(`Read more at location ${location}...`)
+    const a = document.createElement('a');
+    a.setAttribute('href', href)
+    const content = document.createTextNode(`Read more at location ${location}...`)
     a.appendChild(content)
-    m.appendChild(a);
+    cite.appendChild(a);
 
-    x.appendChild(m)
+    blockquote.appendChild(cite)
 
-   return x
- }
-};
+    return blockquote
+  }
+}
 
 const LinkCard = {
  name: 'LinkCard',
  type: 'dom',
  render({env, options, payload}) {
-   let a = document.createElement('a');
+   const a = document.createElement('a');
    a.href = payload.href;
    a.innerText = payload.href
 
    return a;
  }
-};
-renderer = new MobiledocDOMRenderer({
-  cards: [HighlightCard, LinkCard],
-  dom: new SimpleDOM.Document()
-})
+}
 
+module.exports = function(mobiledoc) {
+  const renderer = new MobiledocDOMRenderer.default({
+    cards: [HighlightCard, LinkCard],
+    dom: new SimpleDOM.Document()
+  })
 
-rendered = renderer.render(mobiledoc);
-serializer = new SimpleDOM.HTMLSerializer([]);
-var html = serializer.serializeChildren(rendered.result);
+  const rendered = renderer.render(mobiledoc);
+  const serializer = new SimpleDOM.HTMLSerializer([]);
+  const html = serializer.serializeChildren(rendered.result);
 
-toMarkdown = require('to-markdown')
-md = toMarkdown(html)
-
-app = require('electron').app
-title = 'book.md'
-
-   dir = app.getPath('downloads')
-   filePath = path.join(dir, title);
-
-  fs.writeFileSync(filePath, md)
+  return html// toMarkdown(html)
+}

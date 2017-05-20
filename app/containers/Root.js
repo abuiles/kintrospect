@@ -60,7 +60,7 @@ export default class Root extends React.Component {
           <div className="sans-serif">
             {kindleSignedIn && <Route exact path="/" component={HomePage} />}
             <Route path="/book/:asin" component={BookPage} />
-            <article className={`paola-revisar mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${(kindleSignedIn && hasWebview) ? 'o-0' : 'db'}`} >
+            <article className={`paola-revisar mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
               {!kindleSignedIn && hasWebview && <h2>{"Welcome to Kintrospect! Let's start by connecting your Amazon account"}</h2>}
               {!hasWebview && !booksStore.all && <Spinner />}
               <WebView

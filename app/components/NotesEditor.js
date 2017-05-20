@@ -85,6 +85,8 @@ class NotesEditor extends React.Component {
 
     const doc = notesStore.findNotes(book)
 
+    let backgroundColor = ''
+
     if (isActive) {
       backgroundColor = 'bg-yellow'
     }
