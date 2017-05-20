@@ -53,14 +53,14 @@ class AnnotationView extends React.Component {
       const location = annotation.location;
 
       content = (
-        <article className="bg-white pa3 mb3">
-            <p className="f6 f5-ns lh-copy measure mv0">
-              {annotation.highlight}
-            </p>
-            <a className="" href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
-              Read more at location {location}...
-            </a>
-        </article>
+        <div className="bg-white pa3 mb3">
+          <p className="f5 mv0">
+            {annotation.highlight}
+          </p>
+          <a className="" href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
+            Read more at location {location}...
+          </a>
+        </div>
       );
     }
 

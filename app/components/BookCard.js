@@ -24,7 +24,7 @@ export default class BookCard extends React.Component {
     if (book.highlightsUpdatedAt) {
       footer = (<div className="fr"><i className="fa fa-comment" aria-hidden="true" /> {book.annotations ? book.annotations.length : 0} highlights</div>)
     } else {
-      footer = <div className="fr"><a className="underline" href="#">Fetch highlights</a></div>
+      footer = <p className="ma0 underline blue" href="#">Fetch highlights</p>
     }
 
     return (
@@ -34,7 +34,7 @@ export default class BookCard extends React.Component {
             <div className="aspect-ratio aspect-ratio--5x8">
               <img alt="book cover" className="img db w-100 aspect-ratio--object" src={`http://images.amazon.com/images/P/${book.asin}`} />
             </div>
-            <div className="pa3 cf bt b--light-gray">
+            <div className="pa3 cf bt b--light-gray tr">
               {footer}
             </div>
           </Link>

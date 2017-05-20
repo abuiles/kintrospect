@@ -123,33 +123,33 @@ export default class BookView extends React.Component {
 
     const drawer = (
       <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
-          <button type="button" className="f3" >
-            Table of contents
-          </button>
-          <ul className="list pl0 ml0 center mw6 ba b--light-silver br2" >
-            {chapters.map((a) =>
-              <li className="ph3 pv3 bb b--light-silver" key={a.uniqueKey}>
-                <button type="button" onClick={() => this.scrollToChapter(a)}>
-                  {a.name}
-                </button>
-              </li>
-            )}
-          </ul>
-          <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
-        </Drawer>
+        <button type="button" className="f3" >
+          Table of contents
+        </button>
+        <ul className="list pl0 ml0 center mw6 ba b--light-silver br2" >
+          {chapters.map((a) =>
+            <li className="ph3 pv3 bb b--light-silver" key={a.uniqueKey}>
+              <button type="button" onClick={() => this.scrollToChapter(a)}>
+                {a.name}
+              </button>
+            </li>
+          )}
+        </ul>
+        <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
+      </Drawer>
     )
 
     return (
       <div className="flex w-100 h-100">
 
         <div className="w-40 bl b--near-white bg-light-gray flex flex-column pv3">
-          <div className="ph3 mb3">
-            <h2>
+          <div className="ph3 mb4">
+            <h2 className="f3 lh-title serif">
               {book.title}
             </h2>
             <h3>{book.annotations.length} annotations</h3>
             {isRunning && <h3>Loading highlights</h3>}
-            <p>Highlights updated on: {book.highlightsUpdatedAt} </p>
+            <p>Highlights updated on: {book.highlightsUpdatedAt}</p>
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
           </div>
 

@@ -108,50 +108,51 @@ class NotesEditor extends React.Component {
           onChange={(mobiledoc) => this.onMobiledocChange(mobiledoc)}
         >
           <ul className="list bb b--light-gray pb2 ph4">
-            <li className="dib mr3">
+            <li className="dib mr4">
               <MarkupButton tag="strong" className="bn pa0 bg-inherit">
                 <i className="silver fa fa-bold" aria-hidden="true"></i>
               </MarkupButton>
             </li>
-            <li className="dib mr3">
+            <li className="dib mr4">
               <MarkupButton tag="em" className="bn pa0 bg-inherit">
                 <i className="silver fa fa-italic" aria-hidden="true"></i>
               </MarkupButton>
             </li>
-            <li className="dib mr3">
+            <li className="dib mr4">
               <button
                 className="bn pa0 bg-inherit"
                 onClick={() => this.addLink()}
               >
-                Link
+                <i className="silver fa fa-link" aria-hidden="true"></i>
+
               </button>
             </li>
-            <li className="dib mr3">
+            <li className="dib mr4">
               <SectionButton tag="h1" className="bn pa0 bg-inherit">
                 <i className="silver fa fa-header" aria-hidden="true"></i>
               </SectionButton>
             </li>
-            <li className="dib mr3">
+            <li className="dib mr4">
               <SectionButton tag="h2" className="bn pa0 bg-inherit">
                 <i className="silver fa fa-header f7" aria-hidden="true"></i>
               </SectionButton>
             </li>
-            <li className="dib mr3">
+            <li className="dib mr4">
               <SectionButton tag="blockquote" className="bn pa0 bg-inherit">
                 <i className="silver fa fa-quote-right" aria-hidden="true"></i>
               </SectionButton>
             </li>
-            <li className="dib mr3">
+            <li className="dib mr4">
               <SectionButton tag="ul" className="bn pa0 bg-inherit">
                 <i className="silver fa fa-list" aria-hidden="true"></i>
               </SectionButton>
             </li>
-            <li className="dib mr3">
+            <li className="dib mr4">
               <SectionButton tag="ol" className="bn pa0 bg-inherit">
                 <i className="silver fa fa-o-list" aria-hidden="true"></i>
               </SectionButton>
             </li>
-            <li className="dib mr3">
+            <li className="dib mr4">
               <button
                 className="bn pa0 bg-inherit"
                 onClick={() => this.downloadNotes()}
