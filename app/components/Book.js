@@ -12,11 +12,9 @@ import SearchInput, { createFilter } from 'react-search-input'
 
 const KEYS_TO_FILTERS = ['highlight', 'name']
 
-import Spinner from './Spinner'
 import NotesEditor from './NotesEditor';
 import AnnotationView from './Annotation';
 import { Book, Annotation } from '../stores/Book'
-import Crawler from '../components/Crawler'
 import AmazonStore from '../stores/Amazon'
 import NoteStore from '../stores/Note'
 
@@ -142,7 +140,7 @@ export default class BookView extends React.Component {
     )
 
     return (
-      <div className="flex w-100">
+      <div className="flex w-100 h-100">
 
         <div className="w-40 bl b--near-white bg-light-gray flex flex-column pv3">
           <div className="ph3 mb3">

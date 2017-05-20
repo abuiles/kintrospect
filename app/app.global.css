@@ -4,11 +4,16 @@ a {
   color: #357edd;
 }
 
+.paragraph {
+  width: 700px;
+}
+
 .yourReadings {
   visibility: hidden;
 }
 
 .search-input input {
+  width: 100%;
   padding: 0.5rem 1rem;
   border-radius: 3px;
   border: 1px #eee solid;

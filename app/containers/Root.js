@@ -3,7 +3,7 @@ import React from 'react'
 import {
   HashRouter as Router,
   Route,
-  // Link
+  Link
 } from 'react-router-dom'
 import { ipcRenderer } from 'electron';
 import WebView from 'react-electron-web-view'
@@ -16,8 +16,8 @@ import BookPage from './BookPage'
 import BookStore from '../stores/Book'
 import NoteStore from '../stores/Note'
 import AmazonStore from '../stores/Amazon'
+import Sidebar from '../components/Sidebar'
 import Spinner from '../components/Spinner'
-import Crawler from '../components/Crawler'
 
 const booksStore = new BookStore();
 const notesStore = new NoteStore();
@@ -65,38 +65,43 @@ export default class Root extends React.Component {
   }
 
   render() {
-    const { kindleSignedIn, hasWebview, isRunning } = amazonStore
+    const { kindleSignedIn, hasWebview, isRunning } = amazonStore;
+
+    let style = {}
+    if (isRunning) {
+      style.pointerEvents = 'none'
+    }
 
     return (
       <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} analytics={analytics} >
         <Router>
-          <div className={ `sans-serif fixed absolute--fill flex ${isRunning ? 'o-40':''}`}>
-            <div className={`bg-blue pa3 ${booksStore.appExpired ? 'dn' : ''}`}>
-              <a className="db mb2" href=""><i className="fa fa-home white" aria-hidden="true"></i></a>
-              {kindleSignedIn && !booksStore.appExpired &&
-                <Crawler/>
-              }
-              {kindleSignedIn &&
-                <button className="db mt4 bn pa0 bg-inherit" onClick={() => amazonStore.signOut()}>
-                  <i className="fa fa-sign-out white" aria-hidden="true"></i>
-                </button>
-              }
+          <div class="vh-100 w-100 sans-serif">
+            {isRunning &&
+              <Spinner />
+            }
+
+            {kindleSignedIn &&
+              <div className={ `fixed absolute--fill flex ${isRunning ? 'o-20':''}`} style={style}>
+                <Sidebar />
+                <Route exact path="/" component={HomePage} />
+                <Route path="/book/:asin" component={BookPage} />
+              </div>
+            }
+
+            <div className={`bg-blue vh-100 tc ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
+              <header className="paragraph mw-100 center tc white pt5 pb4">
+                <h2 className="f1 mb2">{"Welcome to Kintrospect!"}</h2>
+                <p className="f3 ma0">{"Let's start by connecting your Amazon account"}</p>
+              </header>
+              <div className="center pa3 bg-white paragraph mw-100">
+                <WebView
+                  src="https://kindle.amazon.com/your_reading/"
+                  autosize
+                  allowpopups
+                  onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
+                  />
+              </div>
             </div>
-
-            {kindleSignedIn && <Route exact path="/" component={HomePage} />}
-            <Route path="/book/:asin" component={BookPage} />
-
-            <article className={`paola-revisar mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
-              {!kindleSignedIn && hasWebview && <h2>{"Welcome to Kintrospect! Let's start by connecting your Amazon account"}</h2>}
-              {!hasWebview && !booksStore.all && <Spinner />}
-              <WebView
-                src="https://kindle.amazon.com/your_reading/"
-                autosize
-                allowpopups
-                style={{ height: 0 }}
-                onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
-                />
-            </article>
           </div>
         </Router>
       </Provider>
