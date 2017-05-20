@@ -10,6 +10,7 @@ export default class AmazonStore {
   @observable kindleSignedIn = true
   @observable webview = null
   @observable booksStore: ?BookStore = null
+  @observable analytics = null
 
   @computed get isRunning(): boolean {
     return this.running
@@ -17,6 +18,10 @@ export default class AmazonStore {
 
   @computed get hasWebview(): boolean {
     return !!this.webview
+  }
+
+  @action setAnalytics(analytics) {
+    this.analytics = analytics
   }
 
   @action setWebview(webview) {

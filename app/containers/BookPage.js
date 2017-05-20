@@ -10,22 +10,25 @@ import BookStore from '../stores/Book'
 import AmazonStore from '../stores/Amazon'
 import withDragDropContext from './withDragDropContext'
 
-@inject('booksStore', 'amazonStore')
+@inject('booksStore', 'amazonStore', 'analytics')
 @observer
 class BookPage extends Component {
   props: {
     match: { params: { asin: string } },
     booksStore: BookStore,
-    amazonStore: AmazonStore
+    amazonStore: AmazonStore,
+    analytics: any
   }
 
   componentDidMount() {
-    const { match, booksStore, amazonStore } = this.props
+    const { match, booksStore, amazonStore, analytics } = this.props
     const book = booksStore.all.find((b) => b.asin === match.params.asin)
 
     if (book && !book.highlightsUpdatedAt && amazonStore.hasWebview) {
       amazonStore.runCrawler()
     }
+
+    analytics.pageview('https://app.kintrospect.com', `/book/${book.asin}`, book.title)
   }
 
   render() {

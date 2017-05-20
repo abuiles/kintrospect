@@ -8,6 +8,7 @@ import {
 import { ipcRenderer } from 'electron';
 import WebView from 'react-electron-web-view'
 import { observer, Provider } from 'mobx-react'
+import Analytics from 'electron-google-analytics';
 
 import HomePage from './HomePage'
 import BookPage from './BookPage'
@@ -44,6 +45,10 @@ ipcRenderer.on('app-version', (event, version) => {
 notesStore.setLoading(true)
 ipcRenderer.send('load-books')
 
+const analytics = new Analytics('UA-99589026-2')
+
+amazonStore.setAnalytics(analytics)
+
 @observer
 export default class Root extends React.Component {
   onDidFinishLoad({ currentTarget }) {
@@ -51,11 +56,15 @@ export default class Root extends React.Component {
     amazonStore.setWebview(currentTarget)
   }
 
+  componentDidMount() {
+    analytics.pageview('https://app.kintrospect.com', '/', 'Root')
+  }
+
   render() {
     const { kindleSignedIn, hasWebview, isRunning } = amazonStore
 
     return (
-      <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} >
+      <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} analytics={analytics} >
         <Router>
           <div className="sans-serif">
             {kindleSignedIn && <Route exact path="/" component={HomePage} />}

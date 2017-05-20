@@ -140,6 +140,7 @@
     "electron": "^1.4.15",
     "electron-builder": "^13.3.2",
     "electron-devtools-installer": "^2.0.1",
+    "electron-google-analytics": "0.0.16",
     "electron-settings": "^3.0.14",
     "enzyme": "^2.7.1",
     "eslint": "^3.14.0",

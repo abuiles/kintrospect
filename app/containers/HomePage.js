@@ -10,16 +10,25 @@ import Crawler from '../components/Crawler'
 // https://wietse.loves.engineering/using-flowtype-with-decorators-in-react-af4fe69e66d6
 @inject('booksStore')
 @inject('amazonStore')
+@inject('analytics')
 @observer
 export default class HomePage extends Component {
   props: {
     booksStore: BookStore,
-    amazonStore: AmazonStore
+    amazonStore: AmazonStore,
+    analytics: any
+  }
+
+  componentDidMount() {
+    const { analytics } = this.props
+    analytics.pageview('https://app.kintrospect.com', '/home', 'Home')
   }
 
   render() {
     const { booksStore, amazonStore } = this.props
     const { kindleSignedIn, hasWebview, isRunning } = amazonStore
+
+
     let content = <Home books={booksStore.all} />
 
     if (booksStore.appExpired) {
