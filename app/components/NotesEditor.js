@@ -40,7 +40,7 @@ const boxTarget = {
   }
 }
 
-@inject('notesStore')
+@inject('notesStore', 'analytics')
 @observer
 class NotesEditor extends React.Component {
   state: {
@@ -53,8 +53,9 @@ class NotesEditor extends React.Component {
 
   onMobiledocChange(mobiledoc) {
     console.log('doc changed', mobiledoc)
-    const { notesStore, book } = this.props
+    const { notesStore, book, analytics } = this.props
 
+    analytics.event('Notes', 'saved', { evLabel: book.asin})
     notesStore.saveNotes(book, mobiledoc)
   }
 
@@ -72,6 +73,12 @@ class NotesEditor extends React.Component {
 
   addLink() {
     linkToCardParser(this.state.editor)
+  }
+
+  downloadNotes() {
+    const { analytics, notesStore, book } = this.props
+    notesStore.download(book)
+    analytics.event('Notes', 'downloaded', { evLabel: book.asin})
   }
 
   didCreateEditor(editor) {
@@ -147,7 +154,7 @@ class NotesEditor extends React.Component {
             <li className="dib mr3">
               <button
                 className="bn pa0 bg-inherit"
-                onClick={() => notesStore.download(book)}
+                onClick={() => this.downloadNotes()}
               >
                 Download notes
               </button>

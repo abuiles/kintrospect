@@ -50,7 +50,7 @@ export default class AmazonStore {
     // document.location.hash
     if (!this.running) {
       this.toggleRunning()
-      const { webview } =  this
+      const { webview, analytics } =  this
 
       if (document.location.hash === '#/') {
         webview.executeJavaScript(this.findPages(), false, (result) => {
@@ -73,6 +73,9 @@ export default class AmazonStore {
               if (items.length === 0) {
                 booksStore.setLoading(false)
                 store.toggleRunning()
+                if (analytics) {
+                  analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin})
+                }
                 ipcRenderer.send('highlights-crawled', asin, highlights)
                 webview.loadURL(HOMEURL)
               } else {
@@ -160,7 +163,7 @@ export default class AmazonStore {
     booksStore.setLoading(true)
 
     const urls = nextLinks
-    const { webview } = this
+    const { webview, analytics  } = this
     urls.reduce((accumulator, url) => accumulator.then((results) => {
       console.log('loading', url)
       return new Promise((resolve) => {
@@ -182,6 +185,11 @@ export default class AmazonStore {
       const books = results.reduce((accumulator, books) => [...accumulator, ...books], []);
       booksStore.setLoading(false)
       this.toggleRunning()
+
+      if (analytics) {
+        analytics.event('Book', 'crawled', { evValue: books.length })
+      }
+
       ipcRenderer.send('books-crawled', books)
     })
   }
