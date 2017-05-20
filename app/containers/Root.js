@@ -17,6 +17,7 @@ import BookStore from '../stores/Book'
 import NoteStore from '../stores/Note'
 import AmazonStore from '../stores/Amazon'
 import Spinner from '../components/Spinner'
+import Crawler from '../components/Crawler'
 
 const booksStore = new BookStore();
 const notesStore = new NoteStore();
@@ -69,9 +70,22 @@ export default class Root extends React.Component {
     return (
       <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} analytics={analytics} >
         <Router>
-          <div className="sans-serif">
+          <div className={ `sans-serif fixed absolute--fill flex ${isRunning ? 'o-40':''}`}>
+            <div className={`bg-blue pa3 ${booksStore.appExpired ? 'dn' : ''}`}>
+              <a className="db mb2" href=""><i className="fa fa-home white" aria-hidden="true"></i></a>
+              {kindleSignedIn && !booksStore.appExpired &&
+                <Crawler/>
+              }
+              {kindleSignedIn &&
+                <button className="db mt4 bn pa0 bg-inherit" onClick={() => amazonStore.signOut()}>
+                  <i className="fa fa-sign-out white" aria-hidden="true"></i>
+                </button>
+              }
+            </div>
+
             {kindleSignedIn && <Route exact path="/" component={HomePage} />}
             <Route path="/book/:asin" component={BookPage} />
+
             <article className={`paola-revisar mw7 center ph3 ph5-ns tc br2 pv5 mb5 ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
               {!kindleSignedIn && hasWebview && <h2>{"Welcome to Kintrospect! Let's start by connecting your Amazon account"}</h2>}
               {!hasWebview && !booksStore.all && <Spinner />}

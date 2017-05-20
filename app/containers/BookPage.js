@@ -38,7 +38,7 @@ class BookPage extends Component {
 
     if (book) {
       return (
-        <div>
+        <div className="w-100">
           <BookView book={book} />
         </div>
       )

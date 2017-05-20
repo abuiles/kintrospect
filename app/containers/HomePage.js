@@ -47,11 +47,7 @@ export default class HomePage extends Component {
     }
 
     return (
-      <div className={`${kindleSignedIn && 'fixed absolute--fill'} flex ${isRunning ? 'o-40':''}`}>
-        <div className={`bg-blue pa3 ${booksStore.appExpired ? 'dn' : ''}`}>
-          {kindleSignedIn && !booksStore.appExpired && <Crawler />}
-          {kindleSignedIn && <button onClick={() => amazonStore.signOut()}>Signout</button>}
-        </div>
+      <div className="w-100">
         {content}
       </div>
     );

@@ -142,13 +142,7 @@ export default class BookView extends React.Component {
     )
 
     return (
-      <div className={ `fixed absolute--fill flex ${isRunning ? 'o-40':''}` }>
-        <div className="bg-blue pa3">
-          <Link className="db mb2" to="/" >
-            <i className="fa fa-home white" aria-hidden="true"></i>
-          </Link>
-          {kindleSignedIn && <Crawler />}
-        </div>
+      <div className="flex w-100">
 
         <div className="w-40 bl b--near-white bg-light-gray flex flex-column pv3">
           <div className="ph3 mb3">
@@ -164,7 +158,6 @@ export default class BookView extends React.Component {
           <div className="overflow-y-auto h-100 ph3">
             {book.annotations.length ? annotationsList : !isRunning && <h3>Create some highlights first</h3>}
           </div>
-
         </div>
 
         <div className="w-60 bg-light-gray">

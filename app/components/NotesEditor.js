@@ -160,6 +160,7 @@ class NotesEditor extends React.Component {
               </button>
             </li>
           </ul>
+
           <div className="h-100 overflow-y-auto">
             <Editor className="pa4 outline-0 h-100" />
           </div>
