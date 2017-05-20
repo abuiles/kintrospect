@@ -9,6 +9,7 @@ import { ipcRenderer } from 'electron';
 import WebView from 'react-electron-web-view'
 import { observer, Provider } from 'mobx-react'
 import Analytics from 'electron-google-analytics';
+import { machineIdSync } from 'electron-machine-id';
 
 import HomePage from './HomePage'
 import BookPage from './BookPage'
@@ -45,7 +46,9 @@ ipcRenderer.on('app-version', (event, version) => {
 notesStore.setLoading(true)
 ipcRenderer.send('load-books')
 
+
 const analytics = new Analytics('UA-99589026-2')
+analytics._machineID = machineIdSync()
 
 amazonStore.setAnalytics(analytics)
 
@@ -57,7 +60,7 @@ export default class Root extends React.Component {
   }
 
   componentDidMount() {
-    analytics.pageview('https://app.kintrospect.com', '/', 'Root')
+    analytics.pageview('https://app.kintrospect.com', '/', 'Root', analytics._machineID)
   }
 
   render() {

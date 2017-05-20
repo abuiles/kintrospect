@@ -55,7 +55,7 @@ class NotesEditor extends React.Component {
     console.log('doc changed', mobiledoc)
     const { notesStore, book, analytics } = this.props
 
-    analytics.event('Notes', 'saved', { evLabel: book.asin})
+    analytics.event('Notes', 'saved', { evLabel: book.asin, clientID: analytics._machineID })
     notesStore.saveNotes(book, mobiledoc)
   }
 
@@ -78,7 +78,7 @@ class NotesEditor extends React.Component {
   downloadNotes() {
     const { analytics, notesStore, book } = this.props
     notesStore.download(book)
-    analytics.event('Notes', 'downloaded', { evLabel: book.asin})
+    analytics.event('Notes', 'downloaded', { evLabel: book.asin, clientID: analytics._machineID })
   }
 
   didCreateEditor(editor) {

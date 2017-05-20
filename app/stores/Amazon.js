@@ -74,7 +74,7 @@ export default class AmazonStore {
                 booksStore.setLoading(false)
                 store.toggleRunning()
                 if (analytics) {
-                  analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin})
+                  analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
                 }
                 ipcRenderer.send('highlights-crawled', asin, highlights)
                 webview.loadURL(HOMEURL)
@@ -187,7 +187,7 @@ export default class AmazonStore {
       this.toggleRunning()
 
       if (analytics) {
-        analytics.event('Book', 'crawled', { evValue: books.length })
+        analytics.event('Book', 'crawled', { evValue: books.length, clientID: analytics._machineID })
       }
 
       ipcRenderer.send('books-crawled', books)

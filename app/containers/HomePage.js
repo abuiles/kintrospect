@@ -21,7 +21,7 @@ export default class HomePage extends Component {
 
   componentDidMount() {
     const { analytics } = this.props
-    analytics.pageview('https://app.kintrospect.com', '/home', 'Home')
+    analytics.pageview('https://app.kintrospect.com', '/home', 'Home', analytics._machineID)
   }
 
   render() {
