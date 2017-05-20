@@ -91,11 +91,11 @@ ipcMain.on('load-books', (event) => {
   })
 })
 
-ipcMain.on('download-notes', (event, title, text) => {
-  let dir = app.getPath('downloads')
-  let filePath = path.join(dir, title);
+ipcMain.on('download-notes', (event, title, mobiledoc) => {
+  const dir = app.getPath('downloads')
+  const filePath = path.join(dir, title);
 
-  fs.writeFileSync(filePath, toHtml(text))
+  fs.writeFileSync(filePath, toHtml(mobiledoc))
 
   if (process.platform === 'darwin') {
     app.dock.downloadFinished(filePath);

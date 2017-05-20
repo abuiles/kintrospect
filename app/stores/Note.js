@@ -24,8 +24,11 @@ export default class NoteStore {
 
   @action saveNotes(book, notes): void {
     ipcRenderer.send('save-notes', book.asin, notes)
-    ipcRenderer.send('download-notes', `${parameterize(book.title)}.html`, notes)
     this.notes[book.asin] = notes
+  }
+
+  download(book) {
+    ipcRenderer.send('download-notes', `${parameterize(book.title)}.html`, this.notes[book.asin])
   }
 
   @action setLoading(loading) {

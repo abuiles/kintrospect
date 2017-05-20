@@ -144,6 +144,14 @@ class NotesEditor extends React.Component {
                 <i className="silver fa fa-o-list" aria-hidden="true"></i>
               </SectionButton>
             </li>
+            <li className="dib mr3">
+              <button
+                className="bn pa0 bg-inherit"
+                onClick={() => notesStore.download(book)}
+              >
+                Download notes
+              </button>
+            </li>
           </ul>
           <div className="h-100 overflow-y-auto">
             <Editor className="pa4 outline-0 h-100" />

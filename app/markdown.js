@@ -53,5 +53,5 @@ module.exports = function(mobiledoc) {
   const serializer = new SimpleDOM.HTMLSerializer([]);
   const html = serializer.serializeChildren(rendered.result);
 
-  return html// toMarkdown(html)
+  return html
 }
