@@ -146,11 +146,7 @@ export default class AmazonStore {
       const img = parent.getElementsByClassName('bookCover')[0]
       meta.bookCover = img.src
 
-      const reading = parent.getElementsByClassName('readActive').length || parent.getElementsByClassName('readingActive').length
-
-      if (reading) {
-        books.push(meta)
-      }
+      books.push(meta)
     })
 
     books
