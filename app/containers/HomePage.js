@@ -32,16 +32,12 @@ export default class HomePage extends Component {
 
     if (booksStore.appExpired) {
       content = (
-        <header className="sans-serif">
-          <div className="cover bg-left bg-center-l">
-            <div className="bg-black-80 pb5 pb6-m pb7-l">
-              <div className="tc-l mt4 mt5-m mt6-l ph3">
-                <h1 className="f2 f1-l fw2 white-90 mb0 lh-title">This version has expired, please download the latest version of the app by visiting the link below:</h1>
-                <a className="f6 no-underline grow dib v-mid bg-blue white ba b--blue ph3 pv2 mb3" href="https://kintrospect.com/downloads" target="_blank" rel="noopener noreferrer">https://kintrospect.com/downloads</a>
-              </div>
-            </div>
+        <div className="vh-100 tc bg-blue">
+          <div className="paragraph center mw-100 white pv4">
+            <h1 className="f1 lh-title"><i className="fa fa-rocket" aria-hidden="true"></i> Woohoo! An improved version of Kintrospect is now available for download at:</h1>
+            <a className="f2 white" href="https://kintrospect.com/downloads" target="_blank" rel="noopener noreferrer">https://kintrospect.com/downloads</a>
           </div>
-        </header>
+        </div>
       )
     }
 

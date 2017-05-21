@@ -99,7 +99,7 @@ export default class BookView extends React.Component {
     const filteredAnnotations = book.annotations.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
 
     const annotationsList = (
-      <div>
+      <div className="pt1">
         {filteredAnnotations.map((annotation) =>
           <div id={annotation.linkId} key={annotation.uniqueKey}>
             <AnnotationView

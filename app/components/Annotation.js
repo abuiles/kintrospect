@@ -53,11 +53,11 @@ class AnnotationView extends React.Component {
       const location = annotation.location;
 
       content = (
-        <div className="bg-white pa3 mb3">
+        <div className="bg-white pa3 mb3 shadow-1">
           <p className="f5 mv0">
             {annotation.highlight}
           </p>
-          <a className="" href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
+          <a href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
             Read more at location {location}...
           </a>
         </div>

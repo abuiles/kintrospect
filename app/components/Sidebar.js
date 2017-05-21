@@ -21,11 +21,12 @@ export default class Sidebar extends Component {
 
     return (
       <div className={`bg-blue ph3 pv4 tc ${booksStore.appExpired ? 'dn' : ''}`}>
-        <Link className="db white no-underline" to="/">
-          <p className="mt0 lh-solid f2 mb4">k</p>
+        <Link className="db white no-underline mb4" to="/">
+          <p className="mt0 lh-solid f2 fw9">k</p>
         </Link>
+
         {kindleSignedIn && !booksStore.appExpired && !isRunning &&
-          <button className="bn mb3 pa0 bg-inherit f4" title="Fetch Books" onClick={() => amazonStore.runCrawler()}>
+          <button className="bn mt1 mb3 pa0 bg-inherit f4" title="Fetch Books" onClick={() => amazonStore.runCrawler()}>
             <i className="fa fa-refresh white" aria-hidden="true"></i>
           </button>
         }
@@ -34,6 +35,7 @@ export default class Sidebar extends Component {
             <i className="fa fa-sign-out white" aria-hidden="true"></i>
           </button>
         }
+
       </div>
     );
   }
