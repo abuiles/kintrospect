@@ -35,7 +35,7 @@ export default class HomePage extends Component {
         <div className="vh-100 tc bg-blue">
           <div className="paragraph center mw-100 white pv4">
             <h1 className="f1 lh-title"><i className="fa fa-rocket" aria-hidden="true"></i> Woohoo! An improved version of Kintrospect is now available for download at:</h1>
-            <a className="f2 white" href="https://kintrospect.com/downloads" target="_blank" rel="noopener noreferrer">https://kintrospect.com/downloads</a>
+            <a className="f2 white" href="https://kintrospect.com/downloads.html" target="_blank" rel="noopener noreferrer">https://kintrospect.com/downloads.html</a>
           </div>
         </div>
       )

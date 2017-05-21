@@ -142,6 +142,6 @@ export default class BookStore {
 
   @action checkAppVersion(version) {
     // to test out expired version just set the value for this.appExpired = false
-    this.appExpired = version > 1280127600
+    this.appExpired = version > 1495341223
   }
 }

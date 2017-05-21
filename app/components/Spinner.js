@@ -9,8 +9,8 @@ export default class Spinner extends Component {
 
     return (
       <div className="flex flex-column justify-center items-center vh-100">
-        <PulseLoader color={color}/>
-        <p className="blue f3">Fun Message</p>
+        <PulseLoader color={color} />
+        <p className="blue f3">Downloading</p>
       </div>
     );
   }
