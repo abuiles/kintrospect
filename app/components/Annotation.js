@@ -58,7 +58,7 @@ class AnnotationView extends React.Component {
             {annotation.highlight}
           </p>
           <a href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
-            Read more at location {location}...
+            Read more
           </a>
         </div>
       );

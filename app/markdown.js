@@ -20,7 +20,7 @@ const HighlightCard = {
 
     const a = document.createElement('a');
     a.setAttribute('href', href)
-    const content = document.createTextNode(`Read more at location ${location}...`)
+    const content = document.createTextNode(`Read more`)
     a.appendChild(content)
     cite.appendChild(a);
 

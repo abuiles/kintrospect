@@ -25,7 +25,7 @@ class HighlightCard extends React.Component {
           </p>
           <cite>
             <a className="f5" href={`kindle://book?action=open&asin=${asin}&location=${location}`}>
-              Read more at location {location}...
+              Read more
             </a>
           </cite>
         </blockquote>
