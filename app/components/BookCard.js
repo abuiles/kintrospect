@@ -22,15 +22,15 @@ export default class BookCard extends React.Component {
     let footer
 
     if (book.highlightsUpdatedAt) {
-      footer = (<div className="fr"><i className="fa fa-comment" aria-hidden="true" /> {book.annotations ? book.annotations.length : 0} highlights</div>)
+      footer = (<p className="gray ma0"><i className="fa fa-comment" aria-hidden="true" /> {book.annotations ? book.annotations.length : 0} highlights</p>)
     } else {
-      footer = <p className="ma0 underline blue" href="#">Fetch highlights</p>
+      footer = <p className="underline ma0" href="#">Fetch highlights &#187;</p>
     }
 
     return (
       <div key={book.asin} className="w-20-l w-third-m w-100 pa3-ns pb3 f5 v-top flex">
         <div className="bg-white flex flex-column shadow-1 w-100">
-          <Link to={`/book/${book.asin}`} >
+          <Link className="no-underline" to={`/book/${book.asin}`} >
             <div className="aspect-ratio aspect-ratio--5x8">
               <img alt="book cover" className="img db w-100 aspect-ratio--object" src={`http://images.amazon.com/images/P/${book.asin}`} />
             </div>

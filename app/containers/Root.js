@@ -75,7 +75,7 @@ export default class Root extends React.Component {
     return (
       <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} analytics={analytics} >
         <Router>
-          <div class="vh-100 w-100 sans-serif">
+          <div className="vh-100 w-100 sans-serif">
             {isRunning &&
               <Spinner />
             }
@@ -93,7 +93,7 @@ export default class Root extends React.Component {
                 <h2 className="f1 mb2">{"Welcome to Kintrospect!"}</h2>
                 <p className="f3 ma0">{"Let's start by connecting your Amazon account"}</p>
               </header>
-              <div className="center pa3 bg-white paragraph mw-100">
+              <div className="center pa4 bg-white paragraph mw-100 br2">
                 <WebView
                   src="https://kindle.amazon.com/your_reading/"
                   autosize

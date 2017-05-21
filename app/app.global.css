@@ -10,9 +10,15 @@ a {
 p {
   line-height: 1.5em;
 }
-
 .paragraph {
-  width: 700px;
+  width: 600px;
+}
+.btn {
+  background-color: #357edd;
+  border-radius: 0.25rem;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
 }
 
 .yourReadings {
@@ -24,6 +30,14 @@ p {
   padding: 0.5rem 1rem;
   border-radius: 3px;
   border: 1px #eee solid;
+}
+
+.search-input input:focus {
+  outline:none;
+  border: 1px #357edd solid;
+}
+button:focus {
+  outline: none;
 }
 
 .__mobiledoc-card {
