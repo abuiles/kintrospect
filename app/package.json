@@ -1,13 +1,13 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
+  "name": "kintrospect",
+  "productName": "kintrospect",
   "version": "1.0.0",
   "description": "Kintrospect helps you make better sense of what you read",
   "main": "./main.js",
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "TopoilocusHQ",
+    "email": "",
+    "url": ""
   },
   "license": "MIT",
   "dependencies": {
