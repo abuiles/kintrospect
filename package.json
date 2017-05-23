@@ -2,7 +2,7 @@
   "name": "electron-react-boilerplate",
   "productName": "Kintrospect",
   "version": "0.10.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "description": "Kintrospect helps you make better sense of what you read",
   "main": "main.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test BABEL_DISABLE_CACHE=1 node --trace-warnings ./test/runTests.js",
