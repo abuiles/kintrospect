@@ -199,6 +199,7 @@
   "dependencies": {
     "electron-debug": "^1.1.0",
     "extract-text-webpack-plugin": "^2.0.0",
+    "graphql-client": "^1.1.0",
     "mobiledoc-kit": "^0.10.15",
     "react": "^15.4.2",
     "react-desktop": "^0.2.19",

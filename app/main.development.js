@@ -3,6 +3,7 @@ import { app, dialog, BrowserWindow } from 'electron'
 import fs from 'fs'
 import path from 'path'
 import nodeFetch from 'node-fetch'
+import graphClient from 'graphql-client'
 
 import MenuBuilder from './menu'
 import toHtml from './markdown'
@@ -107,6 +108,51 @@ ipcMain.on('download-notes', (event, title, asin) => {
       }
     );
   }
+})
+
+ipcMain.on('publish-notes', (event, asin) => {
+  const books = config.get('books')
+  const book = books.find((b) => b.asin === asin)
+
+  const mobiledoc = config.get('notes')[asin]
+
+  const html = toHtml(mobiledoc)
+
+  const client = graphClient({
+    url: 'http://localhost:4000/graphql'
+  })
+  const query = `
+mutation CreateBook($html: String, $asin: String, $bookCover: String, $title: String, $url: String) {
+  book(html: $html, author: "abuiles", asin: $asin, bookCover: $bookCover,title: $title, url: $url) {
+    asin
+  }
+}`
+
+  const variables = {
+    html,
+    title: book.title,
+    asin: book.asin,
+    bookCover: book.bookCover,
+    url: book.url
+  }
+
+  client.query(query, variables).then(() => {
+    if (process.platform === 'darwin') {
+      dialog.showMessageBox(
+        {
+          message: 'The file has been published.',
+          buttons: ['OK']
+        }
+      );
+    }
+  }, () => {
+    dialog.showMessageBox(
+      {
+        message: 'no bueno.',
+        buttons: ['OK']
+      }
+    );
+  })
 })
 
 app.on('ready', async () => {

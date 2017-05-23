@@ -27,10 +27,6 @@ export default class NoteStore {
     this.notes[book.asin] = notes
   }
 
-  download(book) {
-    ipcRenderer.send('download-notes', `${parameterize(book.title)}.html`, book.asin)
-  }
-
   @action setLoading(loading) {
     this.isLoading = loading
   }
@@ -55,5 +51,13 @@ export default class NoteStore {
       cards: [],
       sections
     }
+  }
+
+  download(book) {
+    ipcRenderer.send('download-notes', `${parameterize(book.title)}.html`, book.asin)
+  }
+
+  publish(book) {
+    ipcRenderer.send('publish-notes', book.asin)
   }
 }
