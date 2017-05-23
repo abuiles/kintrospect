@@ -1,7 +1,7 @@
 {
   "name": "electron-react-boilerplate",
   "productName": "Kintrospect",
-  "version": "0.10.0",
+  "version": "0.20.0",
   "description": "Kintrospect helps you make better sense of what you read",
   "main": "main.js",
   "scripts": {
