@@ -158,7 +158,7 @@ class NotesEditor extends React.Component {
               <button className="btn f6 mr3" onClick={() => this.downloadNotes()}>
                 Export Notes
               </button>
-              <button className="btn f6">Publish</button>
+              {/* <button className="btn f6">Publish</button> */}
             </div>
           </div>
 
