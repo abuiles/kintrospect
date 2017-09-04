@@ -3,7 +3,7 @@ import { observable, action, computed } from 'mobx';
 import { ipcRenderer } from 'electron';
 import BookStore from './Book'
 
-const HOMEURL = 'https://kindle.amazon.com/your_reading/'
+const HOMEURL = 'https://read.amazon.com'
 
 export default class AmazonStore {
   @observable running = false
@@ -53,10 +53,7 @@ export default class AmazonStore {
       const { webview, analytics } =  this
 
       if (document.location.hash === '#/') {
-        webview.executeJavaScript(this.findPages(), false, (result) => {
-          result.nextLinks.unshift('https://kindle.amazon.com/your_reading')
-          this.getBooksData(result)
-        })
+        this.getBooksData()
       } else if (document.location.hash.match('#/book/')) {
         const asin = document.location.hash.split('#/book/')[1]
         const { booksStore } = this
@@ -111,74 +108,27 @@ export default class AmazonStore {
     }
   }
 
-  findPages() {
-    return `
-    const pagination = document.querySelectorAll('.paginationLinks.bottomPagination')[0];
-    const nextLinks = Array.from(pagination.getElementsByTagName('a'))
-          .filter((link) => {
-            console.log(link.text)
-            return link.text.indexOf('Next') < 0
-          })
-          .map((link) => link.href)
-
-    const result = {}
-
-    if (nextLinks) {
-      result.nextLinks = nextLinks
-    }
-
-    result
-    `
-  }
-
   extractBooks() {
-    return `
-    const books = [];
-    const kindleBooks = Array.from(document.getElementsByClassName('titleAndAuthor'))
-    kindleBooks.forEach((book) => {
-      const meta = {}
-      const link = book.getElementsByTagName('a')[0];
-      meta.url = link.href
-      meta.title = link.text
-      meta.asin = meta.url.split('/').reverse()[0]
-
-      const parent = book.parentElement
-      const img = parent.getElementsByClassName('bookCover')[0]
-      meta.bookCover = img.src
-
-      books.push(meta)
-    })
-
-    books
-    `
-
+    return 'KindleModuleManager.getModuleSync(KindleModuleManager.DB_CLIENT).getAppDb().getAllBooks()'
   }
 
-  getBooksData({ nextLinks }) {
+  getBooksData() {
     const { booksStore } = this
     booksStore.setLoading(true)
 
-    const urls = nextLinks
     const { webview, analytics  } = this
-    urls.reduce((accumulator, url) => accumulator.then((results) => {
-      console.log('loading', url)
-      return new Promise((resolve) => {
-        // run after URL loads page and extra book data
-        webview.addEventListener('did-finish-load', ({ currentTarget }) => {
-          currentTarget.executeJavaScript(this.extractBooks(), false, (result) => {
-            resolve(result)
-          })
+    console.log('loading', HOMEURL)
 
-        }, {once: true})
-
-        webview.loadURL(url)
-      }).then((result) => {
-        results.push(result);
-        booksStore.concatBooks(result)
-        return results;
+    debugger;
+    new Promise((resolve) => {
+      // run after URL loads page and extra book data
+      webview.executeJavaScript(this.extractBooks(), false, (result) => {
+        debugger;
+        resolve(result)
       })
-    }), Promise.resolve([])).then((results) => {
-      const books = results.reduce((accumulator, books) => [...accumulator, ...books], []);
+    }).then((books) => {
+      debugger;
+      console.log(books)
       booksStore.setLoading(false)
       this.toggleRunning()
 

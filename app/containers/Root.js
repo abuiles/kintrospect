@@ -95,7 +95,7 @@ export default class Root extends React.Component {
               </header>
               <div className="center pa4 bg-white paragraph mw-100 br2">
                 <WebView
-                  src="https://kindle.amazon.com/your_reading/"
+                  src="https://read.amazon.com"
                   autosize
                   allowpopups
                   onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}

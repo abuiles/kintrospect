@@ -87,7 +87,6 @@ export class Annotation implements AnnotationObjectAttrs {
 }
 
 export interface BookMeta {
-  bookCover: string,
   title: string,
   asin: string,
   url: string,
@@ -95,15 +94,13 @@ export interface BookMeta {
 }
 
 export class Book {
-  bookCover: string
   title: string
   asin: string
   updatedAt: string
   annotations: Annotation[]
   highlightsUpdatedAt: ?string
 
-  constructor({ bookCover, title, asin, annotations, highlightsUpdatedAt }) {
-    this.bookCover = bookCover;
+  constructor({ title, asin, annotations, highlightsUpdatedAt }) {
     this.title = title;
     this.asin = asin;
     this.highlightsUpdatedAt = highlightsUpdatedAt
