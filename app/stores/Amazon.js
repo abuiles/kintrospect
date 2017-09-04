@@ -109,7 +109,22 @@ export default class AmazonStore {
   }
 
   extractBooks() {
-    return 'KindleModuleManager.getModuleSync(KindleModuleManager.DB_CLIENT).getAppDb().getAllBooks()'
+    return `
+new Promise(function(resolve) {
+  KindleModuleManager.getModuleSync(KindleModuleManager.DB_CLIENT).getAppDb().getDeviceToken().then(function(token) {
+    var headers = new Headers()
+    headers.append('X-ADP-Session-Token', token)
+    return fetch('https://read.amazon.com/service/web/reader/getOwnedContent', {
+      credentials: 'include',
+      headers: headers
+    }).then(function(response) {
+      return response.json()
+    }).then(function(books) {
+      resolve(books)
+    })
+  })
+})
+ `
   }
 
   getBooksData() {
@@ -119,15 +134,14 @@ export default class AmazonStore {
     const { webview, analytics  } = this
     console.log('loading', HOMEURL)
 
-    debugger;
     new Promise((resolve) => {
-      // run after URL loads page and extra book data
       webview.executeJavaScript(this.extractBooks(), false, (result) => {
-        debugger;
         resolve(result)
       })
-    }).then((books) => {
-      debugger;
+    }).then(({ asinsToAdd }) => {
+      const books = Object.keys(asinsToAdd)
+            .map((asin) => asinsToAdd[asin])
+            .sort((a, b) => b.purchaseDate - a.purchaseDate)
       console.log(books)
       booksStore.setLoading(false)
       this.toggleRunning()

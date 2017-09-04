@@ -90,12 +90,17 @@ export interface BookMeta {
   title: string,
   asin: string,
   url: string,
-  highlightsUpdatedAt: ?string
+  highlightsUpdatedAt: ?string,
+  contentType: string,
+  publicationDate: number,
+  purchaseDate: number
 }
 
 export class Book {
   title: string
   asin: string
+  publicationDate: number
+  purchaseDate: number
   updatedAt: string
   annotations: Annotation[]
   highlightsUpdatedAt: ?string
