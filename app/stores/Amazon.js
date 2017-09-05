@@ -26,8 +26,8 @@ export default class AmazonStore {
 
   @action setWebview(webview) {
     this.webview = webview
+
     if (!webview.getURL().match('www.amazon.com/ap/signin')) {
-      console.log('signed in')
       this.kindleSignedIn = true
 
       if (!this.booksStore.all.length) {
@@ -62,33 +62,15 @@ export default class AmazonStore {
         booksStore.setLoading(true)
         const store = this
 
-        const loadHighlights = (highlights, cursor) => {
-          webview.addEventListener('did-finish-load', ({ currentTarget }) => {
-            webview.executeJavaScript("document.getElementsByTagName('pre')[0].textContent", false, function(result) {
-              const items = JSON.parse(result).items
+        this.getHighlights(asin).then((highlights) =>  {
+          booksStore.setLoading(false)
+          store.toggleRunning()
 
-              if (items.length === 0) {
-                booksStore.setLoading(false)
-                store.toggleRunning()
-                if (analytics) {
-                  analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
-                }
-                ipcRenderer.send('highlights-crawled', asin, highlights)
-                webview.loadURL(HOMEURL)
-              } else {
-                console.log('loading more items')
-                loadHighlights(highlights.concat(items), cursor += 200)
-              }
-
-            })
-          }, { once: true })
-
-          const url = `https://kindle.amazon.com/kcw/highlights?asin=${asin}&cursor=${cursor}&count=200`
-
-          webview.loadURL(url)
-        }
-
-        loadHighlights([], 0)
+          if (analytics) {
+            analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
+          }
+          ipcRenderer.send('highlights-crawled', asin, highlights)
+        });
       }
     }
   }
@@ -97,7 +79,7 @@ export default class AmazonStore {
     this.runnnig = false
   }
   @action signOut() {
-    const clearSession = 'document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });'
+    const clearSession = 'KindleApp.deregister()'
 
     if (this.webview) {
       this.webview.executeJavaScript(clearSession, false, () => {
@@ -151,6 +133,43 @@ new Promise(function(resolve) {
       }
 
       ipcRenderer.send('books-crawled', books)
+    })
+  }
+
+  extractHighlights(asin) {
+    return `
+new Promise(function(resolve) {
+  KindleModuleManager.getModuleSync(KindleModuleManager.DB_CLIENT).getAppDb().getDeviceToken().then(function(token) {
+    var headers = new Headers()
+    headers.append('X-ADP-Session-Token', token)
+    return fetch("https://read.amazon.com/service/web/reader/startReading?asin=${asin}", {
+      credentials: 'include',
+      headers: headers
+    }).then(function(response) {
+      return response.json()
+    }).then(function(startReading) {
+      let guid = 'CR!' + startReading.pageNumberUrl.split('_CR%21')[1].split('.')[0] + '%3A' + startReading.contentVersion.toUpperCase()
+      return fetch('https://read.amazon.com/service/web/reader/getAnnotations?asin=${asin}&guid=' + guid, {
+        credentials: 'include',
+        headers: headers
+      }).then(function (response) {
+        return response.json()
+      }).then(function (highlights) {
+        resolve(highlights)
+      })
+    })
+  })
+})
+`
+  }
+
+  getHighlights(asin) {
+    const { webview  } = this
+
+    return new Promise((resolve) => {
+      webview.executeJavaScript(this.extractHighlights(asin), false, (result) => {
+        resolve(result.annotations)
+      })
     })
   }
 }

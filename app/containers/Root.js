@@ -65,7 +65,7 @@ export default class Root extends React.Component {
   }
 
   render() {
-    const { kindleSignedIn, hasWebview, isRunning } = amazonStore;
+    let { kindleSignedIn, hasWebview, isRunning } = amazonStore
 
     let style = {}
     if (isRunning) {
@@ -91,7 +91,7 @@ export default class Root extends React.Component {
             <div className={`bg-blue vh-100 tc ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
               <header className="paragraph mw-100 center tc white pt5 pb4">
                 <h2 className="f1 mb2">{"Welcome to Kintrospect!"}</h2>
-                <p className="f3 ma0">{"Let's start by connecting your Amazon account"}</p>
+                <p className="f3 ma0">{"Let's start by connecting your Kindle cloud reader"}</p>
               </header>
               <div className="center pa4 bg-white paragraph mw-100 br2">
                 <WebView

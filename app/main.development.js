@@ -71,7 +71,8 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
 
   book.annotations = items.map((item) => {
     const copy = Object.assign({}, item)
-    copy.highlight = he.decode(item.highlight)
+    copy.highlight = he.decode(item.context)
+    copy.location = item.position
 
     return copy
   })

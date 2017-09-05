@@ -8,6 +8,7 @@ interface AnnotationObjectAttrs {
   highlight: string,
   location: number,
   timestamp: number,
+  modifiedTimestamp: number,
   asin: string,
   annotations: Annotation[],
   startLocation: number
@@ -19,6 +20,7 @@ export class Annotation implements AnnotationObjectAttrs {
   highlight: string;
   location: number;
   timestamp: number;
+  modifiedTimestamp: number;
   asin: string;
   annotations: Annotation[];
   startLocation: number;
@@ -44,17 +46,17 @@ export class Annotation implements AnnotationObjectAttrs {
       this.name = payload.name
     }
 
-    if (payload.location) {
-      this.location = payload.location
+    if (!payload.timestamp && payload.modifiedTimestamp) {
+      this.timestamp = payload.modifiedTimestamp;
     }
 
     if (payload.asin) {
       this.asin = payload.asin;
     }
 
-    if (payload.startLocation) {
+    if (payload.start) {
       // https://www.amazon.com/forum/kindle/Tx2S4K44LSXEWRI?_encoding=UTF8&cdForum=Fx1D7SY3BVSESG
-      this.location = Math.ceil(payload.startLocation / 150);
+      this.location = Math.ceil(payload.start / 150);
     }
 
     if (this.isChapter) {
