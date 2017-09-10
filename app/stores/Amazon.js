@@ -7,7 +7,7 @@ const HOMEURL = 'https://read.amazon.com'
 
 export default class AmazonStore {
   @observable running = false
-  @observable kindleSignedIn = true
+  @observable kindleSignedIn = false
   @observable webview = null
   @observable booksStore: ?BookStore = null
   @observable analytics = null
@@ -24,16 +24,42 @@ export default class AmazonStore {
     this.analytics = analytics
   }
 
+  isLoggedIn() {
+    return `
+new Promise(function(resolve) {
+  KindleModuleManager.getModuleSync(KindleModuleManager.DB_CLIENT).getAppDb().getDeviceToken().then(function(t) { resolve(t) })
+})
+`
+  }
+
   @action setWebview(webview) {
     this.webview = webview
 
-    if (!webview.getURL().match('www.amazon.com/ap/signin')) {
-      this.kindleSignedIn = true
-
-      if (!this.booksStore.all.length) {
-        this.runCrawler()
+    if (webview.getURL().match('https://read.amazon.com')) {
+      if (this.reloadOnSignIn) {
+        this.reloadOnSignIn = false
+        webview.reload()
       }
+
+      webview.executeJavaScript(this.isLoggedIn(), false, (result) => {
+        if (result) {
+          console.log('logged in')
+          this.kindleSignedIn = true
+
+          if (!this.booksStore.all.length) {
+            this.runCrawler()
+          }
+        } else {
+          console.log('not logged in')
+          this.kindleSignedIn = false
+        }
+      })
     } else {
+      if (this.reload) {
+        this.reload = false
+        webview.reload()
+      }
+      this.reloadOnSignIn = true
       this.kindleSignedIn = false
     }
   }
@@ -83,9 +109,10 @@ export default class AmazonStore {
 
     if (this.webview) {
       this.webview.executeJavaScript(clearSession, false, () => {
-        if (this.webview) {
-          this.webview.loadURL(HOMEURL)
-        }
+        // for some reason we need to force a reload on the webview to
+        // display the sign in fields
+        this.reload = true
+        this.kindleSignedIn = false
       })
     }
   }

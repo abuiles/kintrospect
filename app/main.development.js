@@ -156,6 +156,11 @@ mutation CreateBook($html: String, $asin: String, $bookCover: String, $title: St
   })
 })
 
+ipcMain.on('restart', () => {
+  // app.relaunch()
+  // app.exit(0)
+})
+
 app.on('ready', async () => {
   await installExtensions()
 

@@ -28,7 +28,7 @@ class BookPage extends Component {
       amazonStore.runCrawler()
     }
 
-    // analytics.pageview('https://app.kintrospect.com', `/book/${book.asin}`, book.title, analytics._machineID)
+    analytics.pageview('https://app.kintrospect.com', `/book/${book.asin}`, book.title, analytics._machineID)
   }
 
   render() {
