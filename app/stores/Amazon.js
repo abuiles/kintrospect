@@ -36,24 +36,12 @@ new Promise(function(resolve) {
     this.webview = webview
 
     if (webview.getURL().match('https://read.amazon.com')) {
-      if (this.reloadOnSignIn) {
-        this.reloadOnSignIn = false
-        webview.reload()
+      console.log('logged in')
+      this.kindleSignedIn = true
+
+      if (!this.booksStore.all.length) {
+        this.runCrawler()
       }
-
-      webview.executeJavaScript(this.isLoggedIn(), false, (result) => {
-        if (result) {
-          console.log('logged in')
-          this.kindleSignedIn = true
-
-          if (!this.booksStore.all.length) {
-            this.runCrawler()
-          }
-        } else {
-          console.log('not logged in')
-          this.kindleSignedIn = false
-        }
-      })
     } else {
       if (this.reload) {
         this.reload = false
@@ -169,20 +157,25 @@ new Promise(function(resolve) {
   KindleModuleManager.getModuleSync(KindleModuleManager.DB_CLIENT).getAppDb().getDeviceToken().then(function(token) {
     var headers = new Headers()
     headers.append('X-ADP-Session-Token', token)
-    return fetch("https://read.amazon.com/service/web/reader/startReading?asin=${asin}", {
+    return fetch('https://read.amazon.com/service/web/reader/startReading?asin=${asin}', {
       credentials: 'include',
       headers: headers
     }).then(function(response) {
       return response.json()
     }).then(function(startReading) {
-      let guid = 'CR!' + startReading.pageNumberUrl.split('_CR%21')[1].split('.')[0] + '%3A' + startReading.contentVersion.toUpperCase()
-      return fetch('https://read.amazon.com/service/web/reader/getAnnotations?asin=${asin}&guid=' + guid, {
-        credentials: 'include',
-        headers: headers
-      }).then(function (response) {
-        return response.json()
-      }).then(function (highlights) {
-        resolve(highlights)
+      var metaUrl = startReading.metadataUrl
+      return fetch(metaUrl).then(function(response) {
+        return response.text().then(function (metaText) {
+          var guid = JSON.parse(metaText.split('loadMetadata(')[1].slice(0, -3)).refEmId
+          return fetch('https://read.amazon.com/service/web/reader/getAnnotations?asin=${asin}&guid=' + guid, {
+            credentials: 'include',
+            headers: headers
+          }).then(function (response) {
+            return response.json()
+          }).then(function (highlights) {
+            resolve(highlights)
+          })
+        })
       })
     })
   })
