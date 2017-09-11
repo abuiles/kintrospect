@@ -3,7 +3,8 @@ import { observable, action, computed } from 'mobx';
 import { ipcRenderer } from 'electron';
 import BookStore from './Book'
 
-const HOMEURL = 'https://read.amazon.com'
+const AmazonUrl = 'https://www.amazon.com/ap/signin?openid.assoc_handle=amzn_kweb&openid.return_to=https%3A%2F%2Fread.amazon.com%2F&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&pageId=amzn_kcr'
+
 
 export default class AmazonStore {
   @observable running = false
@@ -22,6 +23,10 @@ export default class AmazonStore {
 
   @action setAnalytics(analytics) {
     this.analytics = analytics
+  }
+
+  amazonUrl() {
+    return AmazonUrl
   }
 
   isLoggedIn() {
@@ -129,7 +134,6 @@ new Promise(function(resolve) {
     booksStore.setLoading(true)
 
     const { webview, analytics  } = this
-    console.log('loading', HOMEURL)
 
     new Promise((resolve) => {
       webview.executeJavaScript(this.extractBooks(), false, (result) => {
