@@ -18,6 +18,7 @@ export class Annotation implements AnnotationObjectAttrs {
   type: string;
   name: string;
   highlight: string;
+  highlightId: string;
   location: number;
   timestamp: number;
   modifiedTimestamp: number;
@@ -78,7 +79,7 @@ export class Annotation implements AnnotationObjectAttrs {
       return `${this.location}`
     }
 
-    return `${this.location}-${this.timestamp}`
+    return this.highlightId  || new Date().toISOString()
   }
 
   get card(): any {

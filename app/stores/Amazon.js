@@ -200,9 +200,10 @@ new Promise(function(resolve) {
 let nextPage = document.getElementsByClassName('kp-notebook-annotations-next-page-start')[0].value
 let limitState = document.getElementsByClassName('kp-notebook-content-limit-state')[0].value
 let highlights = Array.from(document.getElementsByTagName('span')).filter(element => element.id === 'highlight').
-  map(e => e.parentElement.parentElement.parentElement.parentElement)
+  map(e => e.parentElement.parentElement.parentElement.parentElement.parentElement)
   .map(function(highlight) {
     return {
+      highlightId: highlight.id,
       highlight: Array.from(highlight.getElementsByTagName('span')).filter(element => element.id === 'highlight')[0].textContent,
       location: parseInt(Array.from(highlight.getElementsByTagName('input')).filter(element => element.id === 'kp-annotation-location')[0].value)
     }
