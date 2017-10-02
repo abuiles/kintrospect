@@ -54,10 +54,14 @@ export class Annotation implements AnnotationObjectAttrs {
       this.asin = payload.asin;
     }
 
-    if (payload.start) {
-      // https://www.amazon.com/forum/kindle/Tx2S4K44LSXEWRI?_encoding=UTF8&cdForum=Fx1D7SY3BVSESG
-      this.location = Math.ceil(payload.start / 150);
+    if (payload.location) {
+      this.location = payload.location
     }
+
+    // if (payload.start) {
+    //   // https://www.amazon.com/forum/kindle/Tx2S4K44LSXEWRI?_encoding=UTF8&cdForum=Fx1D7SY3BVSESG
+    //   this.location = Math.ceil(payload.start / 150);
+    // }
 
     if (this.isChapter) {
       this.linkId = `chapter-${this.location}`;
@@ -121,7 +125,6 @@ export default class BookStore {
   @observable items = []
   @observable isLoading = false
   @observable appExpired = false
-
   @observable appVersion = 1280127600
 
   @computed get all() {

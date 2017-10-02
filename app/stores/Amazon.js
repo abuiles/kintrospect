@@ -10,6 +10,7 @@ export default class AmazonStore {
   @observable running = false
   @observable kindleSignedIn = false
   @observable webview = null
+  @observable bookWebview = null
   @observable booksStore: ?BookStore = null
   @observable analytics = null
 
@@ -57,6 +58,12 @@ new Promise(function(resolve) {
     }
   }
 
+  @action setBookWebview(webview) {
+    if (webview.getURL().match('https://read.amazon.com/notebook')) {
+      this.bookWebview = webview
+    }
+  }
+
   @action toggleRunning(): void {
     this.running = !this.isRunning
   }
@@ -78,18 +85,18 @@ new Promise(function(resolve) {
         const { booksStore } = this
 
         console.log('load highlights', asin)
-        booksStore.setLoading(true)
+        // booksStore.setLoading(true)
         const store = this
 
-        this.getHighlights(asin).then((highlights) =>  {
-          booksStore.setLoading(false)
-          store.toggleRunning()
+        this.getHighlights(asin)// .then((highlights) =>  {
+        //   booksStore.setLoading(false)
+        //   store.toggleRunning()
 
-          if (analytics) {
-            analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
-          }
-          ipcRenderer.send('highlights-crawled', asin, highlights)
-        });
+        //   if (analytics) {
+        //     analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
+        //   }
+        //   ipcRenderer.send('highlights-crawled', asin, highlights)
+        // });
       }
     }
   }
@@ -187,13 +194,83 @@ new Promise(function(resolve) {
 `
   }
 
-  getHighlights(asin) {
-    const { webview  } = this
 
-    return new Promise((resolve) => {
-      webview.executeJavaScript(this.extractHighlights(asin), false, (result) => {
-        resolve(result.annotations)
-      })
-    })
+  newExtraCode() {
+    return `
+let nextPage = document.getElementsByClassName('kp-notebook-annotations-next-page-start')[0].value
+let limitState = document.getElementsByClassName('kp-notebook-content-limit-state')[0].value
+let highlights = Array.from(document.getElementsByTagName('span')).filter(element => element.id === 'highlight').
+  map(e => e.parentElement.parentElement.parentElement.parentElement)
+  .map(function(highlight) {
+    return {
+      highlight: Array.from(highlight.getElementsByTagName('span')).filter(element => element.id === 'highlight')[0].textContent,
+      location: parseInt(Array.from(highlight.getElementsByTagName('input')).filter(element => element.id === 'kp-annotation-location')[0].value)
+    }
+  })
+
+
+JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitState})
+`
+  }
+
+  extracHighlightsFromNotebook(asin) {
+    const { bookWebview, analytics  } = this
+    const { booksStore } = this
+
+    if (!bookWebview) {
+      this.toggleRunning()
+      return;
+    }
+
+    console.log('load highlights', asin)
+    booksStore.setLoading(true)
+    const store = this
+
+
+    const loadHighlights = (highlights, meta) => {
+      bookWebview.addEventListener('did-finish-load', ({ currentTarget }) => {
+        currentTarget.executeJavaScript(this.newExtraCode(), false, function(result) {
+          result;
+          const data = JSON.parse(result)
+          highlights = highlights.concat(data.highlights)
+
+          if (!data.nextPage) {
+            booksStore.setLoading(false)
+            store.toggleRunning()
+            if (analytics) {
+              analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
+            }
+            ipcRenderer.send('highlights-crawled', asin, highlights)
+          } else {
+            console.log('loading more items')
+            loadHighlights(highlights, data)
+          }
+
+        })
+      }, { once: true })
+
+      let url = `https://read.amazon.com/notebook?asin=${asin}`
+
+      if (meta) {
+        url = `${url}&contentLimitState=${meta.limitState}&index=${meta.nextPage}`
+      } else {
+        url = `${url}&contentLimitState=`
+      }
+
+      bookWebview.loadURL(url)
+    }
+
+    loadHighlights([], 0)
+  }
+
+
+  getHighlights(asin) {
+    this.extracHighlightsFromNotebook(asin)
+
+    // return new Promise((resolve) => {
+    //   webview.executeJavaScript(this.extractHighlights(asin), false, (result) => {
+    //     resolve(result.annotations)
+    //   })
+    // })
   }
 }

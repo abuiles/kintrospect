@@ -71,8 +71,8 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
 
   book.annotations = items.map((item) => {
     const copy = Object.assign({}, item)
-    copy.highlight = he.decode(item.context)
-    copy.location = item.position
+    copy.highlight = he.decode(item.highlight)
+    copy.location = item.location
 
     return copy
   })
@@ -124,7 +124,7 @@ ipcMain.on('publish-notes', (event, asin) => {
   })
   const query = `
 mutation CreateBook($html: String, $asin: String, $bookCover: String, $title: String, $url: String) {
-  book(html: $html, author: "abuiles", asin: $asin, bookCover: $bookCover,title: $title, url: $url) {
+  book(html: $html, author: "johndoe", asin: $asin, bookCover: $bookCover,title: $title, url: $url) {
     asin
   }
 }`
@@ -133,8 +133,8 @@ mutation CreateBook($html: String, $asin: String, $bookCover: String, $title: St
     html,
     title: book.title,
     asin: book.asin,
-    bookCover: book.bookCover,
-    url: book.url
+    bookCover: `http://images.amazon.com/images/P/${book.asin}`,
+    url: `https://www.amazon.com/gp/product/${book.asin}`
   }
 
   client.query(query, variables).then(() => {
@@ -146,7 +146,8 @@ mutation CreateBook($html: String, $asin: String, $bookCover: String, $title: St
         }
       );
     }
-  }, () => {
+  }, (err) => {
+    console.log('err', err)
     dialog.showMessageBox(
       {
         message: 'no bueno.',

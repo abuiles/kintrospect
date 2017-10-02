@@ -9,6 +9,7 @@ import Spinner from '../components/Spinner'
 import BookStore from '../stores/Book'
 import AmazonStore from '../stores/Amazon'
 import withDragDropContext from './withDragDropContext'
+import WebView from 'react-electron-web-view'
 
 @inject('booksStore', 'amazonStore', 'analytics')
 @observer
@@ -18,6 +19,11 @@ class BookPage extends Component {
     booksStore: BookStore,
     amazonStore: AmazonStore,
     analytics: any
+  }
+
+  onDidFinishLoad({ currentTarget }) {
+    const { amazonStore } = this.props
+    amazonStore.setBookWebview(currentTarget)
   }
 
   componentDidMount() {
@@ -40,6 +46,12 @@ class BookPage extends Component {
       return (
         <div className="w-100">
           <BookView book={book} />
+          <WebView
+            src="https://read.amazon.com/notebook"
+            autosize
+            allowpopups
+            onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
+            />
         </div>
       )
     }
