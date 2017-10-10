@@ -119,7 +119,7 @@ new Promise(function(resolve) {
 
   extractBooks() {
     return `
-new Promise(function(resolve) {
+var getBooks = function(resolve)  {
   KindleModuleManager.getModuleSync(KindleModuleManager.DB_CLIENT).getAppDb().getDeviceToken().then(function(token) {
     var headers = new Headers()
     headers.append('X-ADP-Session-Token', token)
@@ -132,7 +132,14 @@ new Promise(function(resolve) {
       resolve(books)
     })
   })
-})
+};
+
+new Promise(function(resolve) {
+  setTimeout(function(){
+    console.log('woot');
+    getBooks(resolve);
+  }, 5000);
+});
  `
   }
 
