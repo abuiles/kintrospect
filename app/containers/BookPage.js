@@ -21,11 +21,6 @@ class BookPage extends Component {
     analytics: any
   }
 
-  onDidFinishLoad({ currentTarget }) {
-    const { amazonStore } = this.props
-    amazonStore.setBookWebview(currentTarget)
-  }
-
   componentDidMount() {
     const { match, booksStore, amazonStore, analytics } = this.props
     const book = booksStore.all.find((b) => b.asin === match.params.asin)
@@ -46,12 +41,6 @@ class BookPage extends Component {
       return (
         <div className="w-100">
           <BookView book={book} />
-          <WebView
-            src="https://read.amazon.com/notebook"
-            autosize
-            allowpopups
-            onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
-            />
         </div>
       )
     }

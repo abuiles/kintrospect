@@ -10,7 +10,6 @@ export default class AmazonStore {
   @observable running = false
   @observable kindleSignedIn = false
   @observable webview = null
-  @observable bookWebview = null
   @observable booksStore: ?BookStore = null
   @observable analytics = null
 
@@ -55,12 +54,6 @@ new Promise(function(resolve) {
       }
       this.reloadOnSignIn = true
       this.kindleSignedIn = false
-    }
-  }
-
-  @action setBookWebview(webview) {
-    if (webview.getURL().match('https://read.amazon.com/notebook')) {
-      this.bookWebview = webview
     }
   }
 
@@ -222,10 +215,10 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
   }
 
   extracHighlightsFromNotebook(asin) {
-    const { bookWebview, analytics  } = this
+    const { webview, analytics  } = this
     const { booksStore } = this
 
-    if (!bookWebview) {
+    if (!webview) {
       this.toggleRunning()
       return;
     }
@@ -236,7 +229,7 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
 
 
     const loadHighlights = (highlights, meta) => {
-      bookWebview.addEventListener('did-finish-load', ({ currentTarget }) => {
+      webview.addEventListener('did-finish-load', ({ currentTarget }) => {
         currentTarget.executeJavaScript(this.newExtraCode(), false, function(result) {
           result;
           const data = JSON.parse(result)
@@ -249,6 +242,7 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
               analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
             }
             ipcRenderer.send('highlights-crawled', asin, highlights)
+            webview.loadURL('https://read.amazon.com')
           } else {
             console.log('loading more items')
             loadHighlights(highlights, data)
@@ -265,7 +259,7 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
         url = `${url}&contentLimitState=`
       }
 
-      bookWebview.loadURL(url)
+      webview.loadURL(url)
     }
 
     loadHighlights([], 0)
