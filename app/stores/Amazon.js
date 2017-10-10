@@ -274,11 +274,5 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
 
   getHighlights(asin) {
     this.extracHighlightsFromNotebook(asin)
-
-    // return new Promise((resolve) => {
-    //   webview.executeJavaScript(this.extractHighlights(asin), false, (result) => {
-    //     resolve(result.annotations)
-    //   })
-    // })
   }
 }

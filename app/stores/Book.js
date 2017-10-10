@@ -31,6 +31,12 @@ export class Annotation implements AnnotationObjectAttrs {
     this.annotations = [];
     this.startLocation = 0;
 
+    if (payload.highlightId) {
+      this.highlightId = payload.highlightId;
+    } else {
+      this.highlightId = `${Math.ceil(Math.random() * 1000)}${Date.now()}`
+    }
+
     if (payload.type) {
       this.type = payload.type;
     }
@@ -79,7 +85,7 @@ export class Annotation implements AnnotationObjectAttrs {
       return `${this.location}`
     }
 
-    return this.highlightId  || new Date().toISOString()
+    return this.highlightId;
   }
 
   get card(): any {
