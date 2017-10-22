@@ -30,12 +30,13 @@ class AnnotationView extends React.Component {
     annotation: any,
     updateLocation: (boolean, any) => void,
     connectDragSource: () => void,
-    isDragging: boolean
+    isDragging: boolean,
+    asin: string
   }
 
   render() {
     let content;
-    const { annotation } = this.props;
+    const { annotation, asin } = this.props;
     const { isDragging, connectDragSource } = this.props
 
     const styles = {
@@ -57,7 +58,7 @@ class AnnotationView extends React.Component {
           <p className="f5 mv0">
             {annotation.highlight}
           </p>
-          <a href={`kindle://book?action=open&asin=${annotation.asin}&location=${location}`}>
+          <a href={`kindle://book?action=open&asin=${asin}&location=${location}`}>
             Read more
           </a>
         </div>

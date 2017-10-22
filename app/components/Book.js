@@ -104,6 +104,7 @@ export default class BookView extends React.Component {
           <div id={annotation.linkId} key={annotation.uniqueKey}>
             <AnnotationView
               annotation={annotation}
+              asin={book.asin}
               updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
             />
             <div>
@@ -111,6 +112,7 @@ export default class BookView extends React.Component {
                 <div key={hl.uniqueKey}>
                   <AnnotationView
                     annotation={hl}
+                    asin={book.asin}
                     updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
                   />
                 </div>
