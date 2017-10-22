@@ -73,6 +73,7 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
     const copy = Object.assign({}, item)
     copy.highlight = he.decode(item.highlight)
     copy.location = item.location
+    copy.asin = asin
 
     return copy
   })
