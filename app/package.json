@@ -1,7 +1,7 @@
 {
   "name": "kintrospect",
   "productName": "kintrospect",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Kintrospect helps you make better sense of what you read",
   "main": "./main.js",
   "author": {
