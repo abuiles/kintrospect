@@ -6,7 +6,7 @@ import nodeFetch from 'node-fetch'
 import graphClient from 'graphql-client'
 
 import MenuBuilder from './menu'
-import toHtml from './markdown'
+import toMarkdown from './markdown'
 
 let mainWindow = null
 
@@ -100,16 +100,18 @@ ipcMain.on('download-notes', (event, title, asin) => {
 
   const mobiledoc = config.get('notes')[asin]
 
-  fs.writeFileSync(filePath, toHtml(mobiledoc))
+  toMarkdown(mobiledoc).then((markdown) => {
+    fs.writeFileSync(filePath, markdown)
 
-  if (process.platform === 'darwin') {
-    dialog.showMessageBox(
-      {
-        message: 'The file has been saved in your Downloads folder.',
-        buttons: ['OK']
-      }
-    );
-  }
+    if (process.platform === 'darwin') {
+      dialog.showMessageBox(
+        {
+          message: 'The file has been saved in your Downloads folder.',
+          buttons: ['OK']
+        }
+      );
+    }
+  });
 })
 
 ipcMain.on('publish-notes', (event, asin) => {

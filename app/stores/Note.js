@@ -54,7 +54,7 @@ export default class NoteStore {
   }
 
   download(book) {
-    ipcRenderer.send('download-notes', `${parameterize(book.title)}.html`, book.asin)
+    ipcRenderer.send('download-notes', `${parameterize(book.title)}.md`, book.asin)
   }
 
   publish(book) {

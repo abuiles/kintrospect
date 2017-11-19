@@ -1,9 +1,11 @@
-const config = require('electron-settings')
 const MobiledocDOMRenderer = require('mobiledoc-dom-renderer')
 const SimpleDOM = require('simple-dom')
 const simpleHtmlTokenizer = require('simple-html-tokenizer')
 
 const document = new SimpleDOM.Document
+
+const promesify = require('promesify')
+var upndown = require('upndown')
 
 const HighlightCard = {
  name: 'HighlightCard',
@@ -52,5 +54,13 @@ module.exports = function(mobiledoc) {
   const serializer = new SimpleDOM.HTMLSerializer([]);
   const html = serializer.serializeChildren(rendered.result);
 
-  return html
+  var und = new upndown();
+
+  const Promesify = promesify({
+    methods: ['convert']
+  });
+
+  und = new Promesify(und)
+
+  return und.convert(html);
 }

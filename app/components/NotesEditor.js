@@ -107,6 +107,7 @@ class NotesEditor extends React.Component {
       <div className="h-100 pa3">
         <Container
           className="flex flex-column w-100 h-100 bg-white pa2"
+          spellcheck={true}
           cards={CARDS}
           didCreateEditor={(e) => this.didCreateEditor(e)}
           mobiledoc={doc}
