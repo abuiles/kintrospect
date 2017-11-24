@@ -136,7 +136,7 @@ export default class BookStore {
   @observable items = []
   @observable isLoading = false
   @observable appExpired = false
-  @observable appVersion = 1280127600
+  @observable appVersion = 1511551035000
 
   @computed get all() {
     return this.items
@@ -159,7 +159,7 @@ export default class BookStore {
   }
 
   @action checkAppVersion(version) {
-    // to test out expired version just set the value for this.appExpired = false
-    this.appExpired = version > 1505094669740
+    // to test out expired version just set the value for this.appExpired = true
+    this.appExpired = version > this.appVersion
   }
 }
