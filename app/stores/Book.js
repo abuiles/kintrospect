@@ -97,6 +97,10 @@ export class Annotation implements AnnotationObjectAttrs {
       return { isChapter, location, asin, highlight };
     }
   }
+
+  get kindleLink(): string {
+    return `kindle://book?action=open&asin=${this.asin}&location=${this.location}`
+  }
 }
 
 export interface BookMeta {
