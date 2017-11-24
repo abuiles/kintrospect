@@ -52,3 +52,17 @@ button:focus {
 .shadow-1 {
   box-shadow: 0 0 4px 2px rgba( 0, 0, 0, .07 );
 }
+
+.notes-editor blockquote {
+  font-family: 'Roboto Slab', serif;
+  padding-left: 2rem;
+  border-left-style:solid;
+  border-left-width:1px;
+  border-width:.25rem;
+  border-color: #357edd;
+  margin: 0;
+  font-size:1.25rem;
+  line-height:1.5;
+  max-width:30em;
+  margin-botton: 1rem;
+}

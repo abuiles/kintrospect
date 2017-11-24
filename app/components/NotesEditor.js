@@ -16,11 +16,31 @@ const CARDS = [
 ]
 
 function imageToCardParser(editor, annotation) {
-  const payload = { annotation: annotation.card };
+  let range = editor.range;
 
   editor.run((postEditor) => {
-    postEditor.editor.insertCard('HighlightCard', payload)
-  })
+    // Split current section and add two empty lines to add new highlight blockquote
+    let cursorSection = postEditor.splitSection(range.tail.section.tailPosition())[1];
+    cursorSection = postEditor.splitSection(cursorSection.tailPosition())[1];
+
+    // postEditor.setRange(cursorSection.headPosition());
+
+    // add highlight text and extra empty space at the end
+    postEditor.insertText(cursorSection.headPosition(), annotation.highlight);
+    postEditor.insertText(cursorSection.tailPosition(), ' ');
+
+    // Make the section a blockquote
+    postEditor.toggleSection('blockquote', cursorSection.headPosition());
+
+    // Add a link to open in kindle at the end of the section
+    const markup = postEditor.builder.createMarkup('a', {href: annotation.kindleLink})
+    postEditor.insertTextWithMarkup(cursorSection.tailPosition(), 'Open in Kindle', [markup])
+
+    // Move to next section after adding blockquote
+    if (cursorSection.next) {
+      postEditor.setRange(cursorSection.next.toRange())
+    }
+  });
 }
 
 function linkToCardParser(editor) {
@@ -169,7 +189,7 @@ class NotesEditor extends React.Component {
           </div>
 
           <div className="h-100 overflow-y-auto">
-            <Editor className="pa4 outline-0 h-100" />
+            <Editor className="pa4 outline-0 h-100 notes-editor" />
           </div>
         </Container>
       </div>
