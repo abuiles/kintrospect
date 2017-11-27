@@ -22,7 +22,8 @@ interface BookState {
   open: boolean,
   currentLocation: number,
   locations: number[],
-  searchTerm: string
+  searchTerm: string,
+  selectedAnnotation: any
 }
 
 @inject('amazonStore', 'notesStore')
@@ -41,7 +42,8 @@ export default class BookView extends React.Component {
       open: false,
       currentLocation: location,
       locations: [location],
-      searchTerm: ''
+      searchTerm: '',
+      selectedAnnotation: null
     };
   }
 
@@ -56,6 +58,12 @@ export default class BookView extends React.Component {
   // handleToggle() {
   //   // this.setState({ open: !this.state.open });
   // }
+
+  selectAnnotation(selectedAnnotation: any) {
+    this.setState({
+      selectedAnnotation
+    })
+  }
 
   updateLocation(isCurrent: boolean, { location }: Annotation) {
     const { locations } = this.state;
@@ -92,7 +100,7 @@ export default class BookView extends React.Component {
 
   render() {
     const { book, amazonStore, notesStore } = this.props;
-    const { open } = this.state;
+    const { open, selectedAnnotation } = this.state;
     const chapters = book.annotations.filter((a) => a.isChapter)
     const { isRunning, kindleSignedIn } = amazonStore
 
@@ -106,18 +114,9 @@ export default class BookView extends React.Component {
               annotation={annotation}
               asin={book.asin}
               updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
+              isHighlighted={annotation===selectedAnnotation}
+              selectAnnotation={(selected) => this.selectAnnotation(selected)}
             />
-            <div>
-              {annotation.annotations.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).map((hl) =>
-                <div key={hl.uniqueKey}>
-                  <AnnotationView
-                    annotation={hl}
-                    asin={book.asin}
-                    updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
-                  />
-                </div>
-            )}
-            </div>
           </div>
         )}
       </div>
