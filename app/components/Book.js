@@ -17,12 +17,14 @@ import AnnotationView from './Annotation';
 import { Book, Annotation } from '../stores/Book'
 import AmazonStore from '../stores/Amazon'
 import NoteStore from '../stores/Note'
+import { print } from 'util';
 
 interface BookState {
   open: boolean,
   currentLocation: number,
   locations: number[],
-  searchTerm: string
+  searchTerm: string,
+  selectedAnnotation: any
 }
 
 @inject('amazonStore', 'notesStore')
@@ -41,7 +43,8 @@ export default class BookView extends React.Component {
       open: false,
       currentLocation: location,
       locations: [location],
-      searchTerm: ''
+      searchTerm: '',
+      selectedAnnotation: null
     };
   }
 
@@ -56,6 +59,12 @@ export default class BookView extends React.Component {
   // handleToggle() {
   //   // this.setState({ open: !this.state.open });
   // }
+
+  selectAnnotation(selectedAnnotation: any) {
+    this.setState({
+      selectedAnnotation: this.state.selectedAnnotation === selectedAnnotation ? null : selectedAnnotation
+    })
+  }
 
   updateLocation(isCurrent: boolean, { location }: Annotation) {
     const { locations } = this.state;
@@ -92,7 +101,7 @@ export default class BookView extends React.Component {
 
   render() {
     const { book, amazonStore, notesStore } = this.props;
-    const { open } = this.state;
+    const { open, selectedAnnotation } = this.state;
     const chapters = book.annotations.filter((a) => a.isChapter)
     const { isRunning, kindleSignedIn } = amazonStore
 
@@ -105,19 +114,10 @@ export default class BookView extends React.Component {
             <AnnotationView
               annotation={annotation}
               asin={book.asin}
+              isHighlighted={annotation === selectedAnnotation}
               updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
+              selectAnnotation={(selected) => this.selectAnnotation(selected)}
             />
-            <div>
-              {annotation.annotations.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS)).map((hl) =>
-                <div key={hl.uniqueKey}>
-                  <AnnotationView
-                    annotation={hl}
-                    asin={book.asin}
-                    updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
-                  />
-                </div>
-            )}
-            </div>
           </div>
         )}
       </div>
@@ -143,7 +143,6 @@ export default class BookView extends React.Component {
 
     return (
       <div className="flex w-100 h-100">
-
         <div className="w-40 bl b--near-white bg-light-gray flex flex-column pv3">
           <div className="ph3 mb4">
             <h2 className="f3 lh-title serif">
@@ -154,7 +153,6 @@ export default class BookView extends React.Component {
             <p>Highlights updated on: {book.highlightsUpdatedAt}</p>
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
           </div>
-
           <div className="overflow-y-auto h-100 ph3">
             {book.annotations.length ? annotationsList : !isRunning && <h3>Create some highlights first</h3>}
           </div>

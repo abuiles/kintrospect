@@ -3,6 +3,8 @@ import { Sticky } from 'react-sticky';
 import { DragSource } from 'react-dnd';
 
 import ItemTypes from './ItemTypes';
+import { prependListener } from 'cluster';
+// import { fail } from 'mobx/lib/utils/utils';
 
 const highlightSource = {
   beginDrag(props) {
@@ -28,15 +30,17 @@ const highlightSource = {
 class AnnotationView extends React.Component {
   props: {
     annotation: any,
+    isDragging: boolean,
+    isHighlighted: boolean,
+    asin: string,
     updateLocation: (boolean, any) => void,
     connectDragSource: () => void,
-    isDragging: boolean,
-    asin: string
+    selectAnnotation: (any) => void
   }
 
   render() {
     let content;
-    const { annotation, asin } = this.props;
+    const { annotation, asin, isHighlighted, selectAnnotation } = this.props
     const { isDragging, connectDragSource } = this.props
 
     const styles = {
@@ -54,12 +58,12 @@ class AnnotationView extends React.Component {
       const location = annotation.location;
 
       content = (
-        <div className="bg-white pa3 mb3 shadow-1">
+        <div className={`pa3 mb3 shadow-1 ${isHighlighted ? 'bg-blue' : 'bg-white'}`}>
           <p className="f5 mv0">
             {annotation.highlight}
           </p>
           <a href={`kindle://book?action=open&asin=${asin}&location=${location}`}>
-            Open in Kindle
+            Read more
           </a>
         </div>
       );
@@ -67,7 +71,7 @@ class AnnotationView extends React.Component {
 
     return (
       connectDragSource(
-        <div style={styles}>
+        <div style={styles} onDoubleClick={() => selectAnnotation(annotation)}>
           {content}
         </div>
       )
