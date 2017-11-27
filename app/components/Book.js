@@ -59,9 +59,9 @@ export default class BookView extends React.Component {
   //   // this.setState({ open: !this.state.open });
   // }
 
-  selectAnnotation(selectedAnnotation: any) {
+  selectAnnotation(annotation: any) {
     this.setState({
-      selectedAnnotation: this.state.selectedAnnotation === selectedAnnotation ? null : selectedAnnotation
+      selectedAnnotation: this.state.selectedAnnotation === annotation ? null : annotation
     })
   }
 
