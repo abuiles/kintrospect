@@ -61,15 +61,9 @@ export default class BookView extends React.Component {
   // }
 
   selectAnnotation(selectedAnnotation: any) {
-    if (this.state.selectedAnnotation === selectedAnnotation) {
-      this.setState({
-        selectedAnnotation: null
-      })
-    } else {
-      this.setState({
-        selectedAnnotation
-      })
-    }
+    this.setState({
+      selectedAnnotation: this.state.selectedAnnotation === selectedAnnotation ? null : selectedAnnotation
+    })
   }
 
   updateLocation(isCurrent: boolean, { location }: Annotation) {
