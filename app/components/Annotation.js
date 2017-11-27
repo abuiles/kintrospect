@@ -28,15 +28,17 @@ const highlightSource = {
 class AnnotationView extends React.Component {
   props: {
     annotation: any,
+    isDragging: boolean,
+    isHighlighted: boolean,
+    asin: string,
     updateLocation: (boolean, any) => void,
     connectDragSource: () => void,
-    isDragging: boolean,
-    asin: string
+    selectAnnotation: (any) => void
   }
 
   render() {
     let content;
-    const { annotation, asin } = this.props;
+    const { annotation, asin, isHighlighted, selectAnnotation } = this.props
     const { isDragging, connectDragSource } = this.props
 
     const styles = {
@@ -54,7 +56,7 @@ class AnnotationView extends React.Component {
       const location = annotation.location;
 
       content = (
-        <div className="bg-white pa3 mb3 shadow-1">
+        <div className={`pa3 mb3 shadow-1 ${isHighlighted ? 'bg-blue' : 'bg-white'}`}>
           <p className="f5 mv0">
             {annotation.highlight}
           </p>
@@ -67,7 +69,7 @@ class AnnotationView extends React.Component {
 
     return (
       connectDragSource(
-        <div style={styles}>
+        <div style={styles} onDoubleClick={() => selectAnnotation(annotation)}>
           {content}
         </div>
       )
