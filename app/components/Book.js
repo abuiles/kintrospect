@@ -17,7 +17,6 @@ import AnnotationView from './Annotation';
 import { Book, Annotation } from '../stores/Book'
 import AmazonStore from '../stores/Amazon'
 import NoteStore from '../stores/Note'
-import { print } from 'util';
 
 interface BookState {
   open: boolean,

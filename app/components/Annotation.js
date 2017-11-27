@@ -3,8 +3,6 @@ import { Sticky } from 'react-sticky';
 import { DragSource } from 'react-dnd';
 
 import ItemTypes from './ItemTypes';
-import { prependListener } from 'cluster';
-// import { fail } from 'mobx/lib/utils/utils';
 
 const highlightSource = {
   beginDrag(props) {
@@ -63,7 +61,7 @@ class AnnotationView extends React.Component {
             {annotation.highlight}
           </p>
           <a href={`kindle://book?action=open&asin=${asin}&location=${location}`}>
-            Read more
+            Open in Kindle
           </a>
         </div>
       );
