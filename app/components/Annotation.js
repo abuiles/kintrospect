@@ -30,25 +30,12 @@ const highlightSource = {
 class AnnotationView extends React.Component {
   props: {
     annotation: any,
-    updateLocation: (boolean, any) => void,
-    connectDragSource: () => void,
     isDragging: boolean,
     isHighlighted: boolean,
     asin: string,
+    updateLocation: (boolean, any) => void,
+    connectDragSource: () => void,
     selectAnnotation: (any) => void
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = { isHighlighted: false }
-  }
-
-  highlightAnnotation() {
-    this.setState(
-      previousState => {
-        return { isHighlighted: !previousState.isHighlighted }
-      }
-    )
   }
 
   render() {

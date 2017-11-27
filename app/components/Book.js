@@ -17,6 +17,7 @@ import AnnotationView from './Annotation';
 import { Book, Annotation } from '../stores/Book'
 import AmazonStore from '../stores/Amazon'
 import NoteStore from '../stores/Note'
+import { print } from 'util';
 
 interface BookState {
   open: boolean,
@@ -60,9 +61,15 @@ export default class BookView extends React.Component {
   // }
 
   selectAnnotation(selectedAnnotation: any) {
-    this.setState({
-      selectedAnnotation
-    })
+    if (this.state.selectedAnnotation === selectedAnnotation) {
+      this.setState({
+        selectedAnnotation: null
+      })
+    } else {
+      this.setState({
+        selectedAnnotation
+      })
+    }
   }
 
   updateLocation(isCurrent: boolean, { location }: Annotation) {
@@ -113,8 +120,8 @@ export default class BookView extends React.Component {
             <AnnotationView
               annotation={annotation}
               asin={book.asin}
+              isHighlighted={annotation === selectedAnnotation}
               updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
-              isHighlighted={annotation===selectedAnnotation}
               selectAnnotation={(selected) => this.selectAnnotation(selected)}
             />
           </div>
@@ -142,7 +149,6 @@ export default class BookView extends React.Component {
 
     return (
       <div className="flex w-100 h-100">
-
         <div className="w-40 bl b--near-white bg-light-gray flex flex-column pv3">
           <div className="ph3 mb4">
             <h2 className="f3 lh-title serif">
@@ -153,7 +159,6 @@ export default class BookView extends React.Component {
             <p>Highlights updated on: {book.highlightsUpdatedAt}</p>
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
           </div>
-
           <div className="overflow-y-auto h-100 ph3">
             {book.annotations.length ? annotationsList : !isRunning && <h3>Create some highlights first</h3>}
           </div>
