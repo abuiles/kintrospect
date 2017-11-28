@@ -37,12 +37,10 @@ export default class NoteStore {
     }
 
     const sections = [
-      [1, 'h1', [[0, [], 0, book.title]]], [1, 'h1', []]
+      [1, 'h1', [[0, [], 0, book.title]]]
     ];
 
-    for (let i = 0; i < 100; i += 1) {
-      sections.push([1, 'p', []])
-    }
+    sections.push([1, 'p', []])
 
     return {
       version: '0.3.0',
