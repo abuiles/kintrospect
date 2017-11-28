@@ -19,27 +19,15 @@ function imageToCardParser(editor, annotation) {
   let range = editor.range;
 
   editor.run((postEditor) => {
-    // Split current section and add two empty lines to add new highlight blockquote
-    let cursorSection = postEditor.splitSection(range.tail.section.tailPosition())[1];
-    cursorSection = postEditor.splitSection(cursorSection.tailPosition())[1];
+    const highlightMarker = postEditor.builder.createMarker(`${annotation.highlight} `)
 
-    // postEditor.setRange(cursorSection.headPosition());
+    const aMarkup = postEditor.builder.createMarkup('a', {href: annotation.kindleLink})
+    const linkMarker = postEditor.builder.createMarker('Open in Kindle', [aMarkup])
+    const section = postEditor.builder.createMarkupSection('blockquote', [highlightMarker, linkMarker])
+    const newlineSection = postEditor.builder.createMarkupSection('p')
 
-    // add highlight text and extra empty space at the end
-    postEditor.insertText(cursorSection.headPosition(), annotation.highlight);
-    postEditor.insertText(cursorSection.tailPosition(), ' ');
-
-    // Make the section a blockquote
-    postEditor.toggleSection('blockquote', cursorSection.headPosition());
-
-    // Add a link to open in kindle at the end of the section
-    const markup = postEditor.builder.createMarkup('a', {href: annotation.kindleLink})
-    postEditor.insertTextWithMarkup(cursorSection.tailPosition(), 'Open in Kindle', [markup])
-
-    // Move to next section after adding blockquote
-    if (cursorSection.next) {
-      postEditor.setRange(cursorSection.next.toRange())
-    }
+    postEditor.insertSection(newlineSection)
+    postEditor.insertSection(section)
   });
 }
 
