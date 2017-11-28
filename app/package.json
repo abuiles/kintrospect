@@ -1,13 +1,13 @@
 {
   "name": "kintrospect",
   "productName": "kintrospect",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Kintrospect helps you make better sense of what you read",
   "main": "./main.js",
   "author": {
-    "name": "TopoilocusHQ",
-    "email": "",
-    "url": ""
+    "name": "Kintrospect",
+    "email": "info@kintrospect.com",
+    "url": "https://kintrospect.com/"
   },
   "license": "MIT",
   "dependencies": {
