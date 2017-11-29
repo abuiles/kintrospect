@@ -60,7 +60,7 @@ class AnnotationView extends React.Component {
           <p className="f5 mv0">
             {annotation.highlight}
           </p>
-          <a href={`kindle://book?action=open&asin=${asin}&location=${location}`}>
+          <a href={`kindle://book?action=open&asin=${asin}&location=${location}`} className={`link underline ${isHighlighted ? 'white' : 'blue'}`} >
             Open in Kindle
           </a>
         </div>
