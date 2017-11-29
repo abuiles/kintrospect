@@ -9,6 +9,7 @@ export const BookArray = PropTypes.observableArray
 export default class NoteStore {
   @observable notes = {}
   @observable isLoading = false
+  @observable mobiledocEditor = null
 
   @computed get all() {
     return this.notes
@@ -29,6 +30,26 @@ export default class NoteStore {
 
   @action setLoading(loading) {
     this.isLoading = loading
+  }
+
+  @action setEditor(editor) {
+    this.mobiledocEditor = editor
+  }
+
+  addAnnotation(annotation) {
+    let range = this.mobiledocEditor.range;
+    
+      this.mobiledocEditor.run((postEditor) => {
+        const highlightMarker = postEditor.builder.createMarker(`${annotation.highlight} `)
+    
+        const aMarkup = postEditor.builder.createMarkup('a', {href: annotation.kindleLink})
+        const linkMarker = postEditor.builder.createMarker('Open in Kindle', [aMarkup])
+        const section = postEditor.builder.createMarkupSection('blockquote', [highlightMarker, linkMarker])
+        const newlineSection = postEditor.builder.createMarkupSection('p')
+    
+        postEditor.insertSection(newlineSection)
+        postEditor.insertSection(section)
+      });
   }
 
   findNotes(book) {

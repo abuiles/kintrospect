@@ -59,6 +59,11 @@ class NotesEditor extends React.Component {
     editor: null
   }
 
+  componentWillUnmount() {
+    const { notesStore } = this.props
+    notesStore.setEditor(null)
+  }
+
   onMobiledocChange(mobiledoc) {
     console.log('doc changed', mobiledoc)
     const { notesStore, book, analytics } = this.props
@@ -96,7 +101,9 @@ class NotesEditor extends React.Component {
 
   didCreateEditor(editor) {
     console.log('created editor:', editor);
+    const { notesStore } = this.props
     this.setState({ editor })
+    notesStore.setEditor(editor)
   }
 
   render() {
