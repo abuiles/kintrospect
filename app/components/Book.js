@@ -98,6 +98,12 @@ export default class BookView extends React.Component {
     this.setState({ searchTerm: term })
   }
 
+  addAllAnnotationsToEditor() {
+    const { book, notesStore } = this.props
+    const { annotations } = book
+    notesStore.addAnnotations(annotations)
+  }
+
   render() {
     const { book, amazonStore, notesStore } = this.props;
     const { open, selectedAnnotation } = this.state;
@@ -149,7 +155,12 @@ export default class BookView extends React.Component {
             </h2>
             <h3>{book.annotations.length} annotations</h3>
             {isRunning && <h3>Loading highlights</h3>}
-            <p>Highlights updated on: {book.highlightsUpdatedAt}</p>
+            <p>
+              Highlights updated on: {book.highlightsUpdatedAt}
+              <button onClick={() => { this.addAllAnnotationsToEditor() }} className="btn f6 mr fr" >
+                Add All
+              </button>
+            </p>
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
           </div>
           <div className="overflow-y-auto h-100 ph3">

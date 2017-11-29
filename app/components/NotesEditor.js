@@ -15,22 +15,6 @@ const CARDS = [
   LinkCard
 ]
 
-function imageToCardParser(editor, annotation) {
-  let range = editor.range;
-
-  editor.run((postEditor) => {
-    const highlightMarker = postEditor.builder.createMarker(`${annotation.highlight} `)
-
-    const aMarkup = postEditor.builder.createMarkup('a', {href: annotation.kindleLink})
-    const linkMarker = postEditor.builder.createMarker('Open in Kindle', [aMarkup])
-    const section = postEditor.builder.createMarkupSection('blockquote', [highlightMarker, linkMarker])
-    const newlineSection = postEditor.builder.createMarkupSection('p')
-
-    postEditor.insertSection(newlineSection)
-    postEditor.insertSection(section)
-  });
-}
-
 function linkToCardParser(editor) {
   const payload = { href: '' };
 
@@ -51,12 +35,10 @@ const boxTarget = {
 @inject('notesStore', 'analytics')
 @observer
 class NotesEditor extends React.Component {
-  state: {
-    editor: any
-  }
 
-  state = {
-    editor: null
+  componentWillUnmount() {
+    const { notesStore } = this.props
+    notesStore.setEditor(null)
   }
 
   onMobiledocChange(mobiledoc) {
@@ -76,7 +58,8 @@ class NotesEditor extends React.Component {
   }
 
   addHighlight(highlight) {
-    imageToCardParser(this.state.editor, highlight.annotation)
+    const { notesStore } = this.props
+    notesStore.addAnnotation(highlight.annotation)
   }
 
   addLink() {
@@ -96,7 +79,8 @@ class NotesEditor extends React.Component {
 
   didCreateEditor(editor) {
     console.log('created editor:', editor);
-    this.setState({ editor })
+    const { notesStore } = this.props
+    notesStore.setEditor(editor)
   }
 
   render() {
