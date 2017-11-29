@@ -101,9 +101,9 @@ export default class BookView extends React.Component {
   addAllAnnotationsToEditor() {
     const { book, notesStore } = this.props
     const { annotations } = book
-    annotations.forEach((annotation) => {
-      notesStore.addAnnotation(annotation)
-    })
+    for (let i = annotations.length - 1; i >= 0; --i) {
+      notesStore.addAnnotation(annotations[i])
+    }
   }
 
   render() {
