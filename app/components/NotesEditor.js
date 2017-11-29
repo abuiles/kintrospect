@@ -35,13 +35,6 @@ const boxTarget = {
 @inject('notesStore', 'analytics')
 @observer
 class NotesEditor extends React.Component {
-  state: {
-    editor: any
-  }
-
-  state = {
-    editor: null
-  }
 
   componentWillUnmount() {
     const { notesStore } = this.props
@@ -87,7 +80,6 @@ class NotesEditor extends React.Component {
   didCreateEditor(editor) {
     console.log('created editor:', editor);
     const { notesStore } = this.props
-    this.setState({ editor })
     notesStore.setEditor(editor)
   }
 
