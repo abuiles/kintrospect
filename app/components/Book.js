@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import Drawer from 'react-motion-drawer';
+import TimeAgo from 'react-timeago';
 
 import {
   Link
@@ -156,7 +157,7 @@ export default class BookView extends React.Component {
             <h3>{book.annotations.length} annotations</h3>
             {isRunning && <h3>Loading highlights</h3>}
             <p>
-              Highlights updated on: {book.highlightsUpdatedAt}
+              Highlights updated <TimeAgo date={book.highlightsUpdatedAt} />
               <button onClick={() => { this.addAllAnnotationsToEditor() }} className="btn f6 mr fr" >
                 Add All
               </button>
