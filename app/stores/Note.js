@@ -36,21 +36,35 @@ export default class NoteStore {
     this.mobiledocEditor = editor
   }
 
+  _addAnnotation(postEditor, annotation) {
+    const highlightMarker = postEditor.builder.createMarker(`${annotation.highlight} `)
+    
+    const aMarkup = postEditor.builder.createMarkup('a', {href: annotation.kindleLink})
+    const linkMarker = postEditor.builder.createMarker('Open in Kindle', [aMarkup])
+    const section = postEditor.builder.createMarkupSection('blockquote', [highlightMarker, linkMarker])
+    const newlineSection = postEditor.builder.createMarkupSection('p')
+    
+    postEditor.insertSection(newlineSection)
+    postEditor.insertSection(section)
+  }
+
   addAnnotation(annotation) {
     let range = this.mobiledocEditor.range;
     
-      this.mobiledocEditor.run((postEditor) => {
-        const highlightMarker = postEditor.builder.createMarker(`${annotation.highlight} `)
-    
-        const aMarkup = postEditor.builder.createMarkup('a', {href: annotation.kindleLink})
-        const linkMarker = postEditor.builder.createMarker('Open in Kindle', [aMarkup])
-        const section = postEditor.builder.createMarkupSection('blockquote', [highlightMarker, linkMarker])
-        const newlineSection = postEditor.builder.createMarkupSection('p')
-    
-        postEditor.insertSection(newlineSection)
-        postEditor.insertSection(section)
-      });
+    this.mobiledocEditor.run((postEditor) => {
+        this._addAnnotation(postEditor, annotation)
+    });
   }
+
+  addAnnotations(annotations) {
+    let range = this.mobiledocEditor.range;
+
+    this.mobiledocEditor.run((postEditor) => {
+      for (let i = annotations.length - 1; i >= 0; --i) {
+        this._addAnnotation(postEditor, annotations[i])
+      }
+    });
+  } 
 
   findNotes(book) {
     if (this.all[book.asin]) {
