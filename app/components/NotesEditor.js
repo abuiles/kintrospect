@@ -15,22 +15,6 @@ const CARDS = [
   LinkCard
 ]
 
-function imageToCardParser(editor, annotation) {
-  let range = editor.range;
-
-  editor.run((postEditor) => {
-    const highlightMarker = postEditor.builder.createMarker(`${annotation.highlight} `)
-
-    const aMarkup = postEditor.builder.createMarkup('a', {href: annotation.kindleLink})
-    const linkMarker = postEditor.builder.createMarker('Open in Kindle', [aMarkup])
-    const section = postEditor.builder.createMarkupSection('blockquote', [highlightMarker, linkMarker])
-    const newlineSection = postEditor.builder.createMarkupSection('p')
-
-    postEditor.insertSection(newlineSection)
-    postEditor.insertSection(section)
-  });
-}
-
 function linkToCardParser(editor) {
   const payload = { href: '' };
 
@@ -81,7 +65,8 @@ class NotesEditor extends React.Component {
   }
 
   addHighlight(highlight) {
-    imageToCardParser(this.state.editor, highlight.annotation)
+    const { notesStore } = this.props
+    notesStore.addAnnotation(highlight.annotation)
   }
 
   addLink() {
