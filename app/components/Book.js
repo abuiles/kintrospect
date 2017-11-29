@@ -157,7 +157,7 @@ export default class BookView extends React.Component {
             {isRunning && <h3>Loading highlights</h3>}
             <p>
               Highlights updated on: {book.highlightsUpdatedAt}
-              <button onClick={() => { this.addAllAnnotationsToEditor() }} className="fr" >
+              <button onClick={() => { this.addAllAnnotationsToEditor() }} className="btn f6 mr fr" >
                 Add All
               </button>
             </p>
