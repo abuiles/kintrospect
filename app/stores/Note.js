@@ -49,16 +49,12 @@ export default class NoteStore {
   }
 
   addAnnotation(annotation) {
-    let range = this.mobiledocEditor.range;
-    
     this.mobiledocEditor.run((postEditor) => {
         this._addAnnotation(postEditor, annotation)
     });
   }
 
   addAnnotations(annotations) {
-    let range = this.mobiledocEditor.range;
-
     this.mobiledocEditor.run((postEditor) => {
       for (let i = annotations.length - 1; i >= 0; --i) {
         this._addAnnotation(postEditor, annotations[i])
