@@ -157,7 +157,7 @@ export default class BookView extends React.Component {
             <h3>{book.annotations.length} annotations</h3>
             {isRunning && <h3>Loading highlights</h3>}
             <p>
-              Highlights updated <TimeAgo date={book.highlightsUpdatedAt} />
+              Highlights updated <TimeAgo date={book.highlightsUpdatedAt} minPeriod={60} />
               <button onClick={() => { this.addAllAnnotationsToEditor() }} className="btn f6 mr fr" >
                 Add All
               </button>
