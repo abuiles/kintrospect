@@ -48,15 +48,12 @@ const parsed = parse(fileContents);
 
 const directories = new Map()
 const files = fs.readdirSync('./samples/');
-//, (err, files) => {
 files.forEach(file => {
-    const asin_start_index = file.lastIndexOf("_")
-    const title = file.substring(0, asin_start_index).replace("_", ":")
-    const asin = file.substring(asin_start_index + 1, file.lastIndexOf("."))
+    const asinStartIndex = file.lastIndexOf("_")
+    const title = file.substring(0, asinStartIndex).replace("_", ":")
+    const asin = file.substring(asinStartIndex + 1, file.lastIndexOf("."))
     directories.set(title, asin)
-    //console.log(title, asin)
   });
-//})
 
 const books = []
 parsed.forEach(function(item) {
@@ -77,5 +74,3 @@ parsed.forEach(function(item) {
   book = {title: simple_title, authors, asin: directories.get(simple_title), annotations}
   books.push(book)
 });
-
-console.log(books)
