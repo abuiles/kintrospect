@@ -1,5 +1,5 @@
 /* 
-For each book, save:
+Formats each book as:
 
 {
 books:[{
@@ -43,36 +43,98 @@ let ParsedBook = {
 const fs = require('fs');
 const parse = require('@sole/kindle-clippings-parser').parse;
 
-const fileContents = fs.readFileSync('./samples/My Clippings.txt', 'utf-8');
-const parsed = parse(fileContents);
+class ParseKindleDirectory {
 
-const directories = new Map()
-const files = fs.readdirSync('./samples/');
-files.forEach(file => {
-    const asinStartIndex = file.lastIndexOf("_")
-    const title = file.substring(0, asinStartIndex).replace("_", ":")
-    const asin = file.substring(asinStartIndex + 1, file.lastIndexOf("."))
-    directories.set(title, asin)
-  });
-
-const books = []
-parsed.forEach(function(item) {
-  const { title, highlights } = item  
-
-  titleIdx = title.lastIndexOf("(")
-  simpleTitle = title.substring(0, titleIdx - 1)
-  authors = title.substring(titleIdx)
+  constructor(directoryPath, myClippings='My Clippings.txt') {
+    this.directoryPath = directoryPath
+    this.myClippings = ( this.directoryPath.endsWith('/') ? '' : '/' ) + myClippings
+    if (this.directoryPath.includes(this.myClippings)) {
+      this.directoryPath = this.directoryPath.substring(0, this.directoryPath.indexOf(this.myClippings))
+    }
+  }
   
-  annotations = []
-  highlights.forEach(function(annotation) {
-    const { metadata, text } = annotation
+  _parseFileFromKindle(format='utf-8') {
+    
+    const fileContents = fs.readFileSync(this.directoryPath + this.myClippings, format);
+    const parsed = parse(fileContents);
+    
+    return parsed
+  }
 
-    location = Math.ceil(parseInt(metadata.substring(metadata.indexOf("Location ") + 9))/150)
-    annotation = {highlight: text, location}
-    annotations.push(annotation)
-  })
-  book = {title: simpleTitle, authors, asin: directories.get(simpleTitle), annotations}
-  books.push(book)
-});
+  _getDirectories() {
+    const files = fs.readdirSync(this.directoryPath);
+    
+    const directories = new Map()
+    const underscore = '_'
+    const colon = ':'
+  
+    files.forEach(file => {
+    
+      const asinStartIndex = file.lastIndexOf(underscore)
+      let title = file.substring(0, asinStartIndex)
+      while (title.includes(underscore)) {
+        title = title.replace(underscore, colon)
+      }
+      const asin = file.substring(asinStartIndex + 1, file.lastIndexOf("."))
+      if (title && asin) {
+        directories.set(title, asin)
+      }
+    });
+  
+    return directories
+  }
+  
+  getParsedFiles() {
+  
+    const books = []
+    const directories = this._getDirectories()
+    const parsedFileFromKindle = this._parseFileFromKindle()
+  
+    parsedFileFromKindle.forEach(function(item) {
+      const { title, highlights } = item  
+      
+      //Author and Title
+      const titleIdx = title.lastIndexOf("(")
+      let simpleTitle = title.substring(0, titleIdx - 1)
+      let authors = title.substring(titleIdx)
+    
+      if (!simpleTitle && authors) {
+        simpleTitle = authors
+        authors = ""
+      }
+      
+      //Annotations
+      let annotations = []
+      highlights.forEach(function(annotation) {
+        const { metadata, text } = annotation
+    
+        const location = Math.ceil(parseInt(metadata.substring(metadata.indexOf("Location ") + 9))/150)
+        annotations.push({highlight: text, location})
+      })
+      
+      //ASIN
+      let asin = directories.get(simpleTitle)
+      if (!asin) {
+        directories.forEach(function(value, key) {
+          if (simpleTitle.includes(key)) {
+            asin = value
+          } else if (key.includes(simpleTitle)) {
+            asin = value
+            simpleTitle = key
+          }
+        })
+      }
 
-console.log(books[0])
+      //Book
+      books.push({title: simpleTitle, authors, asin: asin, annotations})
+    });
+    
+    return books
+  }
+}
+
+/* 
+const kindleFile = new ParseKindleDirectory('./samples')
+const books = kindleFile.getParsedFiles()
+console.log(books) 
+*/
