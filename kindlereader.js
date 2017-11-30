@@ -59,9 +59,9 @@ const books = []
 parsed.forEach(function(item) {
   const { title, highlights } = item  
 
-  title_idx = title.lastIndexOf("(")
-  simple_title = title.substring(0, title_idx - 1)
-  authors = title.substring(title_idx)
+  titleIdx = title.lastIndexOf("(")
+  simpleTitle = title.substring(0, titleIdx - 1)
+  authors = title.substring(titleIdx)
   
   annotations = []
   highlights.forEach(function(annotation) {
@@ -71,6 +71,8 @@ parsed.forEach(function(item) {
     annotation = {highlight: text, location}
     annotations.push(annotation)
   })
-  book = {title: simple_title, authors, asin: directories.get(simple_title), annotations}
+  book = {title: simpleTitle, authors, asin: directories.get(simpleTitle), annotations}
   books.push(book)
 });
+
+console.log(books[0])
