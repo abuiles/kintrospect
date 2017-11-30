@@ -150,7 +150,7 @@ export default class BookView extends React.Component {
     return (
       <div className="flex w-100 h-100">
         <div className="w-40 bl b--near-white bg-light-gray flex flex-column pv3">
-          <div className="ph3 mb4">
+          <div className="ph3 mb2">
             <h2 className="f3 lh-title serif">
               {book.title}
             </h2>
@@ -158,11 +158,11 @@ export default class BookView extends React.Component {
             {isRunning && <h3>Loading highlights</h3>}
             <p>
               Highlights updated <TimeAgo date={book.highlightsUpdatedAt} minPeriod={60} />
-              <button onClick={() => { this.addAllAnnotationsToEditor() }} className="btn f6 mr fr" >
-                Add All
-              </button>
             </p>
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
+            <button onClick={() => { this.addAllAnnotationsToEditor() }} className="btn f6 mt4 fr" >
+              Add All &#187;
+            </button>
           </div>
           <div className="overflow-y-auto h-100 ph3">
             {book.annotations.length ? annotationsList : !isRunning && <h3>Create some highlights first</h3>}
