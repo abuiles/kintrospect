@@ -94,6 +94,13 @@ new Promise(function(resolve) {
     }
   }
 
+  @action runKindleCrawler(): void {
+    if (!this.running) {
+      this.toggleRunning()
+      ipcRenderer.send('read-from-kindle')
+    }
+  }
+
   @action crawlerDidFinish() {
     this.runnnig = false
   }
