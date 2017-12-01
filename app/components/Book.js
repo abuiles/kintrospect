@@ -101,7 +101,10 @@ export default class BookView extends React.Component {
 
   addAllAnnotationsToEditor() {
     const { book, notesStore } = this.props
-    const { annotations } = book
+    const { annotations, isKindleBook } = book
+    annotations.forEach(function(annotation) {
+      annotation.isKindleBook = isKindleBook
+    })
     notesStore.addAnnotations(annotations)
   }
 
@@ -120,6 +123,7 @@ export default class BookView extends React.Component {
             <AnnotationView
               annotation={annotation}
               asin={book.asin}
+              isKindleBook={book.isKindleBook}
               isHighlighted={annotation === selectedAnnotation}
               updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
               selectAnnotation={(selected) => this.selectAnnotation(selected)}

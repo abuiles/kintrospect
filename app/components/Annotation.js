@@ -9,7 +9,8 @@ const highlightSource = {
     console.log('dragging', props.annotation);
     return {
       text: props.annotation.highlight,
-      annotation: props.annotation
+      annotation: props.annotation,
+      isKindleBook: props.isKindleBook
     };
   },
 
@@ -18,6 +19,7 @@ const highlightSource = {
     const dropResult = monitor.getDropResult();
     console.log('dragging', props.annotation);
 
+    item.annotation.isKindleBook = props.isKindleBook
     if (monitor.didDrop()) {
       // do this in the notes store
       dropResult.component.wrappedInstance.addHighlight(item)
@@ -31,6 +33,7 @@ class AnnotationView extends React.Component {
     isDragging: boolean,
     isHighlighted: boolean,
     asin: string,
+    isKindleBook: boolean,
     updateLocation: (boolean, any) => void,
     connectDragSource: () => void,
     selectAnnotation: (any) => void
@@ -39,7 +42,7 @@ class AnnotationView extends React.Component {
   render() {
     let content;
     const { annotation, asin, isHighlighted, selectAnnotation } = this.props
-    const { isDragging, connectDragSource } = this.props
+    const { isKindleBook, isDragging, connectDragSource } = this.props
 
     const styles = {
       opacity: isDragging ? 0.4 : 1,
@@ -53,16 +56,22 @@ class AnnotationView extends React.Component {
         </div>
       )
     } else {
-      const location = annotation.location;
+      let openInKindle = null
+      if (isKindleBook) {
+        const location = annotation.location;
+        openInKindle = (
+          <a href={`kindle://book?action=open&asin=${asin}&location=${location}`} className={`link underline ${isHighlighted ? 'white' : 'blue'}`} >
+            Open in Kindle
+          </a>
+          )
+      }
 
       content = (
         <div className={`pa3 mb3 shadow-1 ${isHighlighted ? 'bg-blue' : 'bg-white'}`}>
           <p className="f5 mv0">
             {annotation.highlight}
           </p>
-          <a href={`kindle://book?action=open&asin=${asin}&location=${location}`} className={`link underline ${isHighlighted ? 'white' : 'blue'}`} >
-            Open in Kindle
-          </a>
+          {openInKindle}
         </div>
       );
     }
