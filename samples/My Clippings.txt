@@ -20192,3 +20192,468 @@ p20-casestudy
 
 ALLSPAW Yes, and the exercise should also make people feel a little uncomfortable. The truth is that things often break in ways we can’t possibly imagine. In the course of responding to those surprises, you get a chance to learn from your mistakes, of course.Ultimately, you also get an opportunity to gain confidence that the system you’ve built and the organization that’s been built up around it are actually pretty resilient. TL How does this work at Google, Kripa? KK We normally give people three to four months’ notice, telling them the event is set to take place within some particular week or month. The GameDay event itself is generally a round-the-clock, 72- to 96-hour exercise. Even though people are unaware of the exact timing, they know there’s a period coming when there will be a lot of disruptions and they’re going to be expected to respond to each
 ==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 19-22 | Added on Thursday, November 30, 2017 4:41:17 PM
+
+However, in his string of arguments on the structure of language, Korzybski introduced and popularized the idea that the map is not the territory. In other words, the description of the thing is not the thing itself. The model is not reality. The abstraction is not the abstracted. This has enormous practical consequences.
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 19-21 | Added on Thursday, November 30, 2017 4:41:19 PM
+
+However, in his string of arguments on the structure of language, Korzybski introduced and popularized the idea that the map is not the territory. In other words, the description of the thing is not the thing itself. The model is not reality. The
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 19-22 | Added on Thursday, November 30, 2017 4:41:28 PM
+
+However, in his string of arguments on the structure of language, Korzybski introduced and popularized the idea that the map is not the territory. In other words, the description of the thing is not the thing itself. The model is not reality. The abstraction is not the abstracted. This has enormous practical consequences.
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 31-32 | Added on Thursday, November 30, 2017 4:43:13 PM
+
+To solve this problem, the mind creates maps of reality in order to understand it, because the only way we can process the complexity of reality is through abstraction.
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 40-43 | Added on Thursday, November 30, 2017 4:44:57 PM
+
+sense of its surroundings. As Charlie Munger has pointed out, a good idea and the human mind act something like the sperm and the egg — after the first good idea gets in, the door closes. This makes the map-territory problem a close cousin of man-with-a-hammer tendency.
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 40-42 | Added on Thursday, November 30, 2017 4:45:02 PM
+
+As Charlie Munger has pointed out, a good idea and the human mind act something like the sperm and the egg — after the first good idea gets in, the door closes. This makes the map-territory problem a close cousin of man-with-a-hammer tendency
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 85-87 | Added on Thursday, November 30, 2017 4:49:53 PM
+
+. He was like a great swimmer that tried to tackle a grand rapid, and the model he used successfully in the past, the map that had navigated a lot of difficult terrain, was not the map he needed anymore. He had an excellent theory about retailing that applied in some circumstances, but not in others. The terrain had changed, but the old idea stuck
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 109-111 | Added on Thursday, November 30, 2017 4:52:13 PM
+
+We can say with a useful amount of confidence that an elephant will not wake up as a monkey, but we can’t say anything with absolute confidence in an Extremistan arena.
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 115-117 | Added on Thursday, November 30, 2017 4:53:06 PM
+
+Deviations of the past may not be the deviations of the future. Just because municipal bonds have never traded at such-and-such a spread to U.S. Treasury bonds does not mean that they won’t in the future. They just haven’t yet. Frequently, the models are blind to this fact.
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 157-162 | Added on Thursday, November 30, 2017 4:57:38 PM
+
+The salient point then is that in our march to simplify reality with useful models, of which Farnam Street is an advocate, we confuse the models with reality. For many people, the model creates its own reality. It is as if the spreadsheet comes to life. We forget that reality is a lot messier. The map isn’t the territory. The theory isn’t what it describes, it’s simply a way we choose to interpret a certain set of information. Maps can also be wrong, but even if they are essentially correct, they are an abstraction, and abstraction means that information is lost to save space. (Recall the mile-to-mile scale map.)
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 162-165 | Added on Thursday, November 30, 2017 4:58:13 PM
+
+How do we do better? This is fodder for another post, but the first step is to realize that you do not understand a model, map, or reduction unless you understand and respect its limitations. We must always be vigilant by stepping back to understand the context in which a map is useful, and where the cliffs might lie.
+==========
+The Map Is Not the Territory (farnamstreetblog.com)
+- Your Highlight on Location 166-167 | Added on Thursday, November 30, 2017 4:58:18 PM
+
+Source: https://www.farnamstreetblog.com/2015/11/map-and-territory/
+==========
+Announcing “The Brooklyn Project” for Token Launches (consensys.net)
+- Your Highlight on Location 12-15 | Added on Thursday, November 30, 2017 6:40:43 PM
+
+Tokens are built on a next-generation globally-shared database infrastructure — the Ethereum blockchain — that facilitates trustworthy, fair, and frictionless operations. All actors on this system can be certain that the rules are being fairly applied and followed by all. No minority set of actors or special interests can improperly manipulate the data or business processes, because everyone can directly inspect both data and business logic.
+==========
+Announcing “The Brooklyn Project” for Token Launches (consensys.net)
+- Your Highlight on Location 17-19 | Added on Thursday, November 30, 2017 6:42:07 PM
+
+At bottom, tokenization is the creation of a natively digital asset that is represented on the Ethereum blockchain and has both the scarcity and veracity that otherwise would be achieved only relying on so-called “trusted third parties,” such as Equifax or Bernard L. Madoff Investment Securities LLC.
+==========
+Announcing “The Brooklyn Project” for Token Launches (consensys.net)
+- Your Highlight on Location 24-24 | Added on Thursday, November 30, 2017 6:46:06 PM
+
+Tokenization of these elements could eliminate or minimize all of these weaknesses and frictions.
+==========
+Announcing “The Brooklyn Project” for Token Launches (consensys.net)
+- Your Note on Location 24 | Added on Thursday, November 30, 2017 6:46:14 PM
+
+how?
+==========
+Announcing “The Brooklyn Project” for Token Launches (consensys.net)
+- Your Bookmark on Location 66 | Added on Thursday, November 30, 2017 6:50:47 PM
+
+
+==========
+Announcing “The Brooklyn Project” for Token Launches (consensys.net)
+- Your Highlight on Location 17-19 | Added on Thursday, November 30, 2017 6:52:42 PM
+
+At bottom, tokenization is the creation of a natively digital asset that is represented on the Ethereum blockchain and has both the scarcity and veracity that otherwise would be achieved only relying on so-called “trusted third parties,” such as Equifax or Bernard L. Madoff Investment Securities LLC.
+==========
+The Difference Between Amateurs and Professionals (farnamstreetblog.com)
+- Your Highlight on Location 30-33 | Added on Thursday, November 30, 2017 7:04:37 PM
+
+There are a host of other differences, but they can effectively be boiled down to two things: fear and reality. Amateurs believe that the world should work the way they want it to. Professionals realize that they have to work with the world as they find it. Amateurs are scared — scared to be vulnerable and honest with themselves. Professionals feel like they are capable of handling almost anything.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 40 | Location 966-967 | Added on Saturday, December 2, 2017 11:05:22 AM
+
+it is not the employer who pays wages. He only handles the money. It is the product that pays the wages and it is the management that arranges the production so that
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 40 | Location 966-968 | Added on Saturday, December 2, 2017 11:05:30 AM
+
+it is not the employer who pays wages. He only handles the money. It is the product that pays the wages and it is the management that arranges the production so that the product may pay the wages.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 40 | Location 970-972 | Added on Saturday, December 2, 2017 11:21:30 AM
+
+while to-day we have skilled mechanics in plenty, they do not produce automobiles—they make it easy for others to produce them. Our skilled men are the tool makers, the experimental workmen, the machinists, and the pattern makers. They are as good as any men in the world—so good, indeed, that they should not be wasted in doing that which the machines they contrive can do better.
+==========
+My Life and Work (Ford, Henry)
+- Your Bookmark on page 42 | Location 1008 | Added on Saturday, December 2, 2017 11:26:58 AM
+
+
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 44 | Location 1058-1060 | Added on Saturday, December 2, 2017 11:52:11 AM
+
+That is one of the troubles with extensive records. If you keep on recording all of your failures you will shortly have a list showing that there is nothing left for you to try—whereas it by no means follows because one man has failed in a certain method that another man will not succeed.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 44 | Location 1064-1066 | Added on Saturday, December 2, 2017 11:53:04 AM
+
+Then, too, a record of failures—particularly if it is a dignified and well-authenticated record—deters a young man from trying. We get some of our best results from letting fools rush in where angels fear to tread.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 44 | Location 1067-1067 | Added on Saturday, December 2, 2017 11:53:25 AM
+
+no one ever considers himself expert if he really knows his job.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 44 | Location 1066-1070 | Added on Saturday, December 2, 2017 11:54:05 AM
+
+None of our men are "experts." We have most unfortunately found it necessary to get rid of a man as soon as he thinks himself an expert—because no one ever considers himself expert if he really knows his job. A man who knows a job sees so much more to be done than he has done, that he is always pressing forward and never gives up an instant of thought to how good and how efficient he is. Thinking always ahead, thinking always of trying to do more, brings a state of mind in which nothing is impossible. The moment one gets into the "expert" state of mind a great number of things become impossible.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 45 | Location 1074-1075 | Added on Saturday, December 2, 2017 11:55:01 AM
+
+If some man, calling himself an authority, says that this or that cannot be done, then a horde of unthinking followers start the chorus: "It can't be done."
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 49 | Location 1117-1118 | Added on Saturday, December 2, 2017 12:00:27 PM
+
+CHAPTER VI MACHINES AND MEN
+==========
+How to Get One Billion Users on Blockchain: Part 1 | LinkedIn (linkedin.com)
+- Your Highlight on Location 18-18 | Added on Saturday, December 2, 2017 12:39:48 PM
+
+top three problems that have, thus far, prevented the mass-market adoption of blockchain technologies:
+==========
+How to Get One Billion Users on Blockchain: Part 1 | LinkedIn (linkedin.com)
+- Your Highlight on Location 19-20 | Added on Saturday, December 2, 2017 12:39:59 PM
+
+1. Scalability To get one billion users on the blockchain, decentralized protocols must figure out a way to to scale beyond the current transaction limits of Proof-of-Work or even Proof-of-Stake blockchain implementations.
+==========
+How to Get One Billion Users on Blockchain: Part 1 | LinkedIn (linkedin.com)
+- Your Highlight on Location 28-30 | Added on Saturday, December 2, 2017 12:40:51 PM
+
+2. Usability If we want a billion users on the blockchain, people must be able to interact with decentralized apps, or dApps, and not feel dizzy, but empowered and in control.
+==========
+How to Get One Billion Users on Blockchain: Part 1 | LinkedIn (linkedin.com)
+- Your Highlight on Location 38-41 | Added on Saturday, December 2, 2017 12:42:04 PM
+
+3. Security This doesn’t just mean that the assets encoded on a blockchain are provably secured against malicious attacks, accidental losses, or forcible seizures. These are the minimum prerequisites that the blockchain world is still struggling to provide consistently. More than that, users need a feeling of security, peace of mind, and dare I say, a sense of “trust” in the overall system
+==========
+How to Get One Billion Users on Blockchain: Part 1 | LinkedIn (linkedin.com)
+- Your Highlight on Location 49-50 | Added on Saturday, December 2, 2017 12:43:24 PM
+
+Without offering blockchain users actual as well as perceived security, there shouldn’t be more users on these networks
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 8-9 | Added on Saturday, December 2, 2017 1:04:01 PM
+
+When we begin to chase an intangible or vague concept (success, wealth, health, happiness), making a tangible goal is often the first step.
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 17-18 | Added on Saturday, December 2, 2017 1:05:32 PM
+
+Goals have an endpoint. This is why many people revert to their previous state after achieving a certain goal.
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 20-20 | Added on Saturday, December 2, 2017 1:06:13 PM
+
+Goals rely on factors which we do not always have control over.
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 23-23 | Added on Saturday, December 2, 2017 1:06:37 PM
+
+Goals rely on willpower and self-discipline.
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 23-23 | Added on Saturday, December 2, 2017 1:06:49 PM
+
+Goals rely on willpower and self-discipline. As
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 28-29 | Added on Saturday, December 2, 2017 1:07:16 PM
+
+Keeping a goal in mind and using it to direct our actions requires constant willpower. During times when other parts of our lives deplete our supply of willpower, it can be easy to forget our goals.
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 31-32 | Added on Saturday, December 2, 2017 1:08:09 PM
+
+Goals can make us complacent or reckless. Studies have shown that people’s brains can confuse goal setting with achievement.
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 36-37 | Added on Saturday, December 2, 2017 1:09:17 PM
+
+The benefits of a systematic approach to achievement include the following:
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 37-37 | Added on Saturday, December 2, 2017 1:09:26 PM
+
+Habits can mean we overshoot our goals.
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 41-41 | Added on Saturday, December 2, 2017 1:10:13 PM
+
+Habits are easy to complete.
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 46-46 | Added on Saturday, December 2, 2017 1:10:49 PM
+
+Habits are for life
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 51-51 | Added on Saturday, December 2, 2017 1:11:23 PM
+
+Habits can compound
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 57-58 | Added on Saturday, December 2, 2017 1:11:59 PM
+
+Habits can be as small as necessary.
+==========
+Habits vs. Goals: A Look at the Benefits of a Systematic Approach to Life (farnamstreetblog.com)
+- Your Highlight on Location 61-61 | Added on Saturday, December 2, 2017 1:12:16 PM
+
+Why a Systematic Approach Works
+==========
+Understanding your Circle of Competence: How Warren Buffett Avoids Problems (farnamstreetblog.com)
+- Your Highlight on Location 11-13 | Added on Saturday, December 2, 2017 1:15:25 PM
+
+Circle Of Competence Circle of Competence is simple: Each of us, through experience or study, has built up useful knowledge on certain areas of the world. Some areas are understood by most of us, while some areas require a lot more specialty to evaluate.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 49 | Location 1128-1135 | Added on Sunday, December 3, 2017 9:47:19 AM
+
+Now a business, in my way of thinking, is not a machine. It is a collection of people who are brought together to do work and not to write letters to one another. It is not necessary for any one department to know what any other department is doing. If a man is doing his work he will not have time to take up any other work. It is the business of those who plan the entire work to see that all of the departments are working properly toward the same end. It is not necessary to have meetings to establish good feeling between individuals or departments. It is not necessary for people to love each other in order to work together. Too much good fellowship may indeed be a very bad thing, for it may lead to one man trying to cover up the faults of another. That is bad for both men. When we are at work we ought to be at work. When we are at play we ought to be at play. There is no use trying to mix the two. The sole object ought to be to get the work done and to get paid for it. When the work is done, then the play can come, but not before.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 49 | Location 1135-1137 | Added on Sunday, December 3, 2017 9:47:52 AM
+
+And so the Ford factories and enterprises have no organization, no specific duties attaching to any position, no line of succession or of authority, very few titles, and no conferences. We have only the clerical help that is absolutely required; we have no elaborate records of any kind, and consequently no red tape.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 50 | Location 1152-1155 | Added on Sunday, December 3, 2017 9:50:26 AM
+
+The work and the work alone controls us. That is one of the reasons why we have no titles. Most men can swing a job, but they are floored by a title. The effect of a title is very peculiar. It has been used too much as a sign of emancipation from work. It is almost equivalent to a badge bearing the legend: "This man has nothing to do but regard himself as important and all others as inferior."
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 51 | Location 1162-1164 | Added on Sunday, December 3, 2017 9:51:27 AM
+
+The health of every organization depends on every member—whatever his place—feeling that everything that happens to come to his notice relating to the welfare of the business is his own job.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 51 | Location 1165-1167 | Added on Sunday, December 3, 2017 9:52:09 AM
+
+There used to be a lot of advice given to officials not to hide behind their titles. The very necessity for the advice showed a condition that needed more than advice to correct it. And the correction is just this—abolish the titles. A few may be legally necessary; a few may be useful in directing the public how to do business with the concern, but for the rest the best
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 51 | Location 1165-1168 | Added on Sunday, December 3, 2017 9:52:18 AM
+
+There used to be a lot of advice given to officials not to hide behind their titles. The very necessity for the advice showed a condition that needed more than advice to correct it. And the correction is just this—abolish the titles. A few may be legally necessary; a few may be useful in directing the public how to do business with the concern, but for the rest the best rule is simple: "Get rid of them."
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 51 | Location 1165-1168 | Added on Sunday, December 3, 2017 9:52:32 AM
+
+There used to be a lot of advice given to officials not to hide behind their titles. The very necessity for the advice showed a condition that needed more than advice to correct it. And the correction is just this—abolish the titles. A few may be legally necessary; a few may be useful in directing the public how to do business with the concern, but for the rest the best rule is simple: "Get rid of them."
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 51 | Location 1174-1174 | Added on Sunday, December 3, 2017 9:54:36 AM
+
+I never met a man who was thoroughly bad. There is always some good
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 51 | Location 1173-1177 | Added on Sunday, December 3, 2017 9:54:48 AM
+
+Since we do not take a man on his past history, we do not refuse him because of his past history. I never met a man who was thoroughly bad. There is always some good in him—if he gets a chance. That is the reason we do not care in the least about a man's antecedents—we do not hire a man's history, we hire the man. If he has been in jail, that is no reason to say that he will be in jail again. I think, on the contrary, he is, if given a chance, very likely to make a special effort to keep out of jail.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 52 | Location 1188-1189 | Added on Sunday, December 3, 2017 9:56:56 AM
+
+This habit of making the work secondary
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 52 | Location 1185-1191 | Added on Sunday, December 3, 2017 9:57:46 AM
+
+Men will work with the idea of catching somebody's eye; they will work with the idea that if they fail to get credit for what they have done, they might as well have done it badly or not have done it at all. Thus the work sometimes becomes a secondary consideration. The job in hand—the article in hand, the special kind of service in hand—turns out to be not the principal job. The main work becomes personal advancement—a platform from which to catch somebody's eye. This habit of making the work secondary and the recognition primary is unfair to the work. It makes recognition and credit the real job. And this also has an unfortunate effect on the worker. It encourages a peculiar kind of ambition which is neither lovely nor productive. It produces the kind of man who imagines that by "standing in with the boss" he will get ahead.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 53 | Location 1203-1206 | Added on Sunday, December 3, 2017 10:00:48 AM
+
+This is easy enough to do, for there is always work, and when you think of getting the work done instead of finding a title to fit a man who wants to be promoted, then there is no difficulty about promotion. The promotion itself is not formal; the man simply finds himself doing something other than what he was doing and getting more money.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 53 | Location 1209-1210 | Added on Sunday, December 3, 2017 10:01:17 AM
+
+Everything can always be done better than it is being done.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 57 | Location 1267-1268 | Added on Sunday, December 3, 2017 12:24:38 PM
+
+CHAPTER VII THE TERROR OF THE MACHINE
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 57 | Location 1272-1273 | Added on Sunday, December 3, 2017 12:28:16 PM
+
+The average worker, I am sorry to say, wants a job in which he does not have to put forth much physical exertion—above all, he wants a job in which he does not have to think.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 57 | Location 1275-1278 | Added on Sunday, December 3, 2017 12:29:17 PM
+
+When you come right down to it, most jobs are repetitive. A business man has a routine that he follows with great exactness; the work of a bank president is nearly all routine; the work of under officers and clerks in a bank is purely routine. Indeed, for most purposes and most people, it is necessary to establish something in the way of a routine and to make most motions purely repetitive—otherwise the individual will not get enough done to be able to live off his own exertions.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 57 | Location 1280-1281 | Added on Sunday, December 3, 2017 12:30:07 PM
+
+And even if the will be present, then the courage to go through with the training is absent. One cannot become skilled by mere wishing.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 58 | Location 1292-1293 | Added on Sunday, December 3, 2017 12:32:37 PM
+
+What this generation needs is a deep faith, a profound conviction in the practicability of righteousness, justice, and humanity in industry. If we cannot have these qualities, then we were better off without industry.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 61 | Location 1359-1360 | Added on Sunday, December 3, 2017 12:45:15 PM
+
+No man had to do the work unless he wanted to. But they all wanted to. It kept time from hanging on their hands. They slept and ate better and recovered more rapidly.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 63 | Location 1413-1413 | Added on Sunday, December 3, 2017 3:58:03 PM
+
+One cannot have morale without cleanliness. We tolerate makeshift cleanliness no more than makeshift methods.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 65 | Location 1429-1429 | Added on Monday, December 4, 2017 6:33:52 AM
+
+CHAPTER VIII WAGES
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 65 | Location 1434-1435 | Added on Monday, December 4, 2017 6:35:39 AM
+
+No question is more important than that of wages—most of the people of the country live on wages. The scale of their living—the rate of their wages—determines the prosperity of the country.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 65 | Location 1440-1441 | Added on Monday, December 4, 2017 6:37:00 AM
+
+The moment a man calls for assistance in his business—even though the assistant be but a boy—that moment he has taken a partner.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 65 | Location 1446-1447 | Added on Monday, December 4, 2017 6:37:29 AM
+
+When they pull and haul against each other—they simply injure the organization in which they are partners and from which both draw support.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 66 | Location 1459-1459 | Added on Monday, December 4, 2017 6:39:51 AM
+
+following bad precedents. If men, instead of saying "the employer ought to do thus-and-so," would say,
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 66 | Location 1459-1461 | Added on Monday, December 4, 2017 6:39:58 AM
+
+If men, instead of saying "the employer ought to do thus-and-so," would say, "the business ought to be so stimulated and managed that it can do thus-and-so," they would get somewhere. Because only the business can pay wages. Certainly the employer cannot, unless the business warrants.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 66 | Location 1466-1469 | Added on Monday, December 4, 2017 6:41:09 AM
+
+But by no means all employers or all employees will think straight. The habit of acting shortsightedly is a hard one to break. What can be done? Nothing. No rules or laws will effect the changes. But enlightened self-interest will. It takes a little while for enlightenment to spread. But spread it must, for the concern in which both employer and employees work to the same end of service is bound to forge ahead in business.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 67 | Location 1478-1482 | Added on Monday, December 4, 2017 6:43:35 AM
+
+There will never be a system invented which will do away with the necessity of work. Nature has seen to that. Idle hands and minds were never intended for any one of us. Work is our sanity, our self-respect, our salvation. So far from being a curse, work is the greatest blessing. Exact social justice flows only out of honest work. The man who contributes much should take away much. Therefore no element of charity is present in the paying of wages. The kind of workman who gives the business the best that is in him is the best kind of workman a business can have. And he cannot be expected to do this indefinitely without proper recognition of his contribution.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 67 | Location 1486-1487 | Added on Monday, December 4, 2017 6:44:05 AM
+
+The man who does not get a certain satisfaction out of his day's work is losing the best part of his pay.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 68 | Location 1493-1494 | Added on Monday, December 4, 2017 6:44:59 AM
+
+When we are all in the business working together, we all ought to have some share in the profits—by way of a good wage, or salary, or added compensation. And that is beginning now quite generally to be recognized.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 68 | Location 1500-1500 | Added on Monday, December 4, 2017 6:46:13 AM
+
+Until each man is absolutely sufficient
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 70 | Location 1550-1551 | Added on Monday, December 4, 2017 6:53:34 AM
+
+A great deal of inequity creeps into wage rates unless both the employer and the employee know that the rate paid has been arrived at by something better than a guess.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 71 | Location 1564-1564 | Added on Monday, December 4, 2017 6:55:59 AM
+
+determined man can win almost anything
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 71 | Location 1564-1565 | Added on Monday, December 4, 2017 6:56:04 AM
+
+A determined man can win almost anything that he goes after, but unless, in his getting, he gains good will he has not profited much.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 72 | Location 1582-1584 | Added on Monday, December 4, 2017 7:20:49 AM
+
+It was a sort of prosperity-sharing plan. But on conditions. The man and his home had to come up to certain standards of cleanliness and citizenship. Nothing paternal was intended!—a certain amount of paternalism did develop, and that is one reason why the whole plan and the social welfare department were readjusted.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 72 | Location 1592-1592 | Added on Monday, December 4, 2017 7:22:17 AM
+
+The man with the larger amount of money has larger opportunity to make a fool of himself.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 74 | Location 1610-1612 | Added on Monday, December 4, 2017 7:24:53 AM
+
+If you expect a man to give his time and energy, fix his wages so that he will have no financial worries. It pays. Our profits, after paying good wages and a bonus—which bonus used to run around ten millions a year before we changed the system—show that paying good wages is the most profitable way of doing business.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 75 | Location 1616-1616 | Added on Monday, December 4, 2017 7:26:17 AM
+
+CHAPTER IX WHY NOT ALWAYS HAVE GOOD BUSINESS?
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 77 | Location 1662-1665 | Added on Monday, December 4, 2017 7:35:41 AM
+
+Consider first the fundamentals of prosperity. Progress is not made by pulling off a series of stunts. Each step has to be regulated. A man cannot expect to progress without thinking. Take prosperity. A truly prosperous time is when the largest number of people are getting all they can legitimately eat and wear, and are in every sense of the word comfortable. It is the degree of the comfort of the people at large—not the size of the manufacturer's bank balance—that evidences prosperity.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 77 | Location 1679-1680 | Added on Monday, December 4, 2017 7:37:46 AM
+
+any man who can give to the consumer the highest quality at the lowest price is bound to be a leader in business, whatever the kind of an article he makes. There is no getting away from this.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 79 | Location 1708-1709 | Added on Monday, December 4, 2017 7:41:22 AM
+
+Concentrating on prices instead of on service is a sure indication of the kind of business man who can give no justification for his existence as a proprietor.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 80 | Location 1730-1731 | Added on Monday, December 4, 2017 7:44:17 AM
+
+Take the industrial idea; what is it? The true industrial idea is not to make money. The industrial idea is to express a serviceable idea, to duplicate a useful idea, by as many thousands as there are people who need it.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 80 | Location 1734-1738 | Added on Monday, December 4, 2017 7:45:47 AM
+
+There are short-sighted men who cannot see that business is bigger than any one man's interests. Business is a process of give and take, live and let live. It is cooperation among many forces and interests. Whenever you find a man who believes that business is a river whose beneficial flow ought to stop as soon as it reaches him you find a man who thinks he can keep business alive by stopping its circulation. He would produce wealth by this stopping of the production of wealth. The principles of service cannot fail to cure bad business. Which leads us into the practical application of the principles of service and finance.
+==========
+My Life and Work (Ford, Henry)
+- Your Highlight on page 81 | Location 1738-1739 | Added on Monday, December 4, 2017 7:46:06 AM
+
+CHAPTER X HOW CHEAPLY CAN THINGS BE MADE?
+==========
