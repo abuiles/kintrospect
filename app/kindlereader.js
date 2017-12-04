@@ -66,14 +66,10 @@ module.exports = class ParseKindleDirectory {
 
     const directories = new Map()
     const underscore = '_'
-    const colon = ':'
 
     files.forEach(file => {
       const asinStartIndex = file.lastIndexOf(underscore)
-      let title = file.substring(0, asinStartIndex)
-      while (title.includes(underscore)) {
-        title = title.replace(underscore, colon)
-      }
+      const title = file.substring(0, asinStartIndex)
       const asin = file.substring(asinStartIndex + 1, file.lastIndexOf('.'))
       if (title && asin) {
         directories.set(title, asin)
@@ -87,6 +83,7 @@ module.exports = class ParseKindleDirectory {
     const books = []
     const directories = this.getDirectories()
     const parsedFileFromKindle = this.parseFileFromKindle()
+    const charsToAvoid = ['<', '>', ':', '"', '/', '\\', '|', '?', '*']
 
     parsedFileFromKindle.forEach(function(item) {
       const { title, highlights } = item
@@ -101,6 +98,16 @@ module.exports = class ParseKindleDirectory {
         authors = ''
       }
 
+      const searchTitle = simpleTitle.split('')
+      let newSearchTitle = ''
+      searchTitle.forEach(function(char, index) {
+        if (charsToAvoid.includes(char)) {
+          searchTitle[index] = '_'
+        }
+        // Used to avoid toString joining the characters with commas
+        newSearchTitle += searchTitle[index]
+      })
+
       // Annotations
       const annotations = []
       highlights.forEach(function(annotation) {
@@ -114,9 +121,9 @@ module.exports = class ParseKindleDirectory {
       let asin = directories.get(simpleTitle) || ''
       if (!asin) {
         directories.forEach(function(value, key) {
-          if (simpleTitle.includes(key)) {
+          if (newSearchTitle.includes(key)) {
             asin = value
-          } else if (key.includes(simpleTitle)) {
+          } else if (key.includes(newSearchTitle)) {
             asin = value
             simpleTitle = key
           }
@@ -136,8 +143,8 @@ module.exports = class ParseKindleDirectory {
   }
 }
 
-/*
-const kindleFile = new ParseKindleDirectory('./samples')
+
+/* const kindleFile = new ParseKindleDirectory('../samples')
 const books = kindleFile.getParsedFiles()
 console.log(books)
-*/
+ */
