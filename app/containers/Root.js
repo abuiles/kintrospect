@@ -26,6 +26,10 @@ const amazonStore = new AmazonStore();
 amazonStore.setBookStore(booksStore)
 
 ipcRenderer.on('books-loaded', (event, books) => {
+  if (amazonStore.isRunning) {
+    amazonStore.toggleRunning()
+  }
+
   booksStore.addBooks(books)
 })
 
