@@ -41,6 +41,9 @@ export default class Home extends Component {
               <button className="btn" onClick={() => amazonStore.runCrawler()}>
                 <i className="fa fa-refresh white" aria-hidden="true"></i>&nbsp;Fetch Books
               </button>
+              <button className="btn" onClick={() => amazonStore.runKindleCrawler()}>
+                <i className="fa fa-refresh white" aria-hidden="true"></i>&nbsp;Fetch From Device
+              </button>
             </div>
         </header>
         <div className="overflow-y-auto h-100">

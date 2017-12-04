@@ -37,11 +37,17 @@ export default class NoteStore {
   }
 
   _addAnnotation(postEditor, annotation) {
-    const highlightMarker = postEditor.builder.createMarker(`${annotation.highlight} `)
-    
-    const aMarkup = postEditor.builder.createMarkup('a', {href: annotation.kindleLink})
-    const linkMarker = postEditor.builder.createMarker('Open in Kindle', [aMarkup])
-    const section = postEditor.builder.createMarkupSection('blockquote', [highlightMarker, linkMarker])
+    const { isKindleBook, kindleLink } = annotation
+
+    const markupSectionAttributes = [postEditor.builder.createMarker(`${annotation.highlight} `)]
+
+    if (isKindleBook) {
+      const aMarkup = postEditor.builder.createMarkup('a', { href: kindleLink })
+      const linkMarker = postEditor.builder.createMarker('Open in Kindle', [aMarkup])
+      markupSectionAttributes.push(linkMarker)
+    }
+
+    const section = postEditor.builder.createMarkupSection('blockquote', markupSectionAttributes)
     const newlineSection = postEditor.builder.createMarkupSection('p')
     
     postEditor.insertSection(newlineSection)

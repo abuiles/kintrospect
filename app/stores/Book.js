@@ -120,11 +120,13 @@ export class Book {
   purchaseDate: number
   updatedAt: string
   annotations: Annotation[]
+  isKindleBook: boolean
   highlightsUpdatedAt: ?string
 
   constructor({ title, asin, annotations, highlightsUpdatedAt }) {
     this.title = title;
     this.asin = asin;
+    this.isKindleBook = this.asin.length === 10
     this.highlightsUpdatedAt = highlightsUpdatedAt
     this.annotations = annotations ? annotations.map((annotation) => new Annotation(annotation)) : []
   }

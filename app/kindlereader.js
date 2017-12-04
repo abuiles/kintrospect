@@ -6,6 +6,7 @@ books:[{
           "title":"_title_here_"
           "authors":["_author_lastname, _author_name_","_author2_lastname, _author2_name_"]
           "asin":"_asin_here_"
+          "highlightsUpdatedAt":"_date_here_"
           "annotations":[{
                           "highlight":"_highlight_here_"
                           "location":"_location_here_"
@@ -45,37 +46,31 @@ const parse = require('@sole/kindle-clippings-parser').parse;
 
 module.exports = class ParseKindleDirectory {
 
-  constructor(directoryPath, myClippings='My Clippings.txt') {
+  constructor(directoryPath, myClippings = 'My Clippings.txt') {
     this.directoryPath = directoryPath
-    this.myClippings = ( this.directoryPath.endsWith('/') ? '' : '/' ) + myClippings
+    this.myClippings = (this.directoryPath.endsWith('/') ? '' : '/') + myClippings
     if (this.directoryPath.includes(this.myClippings)) {
       this.directoryPath = this.directoryPath.substring(0, this.directoryPath.indexOf(this.myClippings))
     }
   }
 
-  _parseFileFromKindle(format='utf-8') {
-
+  parseFileFromKindle(format = 'utf-8') {
     const fileContents = fs.readFileSync(this.directoryPath + this.myClippings, format);
     const parsed = parse(fileContents);
 
     return parsed
   }
 
-  _getDirectories() {
+  getDirectories() {
     const files = fs.readdirSync(this.directoryPath);
 
     const directories = new Map()
     const underscore = '_'
-    const colon = ':'
 
     files.forEach(file => {
-
       const asinStartIndex = file.lastIndexOf(underscore)
-      let title = file.substring(0, asinStartIndex)
-      while (title.includes(underscore)) {
-        title = title.replace(underscore, colon)
-      }
-      const asin = file.substring(asinStartIndex + 1, file.lastIndexOf("."))
+      const title = file.substring(0, asinStartIndex)
+      const asin = file.substring(asinStartIndex + 1, file.lastIndexOf('.'))
       if (title && asin) {
         directories.set(title, asin)
       }
@@ -85,56 +80,71 @@ module.exports = class ParseKindleDirectory {
   }
 
   getParsedFiles() {
-
     const books = []
-    const directories = this._getDirectories()
-    const parsedFileFromKindle = this._parseFileFromKindle()
+    const directories = this.getDirectories()
+    const parsedFileFromKindle = this.parseFileFromKindle()
+    const charsToAvoid = ['<', '>', ':', '"', '/', '\\', '|', '?', '*']
 
     parsedFileFromKindle.forEach(function(item) {
       const { title, highlights } = item
 
-      //Author and Title
-      const titleIdx = title.lastIndexOf("(")
+      // Author and Title
+      const titleIdx = title.lastIndexOf('(')
       let simpleTitle = title.substring(0, titleIdx - 1)
       let authors = title.substring(titleIdx)
 
       if (!simpleTitle && authors) {
         simpleTitle = authors
-        authors = ""
+        authors = ''
       }
 
-      //Annotations
-      let annotations = []
+      const searchTitle = simpleTitle.split('')
+      let newSearchTitle = ''
+      searchTitle.forEach(function(char, index) {
+        if (charsToAvoid.includes(char)) {
+          searchTitle[index] = '_'
+        }
+        // Used to avoid toString joining the characters with commas
+        newSearchTitle += searchTitle[index]
+      })
+
+      // Annotations
+      const annotations = []
       highlights.forEach(function(annotation) {
         const { metadata, text } = annotation
 
-        const location = Math.ceil(parseInt(metadata.substring(metadata.indexOf("Location ") + 9))/150)
-        annotations.push({highlight: text, location})
+        const location = Math.ceil(parseInt(metadata.substring(metadata.indexOf('Location ') + 9))/150)
+        annotations.push({ highlight: text, location })
       })
 
-      //ASIN
-      let asin = directories.get(simpleTitle)
+      // ASIN
+      let asin = directories.get(simpleTitle) || ''
       if (!asin) {
         directories.forEach(function(value, key) {
-          if (simpleTitle.includes(key)) {
+          if (newSearchTitle.includes(key)) {
             asin = value
-          } else if (key.includes(simpleTitle)) {
+          } else if (key.includes(newSearchTitle)) {
             asin = value
             simpleTitle = key
           }
         })
       }
 
-      //Book
-      books.push({title: simpleTitle, authors, asin: asin, annotations})
+      // Date
+      const highlightsUpdatedAt = new Date()
+
+      // Book
+      if (asin) {
+        books.push({ title: simpleTitle, authors, asin, highlightsUpdatedAt, annotations })
+      }
     });
 
     return books
   }
 }
 
-/*
-const kindleFile = new ParseKindleDirectory('./samples')
+
+/* const kindleFile = new ParseKindleDirectory('../samples')
 const books = kindleFile.getParsedFiles()
 console.log(books)
-*/
+ */

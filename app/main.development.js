@@ -57,6 +57,19 @@ ipcMain.on('books-crawled', (event, books) => {
   event.sender.send('books-loaded', books)
 })
 
+const KindleReader = require('./kindlereader')
+
+ipcMain.on('read-from-kindle', (event) => {
+  const reader = new KindleReader('/Volumes/Kindle/documents')
+  const books = reader.getParsedFiles()
+
+  config.set('books', books)
+
+  event.sender.send('books-saved', books)
+  event.sender.send('books-loaded', books)
+})
+
+
 ipcMain.on('save-notes', (event, asin, doc) => {
   const notes = config.get('notes') || {}
 
