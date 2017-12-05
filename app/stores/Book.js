@@ -33,8 +33,6 @@ export class Annotation implements AnnotationObjectAttrs {
 
     if (payload.highlightId) {
       this.highlightId = payload.highlightId;
-    } else {
-      this.highlightId = `${Math.ceil(Math.random() * 1000)}${Date.now()}`
     }
 
     if (payload.type) {
