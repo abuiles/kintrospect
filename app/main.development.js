@@ -60,7 +60,8 @@ ipcMain.on('books-crawled', (event, books) => {
 const KindleReader = require('./kindlereader')
 
 ipcMain.on('read-from-kindle', (event) => {
-  const reader = new KindleReader('/Volumes/Kindle/documents')
+  // '/Volumes/Kindle/documents'
+  const reader = new KindleReader('/Users/AlejandroMurillo/Documents/Programación/kintrospect/samples')
   const books = reader.getParsedFiles()
 
   config.set('books', books)
