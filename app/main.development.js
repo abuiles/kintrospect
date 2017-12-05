@@ -59,13 +59,8 @@ ipcMain.on('books-crawled', (event, books) => {
 
 const KindleReader = require('./kindlereader')
 
-<<<<<<< HEAD
 ipcMain.on('read-from-kindle', (event, path) => {
   const reader = new KindleReader(path)
-=======
-ipcMain.on('read-from-kindle', (event) => {
-  const reader = new KindleReader('/Volumes/Kindle/documents')
->>>>>>> 58f92a22bee4d78890e0b9bfaa270612d52d5270
   const books = reader.getParsedFiles()
 
   config.set('books', books)
