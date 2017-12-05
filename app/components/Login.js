@@ -44,11 +44,9 @@ export default class Login extends Component {
     dialog.showOpenDialog({
       properties: ['openDirectory']
     }, (path) => {
-
       this.setState({
         syncOption: SyncOption.FetchFromDevice
       })
-  
       const { amazonStore } = this.props
       amazonStore.kindleSignedIn = true
       amazonStore.runKindleCrawler(path)
