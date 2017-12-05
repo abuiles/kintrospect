@@ -108,15 +108,6 @@ module.exports = class ParseKindleDirectory {
         newSearchTitle += searchTitle[index]
       })
 
-      // Annotations
-      const annotations = []
-      highlights.forEach(function(annotation) {
-        const { metadata, text } = annotation
-
-        const location = Math.ceil(parseInt(metadata.substring(metadata.indexOf('Location ') + 9))/150)
-        annotations.push({ highlight: text, location })
-      })
-
       // ASIN
       let asin = directories.get(simpleTitle) || ''
       if (!asin) {
@@ -135,6 +126,19 @@ module.exports = class ParseKindleDirectory {
 
       // Book
       if (asin) {
+        // Annotations
+        const annotations = []
+        highlights.forEach(function(annotation, index) {
+          const { metadata, text } = annotation
+
+          const location = Math.ceil(parseInt(metadata.substring(metadata.indexOf('Location ') + 9))/150)
+          annotations.push({
+            highlight: text,
+            location,
+            highlightId: `kintrospect-${asin}-${index}`
+          })
+        })
+
         books.push({ title: simpleTitle, authors, asin, highlightsUpdatedAt, annotations })
       }
     });
