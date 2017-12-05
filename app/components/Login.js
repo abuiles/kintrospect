@@ -4,6 +4,8 @@ import WebView from 'react-electron-web-view'
 
 import AmazonStore from '../stores/Amazon'
 
+const { dialog } = require('electron').remote
+
 const SyncOption = {
   FetchFromDevice: 'fetchFromDevice',
   SyncFromCloud: 'syncFromCloud',
@@ -39,13 +41,18 @@ export default class Login extends Component {
   }
 
   fetchFromDevice() {
-    this.setState({
-      syncOption: SyncOption.FetchFromDevice
-    })
+    dialog.showOpenDialog({
+      properties: ['openDirectory']
+    }, (path) => {
 
-    const { amazonStore } = this.props
-    amazonStore.kindleSignedIn = true
-    amazonStore.runKindleCrawler()
+      this.setState({
+        syncOption: SyncOption.FetchFromDevice
+      })
+  
+      const { amazonStore } = this.props
+      amazonStore.kindleSignedIn = true
+      amazonStore.runKindleCrawler(path)
+    })
   }
 
   render() {
@@ -76,9 +83,8 @@ export default class Login extends Component {
     } else if (syncOption === SyncOption.FetchFromDevice) {
       syncComponent = (
       <div>
-        <h1 className="f3 red">
-        Figuring out how to go to Home.
-        </h1>
+        <h2 className="f3 blue">Something went wrong!</h2>
+        <h1 className="f3 blue">Make sure your device is connected.</h1>
       </div>)
     }
 

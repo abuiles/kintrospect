@@ -94,10 +94,10 @@ new Promise(function(resolve) {
     }
   }
 
-  @action runKindleCrawler(): void {
+  @action runKindleCrawler(path): void {
     if (!this.running) {
       this.toggleRunning()
-      ipcRenderer.send('read-from-kindle')
+      ipcRenderer.send('read-from-kindle', path)
     } 
   }
 
