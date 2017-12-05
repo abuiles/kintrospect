@@ -5,7 +5,6 @@ import BookCard from './BookCard'
 import SearchInput, { createFilter } from 'react-search-input'
 
 import AmazonStore from '../stores/Amazon'
-import SyncOption from './Login'
 
 const KEYS_TO_FILTERS = ['title']
 
@@ -30,7 +29,7 @@ export default class Home extends Component {
   }
 
   render() {
-    const { amazonStore, syncOption } = this.props;
+    const { amazonStore } = this.props;
     const books = this.props.books || [];
     const filteredBooks = books.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
 

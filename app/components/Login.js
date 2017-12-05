@@ -10,7 +10,7 @@ const SyncOption = {
   Unknown: ''
 }
 
-@inject('amazonStore'/* ,'booksStore' */)
+@inject('amazonStore')
 @observer
 export default class Login extends Component {
 
@@ -54,7 +54,8 @@ export default class Login extends Component {
     const { syncOption } = this.state
 
     let logInDisclaimer = null
-    let syncComponent = (<div>
+    let syncComponent = (
+    <div>
       <h1 className="f3 blue">
       Choose a sync option
         <div>
@@ -65,14 +66,16 @@ export default class Login extends Component {
     </div>)
 
     if (syncOption === SyncOption.SyncFromCloud) {
-      syncComponent = (<WebView
+      syncComponent = (
+      <WebView
         src={amazonStore.amazonUrl()}
         allowpopups
         onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
       />)
       logInDisclaimer = (<p className="f3 ma0">Login first into the Kindle Cloud Reader using the account associated with your Kindle - we don't store or have access to your email or password.</p>)
     } else if (syncOption === SyncOption.FetchFromDevice) {
-      syncComponent = (<div>
+      syncComponent = (
+      <div>
         <h1 className="f3 red">
         Figuring out how to go to Home.
         </h1>
