@@ -98,9 +98,9 @@ new Promise(function(resolve) {
     if (!this.running) {
       this.toggleRunning()
       ipcRenderer.send('read-from-kindle', path.toString())
-    } 
+    }
   }
-
+  
   @action crawlerDidFinish() {
     this.runnnig = false
   }

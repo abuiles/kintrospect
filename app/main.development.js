@@ -81,7 +81,7 @@ ipcMain.on('save-notes', (event, asin, doc) => {
 ipcMain.on('highlights-crawled', (event, asin, items) => {
   const books = config.get('books')
   const book = books.find((b) => b.asin === asin)
-
+  
   book.annotations = items.map((item) => {
     const copy = Object.assign({}, item)
     copy.highlight = he.decode(item.highlight)
