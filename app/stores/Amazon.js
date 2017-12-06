@@ -97,13 +97,14 @@ new Promise(function(resolve) {
   @action runKindleCrawler(path): void {
     if (!this.running) {
       this.toggleRunning()
-      ipcRenderer.send('read-from-kindle', path.toString())
+      ipcRenderer.send('read-from-kindle', path)
     }
   }
   
   @action crawlerDidFinish() {
     this.runnnig = false
   }
+  
   @action signOut() {
     const clearSession = 'KindleApp.deregister()'
 

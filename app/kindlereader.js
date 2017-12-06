@@ -57,6 +57,10 @@ module.exports = class ParseKindleDirectory {
     // }
   }
 
+  hasValidPath(): boolean {
+    return fs.existsSync(this.directoryPath + this.myClippings)
+  }
+
   parseFileFromKindle(format = 'utf-8') {
     const fileContents = fs.readFileSync(this.directoryPath + this.myClippings, format);
     const parsed = parse(fileContents);

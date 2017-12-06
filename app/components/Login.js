@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import WebView from 'react-electron-web-view'
+import ParseKindleDirectory from '../kindlereader'
 
 import AmazonStore from '../stores/Amazon'
 
@@ -40,16 +41,23 @@ export default class Login extends Component {
     })
   }
 
-  fetchFromDevice() {
+  fetchFromDevice() {    
     dialog.showOpenDialog({
       properties: ['openDirectory']
     }, (path) => {
-      this.setState({
-        syncOption: SyncOption.FetchFromDevice
-      })
-      const { amazonStore } = this.props
-      amazonStore.kindleSignedIn = true
-      amazonStore.runKindleCrawler(path)
+      if (path) {
+        const reader = new ParseKindleDirectory(path.toString())
+        if (reader.hasValidPath()) {
+          this.setState({
+            syncOption: SyncOption.FetchFromDevice
+          })
+          const { amazonStore } = this.props
+          amazonStore.kindleSignedIn = true
+          amazonStore.runKindleCrawler(path.toString())
+        } else {
+          dialog.showErrorBox('Clippings not found.', 'Make sure you selected the right directory.')
+        }
+      } 
     })
   }
 
