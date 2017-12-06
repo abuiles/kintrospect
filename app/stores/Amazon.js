@@ -97,7 +97,7 @@ new Promise(function(resolve) {
   @action runKindleCrawler(path): void {
     if (!this.running) {
       this.toggleRunning()
-      ipcRenderer.send('read-from-kindle', path)
+      ipcRenderer.send('read-from-kindle', path.toString())
     } 
   }
 

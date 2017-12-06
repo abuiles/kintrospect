@@ -59,7 +59,7 @@ ipcMain.on('books-crawled', (event, books) => {
 
 const KindleReader = require('./kindlereader')
 
-ipcMain.on('read-from-kindle', (event) => {
+ipcMain.on('read-from-kindle', (event, path) => {
   const reader = new KindleReader(path)
   const books = reader.getParsedFiles()
 
