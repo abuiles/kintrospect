@@ -113,9 +113,9 @@ new Promise(function(resolve) {
         // for some reason we need to force a reload on the webview to
         // display the sign in fields
         this.reload = true
-        this.kindleSignedIn = false
       })
     }
+    this.kindleSignedIn = false
   }
 
   extractBooks() {
@@ -223,7 +223,7 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
   }
 
   extracHighlightsFromNotebook(asin) {
-    const { webview, analytics  } = this
+    const { webview, analytics } = this
     const { booksStore } = this
 
     if (!webview) {

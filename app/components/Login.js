@@ -31,6 +31,16 @@ export default class Login extends Component {
     amazonStore.setWebview(currentTarget)
   }
 
+  componentWillMount() {
+    const { amazonStore } = this.props
+    const { syncOption } = this.state
+    if (!amazonStore.kindleSignedIn && syncOption !== SyncOption.Unknown) {
+      this.setState({
+        syncOption: SyncOption.Unknown
+      })
+    }
+  }
+
   props: {
     amazonStore: AmazonStore
   }
@@ -78,7 +88,7 @@ export default class Login extends Component {
       </h1>
     </div>)
 
-    if (syncOption === SyncOption.SyncFromCloud) {
+    if (!kindleSignedIn && syncOption === SyncOption.SyncFromCloud) {
       syncComponent = (
       <WebView
         src={amazonStore.amazonUrl()}
@@ -86,7 +96,7 @@ export default class Login extends Component {
         onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
       />)
       logInDisclaimer = (<p className="f3 ma0">Login first into the Kindle Cloud Reader using the account associated with your Kindle - we don't store or have access to your email or password.</p>)
-    } else if (syncOption === SyncOption.FetchFromDevice) {
+    } else if (kindleSignedIn && syncOption === SyncOption.FetchFromDevice) {
       syncComponent = (
       <div>
         <h2 className="f3 blue">Something went wrong!</h2>
