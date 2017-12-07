@@ -54,7 +54,8 @@ export default class Login extends Component {
               dialog.showMessageBox({
                 type: 'error',
                 icon: appIcon,
-                message: 'Clippings not found.\nMake sure you selected the right directory.'
+                message: 'Clippings not found',
+                detail: 'Make sure you selected the right directory.'
               })
             }
           }
