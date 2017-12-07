@@ -51,23 +51,30 @@ export default class Login extends Component {
     })
   }
 
-  fetchFromDevice() {    
-    dialog.showOpenDialog({
-      properties: ['openDirectory']
-    }, (path) => {
-      if (path) {
-        const reader = new ParseKindleDirectory(path.toString())
-        if (reader.hasValidPath()) {
-          this.setState({
-            syncOption: SyncOption.FetchFromDevice
-          })
-          const { amazonStore } = this.props
-          amazonStore.kindleSignedIn = true
-          amazonStore.runKindleCrawler(path.toString())
-        } else {
-          dialog.showErrorBox('Clippings not found.', 'Make sure you selected the right directory.')
+  fetchFromDevice() {
+    dialog.showMessageBox({
+      type: 'info',
+      title: 'Syncing from Kindle device',
+      message: 'Select next the directory containing "My Clippings.txt" inside your Kindle device.',
+      detail: 'If you language is not English, just select the directory that contains the equivalent.',
+    }, () => {
+      dialog.showOpenDialog({
+        properties: ['openDirectory']
+      }, (path) => {
+        if (path) {
+          const reader = new ParseKindleDirectory(path.toString())
+          if (reader.hasValidPath()) {
+            this.setState({
+              syncOption: SyncOption.FetchFromDevice
+            })
+            const { amazonStore } = this.props
+            amazonStore.kindleSignedIn = true
+            amazonStore.runKindleCrawler(path.toString())
+          } else {
+            dialog.showErrorBox('Clippings not found.', 'Make sure you selected the right directory.')
+          }
         }
-      } 
+      })
     })
   }
 
