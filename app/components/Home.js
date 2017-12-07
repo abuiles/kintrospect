@@ -4,7 +4,7 @@ import { observer, inject } from 'mobx-react'
 import BookCard from './BookCard'
 import SearchInput, { createFilter } from 'react-search-input'
 
-import AmazonStore from '../stores/Amazon'
+import AmazonStore, { syncOptions } from '../stores/Amazon'
 
 const KEYS_TO_FILTERS = ['title']
 
@@ -33,17 +33,22 @@ export default class Home extends Component {
     const books = this.props.books || [];
     const filteredBooks = books.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
 
+    const syncButton = (amazonStore.userPreferences.syncOption === syncOptions.FetchFromDevice) ? (
+      <button className="btn" onClick={() => amazonStore.runKindleCrawler()}>
+        <i className="fa fa-refresh white" aria-hidden="true"></i>&nbsp;Fetch From Device
+      </button>
+    ) : (
+      <button className="btn" onClick={() => amazonStore.runCrawler()}>
+        <i className="fa fa-refresh white" aria-hidden="true"></i>&nbsp;Fetch Books
+      </button>
+    )
+
     return (
       <div className="h-100 flex flex-column ph3 bl b--near-white bg-light-gray relative">
         <header className="pv4 ph3 flex cf">
           <SearchInput className="search-input paragraph mw-100" onChange={(term) => this.searchUpdated(term)} />
             <div className="w-100 tr">
-              <button className="btn" onClick={() => amazonStore.runCrawler()}>
-                <i className="fa fa-refresh white" aria-hidden="true"></i>&nbsp;Fetch Books
-              </button>
-              <button className="btn" onClick={() => amazonStore.runKindleCrawler()}>
-                <i className="fa fa-refresh white" aria-hidden="true"></i>&nbsp;Fetch From Device
-              </button>
+              {syncButton}
             </div>
         </header>
         <div className="overflow-y-auto h-100">

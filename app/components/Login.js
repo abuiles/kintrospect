@@ -3,26 +3,13 @@ import { observer, inject } from 'mobx-react'
 import WebView from 'react-electron-web-view'
 import ParseKindleDirectory from '../kindlereader'
 
-import AmazonStore from '../stores/Amazon'
+import AmazonStore, { syncOptions } from '../stores/Amazon'
 
-const { dialog } = require('electron').remote
-
-const SyncOption = {
-  FetchFromDevice: 'fetchFromDevice',
-  SyncFromCloud: 'syncFromCloud',
-  Unknown: ''
-}
+const { dialog, nativeImage } = require('electron').remote
 
 @inject('amazonStore')
 @observer
 export default class Login extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      syncOption: SyncOption.Unknown
-    }
-  }
 
   onDidFinishLoad({ currentTarget }) {
     const { amazonStore } = this.props
@@ -31,57 +18,55 @@ export default class Login extends Component {
     amazonStore.setWebview(currentTarget)
   }
 
-  componentWillMount() {
-    const { amazonStore } = this.props
-    const { syncOption } = this.state
-    if (!amazonStore.kindleSignedIn && syncOption !== SyncOption.Unknown) {
-      this.setState({
-        syncOption: SyncOption.Unknown
-      })
-    }
-  }
-
   props: {
     amazonStore: AmazonStore
   }
 
   syncFromCloud() {
-    this.setState({
-      syncOption: SyncOption.SyncFromCloud
-    })
+    const { amazonStore } = this.props
+    amazonStore.userPreferences.syncOption = syncOptions.SyncFromCloud
   }
 
   fetchFromDevice() {
+    const appIcon = nativeImage.createFromPath('./resources/icon.png')
+
     dialog.showMessageBox({
       type: 'info',
+      icon: appIcon,
+      buttons: ['Ok', 'Cancel'],
       title: 'Syncing from Kindle device',
       message: 'Select next the directory containing "My Clippings.txt" inside your Kindle device.',
       detail: 'If you language is not English, just select the directory that contains the equivalent.',
-    }, () => {
-      dialog.showOpenDialog({
-        properties: ['openDirectory']
-      }, (path) => {
-        if (path) {
-          const reader = new ParseKindleDirectory(path.toString())
-          if (reader.hasValidPath()) {
-            this.setState({
-              syncOption: SyncOption.FetchFromDevice
-            })
-            const { amazonStore } = this.props
-            amazonStore.kindleSignedIn = true
-            amazonStore.runKindleCrawler(path.toString())
-          } else {
-            dialog.showErrorBox('Clippings not found.', 'Make sure you selected the right directory.')
+    }, (response) => {
+      if (response === 0) {
+        dialog.showOpenDialog({
+          properties: ['openDirectory']
+        }, (path) => {
+          if (path) {
+            const reader = new ParseKindleDirectory(path.toString())
+            if (reader.hasValidPath()) {
+              const { amazonStore } = this.props
+              amazonStore.userPreferences.syncOption = syncOptions.FetchFromDevice
+              amazonStore.userPreferences.kindlePath = path.toString()
+              amazonStore.kindleSignedIn = true
+              amazonStore.runKindleCrawler()
+            } else {
+              dialog.showMessageBox({
+                type: 'error',
+                icon: appIcon,
+                message: 'Clippings not found.\nMake sure you selected the right directory.'
+              })
+            }
           }
-        }
-      })
+        })
+      }
     })
   }
 
   render() {
     const { amazonStore } = this.props
-    const { kindleSignedIn, hasWebview } = amazonStore
-    const { syncOption } = this.state
+    const { kindleSignedIn, hasWebview, userPreferences } = amazonStore
+    const { syncOption } = userPreferences
 
     let logInDisclaimer = null
     let syncComponent = (
@@ -95,7 +80,7 @@ export default class Login extends Component {
       </h1>
     </div>)
 
-    if (!kindleSignedIn && syncOption === SyncOption.SyncFromCloud) {
+    if (syncOption === syncOptions.SyncFromCloud) {
       syncComponent = (
       <WebView
         src={amazonStore.amazonUrl()}
@@ -103,7 +88,7 @@ export default class Login extends Component {
         onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
       />)
       logInDisclaimer = (<p className="f3 ma0">Login first into the Kindle Cloud Reader using the account associated with your Kindle - we don't store or have access to your email or password.</p>)
-    } else if (kindleSignedIn && syncOption === SyncOption.FetchFromDevice) {
+    } else if (syncOption === syncOptions.FetchFromDevice) {
       syncComponent = (
       <div>
         <h2 className="f3 blue">Something went wrong!</h2>

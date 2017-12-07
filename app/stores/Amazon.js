@@ -5,6 +5,17 @@ import BookStore from './Book'
 
 const AmazonUrl = 'https://www.amazon.com/ap/signin?openid.assoc_handle=amzn_kweb&openid.return_to=https%3A%2F%2Fread.amazon.com%2F&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&pageId=amzn_kcr'
 
+export const syncOptions = {
+  FetchFromDevice: 'fetchFromDevice',
+  SyncFromCloud: 'syncFromCloud',
+  Unknown: ''
+}
+
+// type SyncOption = $Keys<typeof syncOptions>;
+
+// interface UserPreferences {
+//   syncOption: SyncOption
+// }
 
 export default class AmazonStore {
   @observable running = false
@@ -12,6 +23,10 @@ export default class AmazonStore {
   @observable webview = null
   @observable booksStore: ?BookStore = null
   @observable analytics = null
+  @observable userPreferences = {
+    syncOption: syncOptions.Unknown,
+    kindlePath: ''
+  }
 
   @computed get isRunning(): boolean {
     return this.running
@@ -94,10 +109,10 @@ new Promise(function(resolve) {
     }
   }
 
-  @action runKindleCrawler(path): void {
+  @action runKindleCrawler(): void {
     if (!this.running) {
       this.toggleRunning()
-      ipcRenderer.send('read-from-kindle', path)
+      ipcRenderer.send('read-from-kindle', this.userPreferences.kindlePath)
     }
   }
   
@@ -113,9 +128,14 @@ new Promise(function(resolve) {
         // for some reason we need to force a reload on the webview to
         // display the sign in fields
         this.reload = true
+        this.userPreferences.syncOption = syncOptions.Unknown
+        this.kindleSignedIn = false
       })
+    } else {
+      this.userPreferences.syncOption = syncOptions.Unknown
+      this.userPreferences.kindlePath = ''
+      this.kindleSignedIn = false
     }
-    this.kindleSignedIn = false
   }
 
   extractBooks() {
@@ -148,7 +168,7 @@ new Promise(function(resolve) {
     const { booksStore } = this
     booksStore.setLoading(true)
 
-    const { webview, analytics  } = this
+    const { webview, analytics } = this
 
     new Promise((resolve) => {
       webview.executeJavaScript(this.extractBooks(), false, (result) => {
