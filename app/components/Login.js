@@ -36,7 +36,7 @@ export default class Login extends Component {
       buttons: ['Ok', 'Cancel'],
       title: 'Syncing from Kindle device',
       message: 'Select next the directory containing "My Clippings.txt" inside your Kindle device.',
-      detail: 'If you language is not English, just select the directory that contains the equivalent.',
+      detail: 'If your language is not English, just select the directory that contains the equivalent.',
     }, (response) => {
       if (response === 0) {
         dialog.showOpenDialog({
