@@ -59,8 +59,8 @@ ipcMain.on('books-crawled', (event, books) => {
 
 const KindleReader = require('./kindlereader')
 
-ipcMain.on('read-from-kindle', (event) => {
-  const reader = new KindleReader('/Volumes/Kindle/documents')
+ipcMain.on('read-from-kindle', (event, path) => {
+  const reader = new KindleReader(path)
   const books = reader.getParsedFiles()
 
   config.set('books', books)
@@ -81,7 +81,7 @@ ipcMain.on('save-notes', (event, asin, doc) => {
 ipcMain.on('highlights-crawled', (event, asin, items) => {
   const books = config.get('books')
   const book = books.find((b) => b.asin === asin)
-
+  
   book.annotations = items.map((item) => {
     const copy = Object.assign({}, item)
     copy.highlight = he.decode(item.highlight)

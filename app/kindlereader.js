@@ -52,6 +52,13 @@ module.exports = class ParseKindleDirectory {
     if (this.directoryPath.includes(this.myClippings)) {
       this.directoryPath = this.directoryPath.substring(0, this.directoryPath.indexOf(this.myClippings))
     }
+    // if (!fs.existsSync(this.directoryPath + this.myClippings)) {
+
+    // }
+  }
+
+  hasValidPath(): boolean {
+    return fs.existsSync(this.directoryPath + this.myClippings)
   }
 
   parseFileFromKindle(format = 'utf-8') {
