@@ -4,6 +4,8 @@ import { PropTypes } from 'mobx-react'
 import slug from 'slug'
 import uuid from 'uuid/v4'
 
+import RootStore from './Root'
+
 export const CommonplaceArray = PropTypes.observableArray
 
 export interface ICommonplace {
@@ -25,10 +27,19 @@ export class Commonplace {
     this.id = id
     this.slug = slug
   }
+
+  get asin(): string {
+    return this.id
+  }
 }
 
-export default class NoteStore {
+export default class CommonplaceStore {
   @observable commonplaces: CommonplaceArray = []
+  @observable rootStore: ?RootStore = null
+
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore
+  }
 
   @computed get all() {
     return this.commonplaces
