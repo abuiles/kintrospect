@@ -2,8 +2,13 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import SearchInput, { createFilter } from 'react-search-input'
-import { Commonplace } from '../stores/Commonplace'
 
+import NotesEditor from './NotesEditor';
+
+import { Commonplace } from '../stores/Commonplace'
+import NoteStore from '../stores/Note'
+
+@inject('notesStore')
 @observer
 export default class CommonplaceView extends Component {
   state: {
@@ -15,7 +20,8 @@ export default class CommonplaceView extends Component {
   }
 
   props: {
-    commonplace: Commonplace
+    commonplace: Commonplace,
+    notesStore: NoteStore
   }
 
   searchUpdated(term: string) {
@@ -23,7 +29,8 @@ export default class CommonplaceView extends Component {
   }
 
   render() {
-    const { commonplace: { title } } = this.props
+    const { commonplace, notesStore } = this.props
+    const { title } = commonplace
 
     return (
       <div className="flex w-100 h-100">
@@ -40,7 +47,7 @@ export default class CommonplaceView extends Component {
         </div>
 
         <div className="w-60 bg-light-gray">
-          <h1>Commonplace editor comes here</h1>
+          {!notesStore.loading && <NotesEditor book={commonplace} />}
         </div>
       </div>
     );
