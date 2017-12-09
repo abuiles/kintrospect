@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import RootStore from '../stores/Root'
 import CommonplaceView from '../components/Commonplace'
+import withDragDropContext from './withDragDropContext'
 
 @inject('rootStore', 'analytics')
 @observer
-export default class CommonplacePage extends Component {
+class CommonplacePage extends Component {
   props: {
     match: { params: { id: string } },
     rootStore: RootStore,
@@ -38,3 +39,5 @@ export default class CommonplacePage extends Component {
     )
   }
 }
+
+export default withDragDropContext(CommonplacePage);
