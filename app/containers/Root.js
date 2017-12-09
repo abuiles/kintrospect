@@ -13,6 +13,8 @@ import { machineIdSync } from 'electron-machine-id';
 
 import HomePage from './HomePage'
 import BookPage from './BookPage'
+import CommonplacesPage from './CommonplacesPage'
+import CommonplacePage from './CommonplacePage'
 import BookStore from '../stores/Book'
 import NoteStore from '../stores/Note'
 import AmazonStore from '../stores/Amazon'
@@ -86,6 +88,8 @@ export default class Root extends React.Component {
                 <Sidebar />
                 <Route exact path="/" component={HomePage} />
                 <Route path="/book/:asin" component={BookPage} />
+                <Route path="/commonplace-books" component={CommonplacesPage} />
+                <Route path="/commonplace-book" component={CommonplacePage} />
               </div>
             }
             <Login amazonStore={amazonStore} />

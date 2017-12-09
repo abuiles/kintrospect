@@ -123,7 +123,7 @@ new Promise(function(resolve) {
   @action signOut() {
     const clearSession = 'KindleApp.deregister()'
 
-    if (this.webview) {
+    if (this.webview && this.userPreferences.syncOption === syncOptions.SyncFromCloud) {
       this.webview.executeJavaScript(clearSession, false, () => {
         // for some reason we need to force a reload on the webview to
         // display the sign in fields
