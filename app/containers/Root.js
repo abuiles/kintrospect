@@ -90,8 +90,8 @@ export default class Root extends React.Component {
                 <Sidebar />
                 <Route exact path="/" component={HomePage} />
                 <Route path="/book/:asin" component={BookPage} />
-                <Route path="/commonplace-books" component={CommonplacesPage} />
-                <Route path="/commonplace-book" component={CommonplacePage} />
+                <Route exact path="/commonplace-books" component={CommonplacesPage} />
+                <Route path="/commonplace-books/:id" component={CommonplacePage} />
               </div>
             }
             <Login amazonStore={amazonStore} />
