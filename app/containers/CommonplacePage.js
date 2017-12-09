@@ -1,22 +1,22 @@
 // @flow
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
-import CommonplaceStore, { Commonplace } from '../stores/Commonplace'
+import RootStore from '../stores/Root'
 import CommonplaceView from '../components/Commonplace'
 
-@inject('commonplaceStore', 'analytics')
+@inject('rootStore', 'analytics')
 @observer
 export default class CommonplacePage extends Component {
   props: {
     match: { params: { id: string } },
-    commonplaceStore: CommonplaceStore,
+    rootStore: RootStore,
     analytics: any
   }
 
   componentDidMount() {
-    const { analytics, match, commonplaceStore } = this.props
+    const { analytics, match, rootStore } = this.props
     const id = match.params.id
-    const commonplace = commonplaceStore.find(id)
+    const commonplace = rootStore.findCommonplace(id)
 
     analytics.pageview(
       'https://app.kintrospect.com',
@@ -27,9 +27,9 @@ export default class CommonplacePage extends Component {
   }
 
   render() {
-    const { match, commonplaceStore } = this.props
+    const { match, rootStore } = this.props
     const id = match.params.id
-    const commonplace = commonplaceStore.find(id)
+    const commonplace = rootStore.findCommonplace(id)
 
     return (
       <div className="w-100">

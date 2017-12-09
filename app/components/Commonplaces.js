@@ -8,7 +8,8 @@ import {
 import { withRouter } from 'react-router'
 import Modal from 'react-modal';
 import TimeAgo from 'react-timeago'
-import CommonplaceStore, { Commonplace } from '../stores/Commonplace'
+import { Commonplace } from '../stores/Commonplace'
+import RootStore from '../stores/Root'
 
 const KEYS_TO_FILTERS = ['title']
 
@@ -40,7 +41,7 @@ class CommonplaceCard extends Component {
   }
 }
 
-@inject('commonplaceStore')
+@inject('rootStore')
 @observer
 export default class Home extends Component {
   state: {
@@ -56,7 +57,7 @@ export default class Home extends Component {
   }
 
   props: {
-    commonplaceStore: CommonplaceStore
+    rootStore: RootStore
   }
 
   searchUpdated(term) {
@@ -64,9 +65,9 @@ export default class Home extends Component {
   }
 
   createCommonplace(history) {
-    const { commonplaceStore } = this.props
+    const { rootStore } = this.props
     const { commonplaceName } = this.state
-    const { id } = commonplaceStore.createCommonplace(commonplaceName)
+    const { id } = rootStore.commonplaceStore.createCommonplace(commonplaceName)
     this.setState({ commonplaceName: '', modalIsOpen: false})
     history.push(`/commonplace-books/${id}`)
   }
@@ -76,9 +77,9 @@ export default class Home extends Component {
   }
 
   render() {
-    const { commonplaceStore } = this.props
+    const { rootStore } = this.props
     const { modalIsOpen, searchTerm, commonplaceName } = this.state
-    const commonplaces = commonplaceStore.all
+    const commonplaces = rootStore.commonplaceStore.all
     const filtered = commonplaces.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
 
     const SaveButton = withRouter(({ history }) => (

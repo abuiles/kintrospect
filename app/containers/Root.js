@@ -18,7 +18,7 @@ import CommonplacePage from './CommonplacePage'
 import BookStore from '../stores/Book'
 import NoteStore from '../stores/Note'
 import AmazonStore from '../stores/Amazon'
-import CommonplaceStore from '../stores/Commonplace'
+import RootStore from '../stores/Root'
 import Sidebar from '../components/Sidebar'
 import Spinner from '../components/Spinner'
 import Login from '../components/Login'
@@ -26,7 +26,8 @@ import Login from '../components/Login'
 const booksStore = new BookStore();
 const notesStore = new NoteStore();
 const amazonStore = new AmazonStore();
-const commonplaceStore = new CommonplaceStore()
+
+const rootStore = new RootStore(booksStore, notesStore, amazonStore)
 
 amazonStore.setBookStore(booksStore)
 
@@ -78,7 +79,7 @@ export default class Root extends React.Component {
     }
 
     return (
-      <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} analytics={analytics} commonplaceStore={commonplaceStore} >
+      <Provider booksStore={booksStore} notesStore={notesStore} amazonStore={amazonStore} analytics={analytics} rootStore={rootStore} >
         <Router>
           <div className="vh-100 w-100 sans-serif">
             {isRunning &&
