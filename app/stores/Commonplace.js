@@ -45,4 +45,8 @@ export default class NoteStore {
     })
     this.commonplaces.push(commonplace)
   }
+
+  find(id: string): ?Commonplace {
+    return this.commonplaces.find((c: Commonplace) => c.id === id)
+  }
 }
