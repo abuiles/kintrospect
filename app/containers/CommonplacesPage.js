@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import { Link } from 'react-router-dom'
 
+import CommonplacesView from '../components/Commonplaces'
+
 @inject('booksStore')
 @inject('amazonStore')
 @inject('analytics')
@@ -27,12 +29,7 @@ export default class CommonplacesPage extends Component {
   render() {
     return (
       <div className="w-100">
-        <div className="h-100 flex flex-column ph3 bl b--near-white bg-light-gray relative">
-          <h1>Your Commonplace Books</h1>
-          <Link className="no-underline mr4" to="/commonplace-book" >
-            Commonplace Page
-          </Link>
-        </div>
+        <CommonplacesView />
       </div>
     );
   }

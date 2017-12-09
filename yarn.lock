@@ -3353,7 +3353,7 @@ execa@^0.4.0:
     path-key "^1.0.0"
     strip-eof "^1.0.0"
 
-exenv@^1.2.1:
+exenv@^1.2.0, exenv@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/exenv/-/exenv-1.2.2.tgz#2ae78e85d9894158670b03d47bec1f03bd91bb9d"
 
@@ -6883,6 +6883,14 @@ react-mobiledoc-editor@^0.1.0:
   resolved "https://registry.yarnpkg.com/react-mobiledoc-editor/-/react-mobiledoc-editor-0.1.0.tgz#0f8c04ecde3e07a33b5ba1c81fa26721754f3c2d"
   dependencies:
     classnames "^2.2.5"
+
+react-modal@^3.1.7:
+  version "3.1.7"
+  resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.1.7.tgz#21feb937c95cd722bf2d375cada751fdc8189c0e"
+  dependencies:
+    exenv "^1.2.0"
+    prop-types "^15.5.10"
+    warning "^3.0.0"
 
 react-motion-drawer@^2.1.5:
   version "2.1.5"
