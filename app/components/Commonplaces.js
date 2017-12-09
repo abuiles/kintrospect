@@ -18,12 +18,12 @@ class CommonplaceCard extends Component {
   }
 
   render() {
-    const { commonplace: { title, createdAt } } = this.props
+    const { commonplace: { title, createdAt, slug, id } } = this.props
 
     return (
       <div className="w-20-l w-third-m w-100 pa3-ns pb3 f5 v-top flex">
         <div className="bg-white flex flex-column shadow-1 w-100">
-          <Link className="no-underline" to="/commonplace-book" >
+          <Link className="no-underline" to={`/commonplace-books/${id}`} >
             <div className="aspect-ratio aspect-ratio--5x8">
               {title}
             </div>
