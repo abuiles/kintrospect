@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 import { observer, inject } from 'mobx-react'
 import BookCard from './BookCard'
 import SearchInput, { createFilter } from 'react-search-input'
+import {
+  Link
+} from 'react-router-dom'
 
 import AmazonStore, { syncOptions } from '../stores/Amazon'
 
@@ -46,10 +49,13 @@ export default class Home extends Component {
     return (
       <div className="h-100 flex flex-column ph3 bl b--near-white bg-light-gray relative">
         <header className="pv4 ph3 flex cf">
+          <Link className="no-underline mr4" to="/commonplace-books" >
+            Commonplace
+          </Link>
           <SearchInput className="search-input paragraph mw-100" onChange={(term) => this.searchUpdated(term)} />
-            <div className="w-100 tr">
-              {syncButton}
-            </div>
+          <div className="w-100 tr">
+            {syncButton}
+          </div>
         </header>
         <div className="overflow-y-auto h-100">
           <div className="f0 flex flex-wrap">
