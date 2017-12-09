@@ -53,7 +53,7 @@ class NotesEditor extends React.Component {
     connectDropTarget: () => void,
     isOver: boolean,
     canDrop: boolean,
-    book: Book,
+    book: any,
     notesStore: NoteStore
   }
 
