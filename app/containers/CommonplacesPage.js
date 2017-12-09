@@ -5,14 +5,10 @@ import { Link } from 'react-router-dom'
 
 import CommonplacesView from '../components/Commonplaces'
 
-@inject('booksStore')
-@inject('amazonStore')
 @inject('analytics')
 @observer
 export default class CommonplacesPage extends Component {
   props: {
-    booksStore: BookStore,
-    amazonStore: AmazonStore,
     analytics: any
   }
 
