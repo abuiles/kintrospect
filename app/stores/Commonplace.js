@@ -27,13 +27,14 @@ export default class NoteStore {
   }
 
   @action createCommonplace(title: string): void {
-    this.commonplaces.push({
+    const commonplace = new Commonplace({
       title,
-      createdAt: new Date(),
+      createdAt: new Date().toISOString()
       /*
         id: TODO assign an UUID https://www.npmjs.com/package/uuid
         slug: TODO create an unique identifier with the name look for possible collisions with other commomnplaces see https://www.npmjs.com/package/slug
       */
     })
+    this.commonplaces.push(commonplace)
   }
 }
