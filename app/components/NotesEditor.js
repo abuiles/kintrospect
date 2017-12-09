@@ -72,11 +72,6 @@ class NotesEditor extends React.Component {
     analytics.event('Notes', 'downloaded', { evLabel: book.asin, clientID: analytics._machineID })
   }
 
-  publish() {
-    const { notesStore, book } = this.props
-    notesStore.publish(book)
-  }
-
   didCreateEditor(editor) {
     console.log('created editor:', editor);
     const { notesStore } = this.props
@@ -157,7 +152,6 @@ class NotesEditor extends React.Component {
                 <button className="btn f6 mr3" onClick={() => this.downloadNotes()}>
                   Export Notes
                 </button>
-                {/* <button className="btn f6" onClick={() => this.publish() }>Publish</button> */}
               </div>
             </div>
 
