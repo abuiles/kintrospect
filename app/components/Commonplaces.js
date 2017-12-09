@@ -5,6 +5,7 @@ import SearchInput, { createFilter } from 'react-search-input'
 import {
   Link
 } from 'react-router-dom'
+import { withRouter } from 'react-router'
 import Modal from 'react-modal';
 import TimeAgo from 'react-timeago'
 import CommonplaceStore, { Commonplace } from '../stores/Commonplace'
@@ -39,14 +40,9 @@ class CommonplaceCard extends Component {
   }
 }
 
-
 @inject('commonplaceStore')
 @observer
 export default class Home extends Component {
-  props: {
-    commonplaceStore: CommonplaceStore,
-  }
-
   state: {
     searchTerm: string,
     modalIsOpen: boolean,
@@ -59,15 +55,20 @@ export default class Home extends Component {
     commonplaceName: ''
   }
 
+  props: {
+    commonplaceStore: CommonplaceStore
+  }
+
   searchUpdated(term) {
     this.setState({ searchTerm: term })
   }
 
-  createCommonplace() {
+  createCommonplace(history) {
     const { commonplaceStore } = this.props
     const { commonplaceName } = this.state
-    commonplaceStore.createCommonplace(commonplaceName)
+    const { id } = commonplaceStore.createCommonplace(commonplaceName)
     this.setState({ commonplaceName: '', modalIsOpen: false})
+    history.push(`/commonplace-books/${id}`)
   }
 
   closeModal() {
@@ -79,6 +80,10 @@ export default class Home extends Component {
     const { modalIsOpen, searchTerm, commonplaceName } = this.state
     const commonplaces = commonplaceStore.all
     const filtered = commonplaces.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
+
+    const SaveButton = withRouter(({ history }) => (
+      <button onClick={() => this.createCommonplace(history) }>Save</button>
+    ))
 
     return (
       <div className="h-100 flex flex-column ph3 bl b--near-white bg-light-gray relative">
@@ -104,7 +109,7 @@ export default class Home extends Component {
         >
           <h2>Name your commonplace</h2>
           <button onClick={() => this.closeModal() }>close</button>
-          <button onClick={() => this.createCommonplace() }>Save</button>
+          <SaveButton />
           <form>
           <input type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
           </form>
