@@ -5,17 +5,11 @@ import SearchInput, { createFilter } from 'react-search-input'
 import {
   Link
 } from 'react-router-dom'
-import TimeAgo from 'react-timeago';
-
+import Modal from 'react-modal';
+import TimeAgo from 'react-timeago'
 import CommonplaceStore, { Commonplace } from '../stores/Commonplace'
 
 const KEYS_TO_FILTERS = ['title']
-
-const NewButton = (({ action }) => (
-  <button className="btn" onClick={() => action()}>
-    <i className="fa fa-plus white" aria-hidden="true"></i>&nbsp;New commonplace book
-  </button>
-))
 
 // eventually we should move this onto its own file
 class CommonplaceCard extends Component {
@@ -54,28 +48,46 @@ export default class Home extends Component {
   }
 
   state: {
-    searchTerm: stringpp
+    searchTerm: string,
+    modalIsOpen: boolean,
+    commonplaceName: string
   }
 
   state = {
-    searchTerm: ''
+    searchTerm: '',
+    modalIsOpen: false,
+    commonplaceName: ''
   }
 
   searchUpdated(term) {
     this.setState({ searchTerm: term })
   }
 
+  createCommonplace() {
+    const { commonplaceStore } = this.props
+    const { commonplaceName } = this.state
+    commonplaceStore.createCommonplace(commonplaceName)
+    this.setState({ commonplaceName: '', modalIsOpen: false})
+  }
+
+  closeModal() {
+    this.setState({ modalIsOpen: false, commonplaceName: '' })
+  }
+
   render() {
     const { commonplaceStore } = this.props
+    const { modalIsOpen, searchTerm, commonplaceName } = this.state
     const commonplaces = commonplaceStore.all
-    const filtered = commonplaces.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
+    const filtered = commonplaces.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
 
     return (
       <div className="h-100 flex flex-column ph3 bl b--near-white bg-light-gray relative">
         <header className="pv4 ph3 flex cf">
           <SearchInput className="search-input paragraph mw-100" onChange={(term) => this.searchUpdated(term)} />
           <div className="w-100 tr">
-            <NewButton action={() => alert('action clicked')} />
+            <button className="btn" onClick={() => this.setState({ modalIsOpen: true })}>
+              <i className="fa fa-plus white" aria-hidden="true"></i>&nbsp;New commonplace book
+            </button>
           </div>
         </header>
         <div className="overflow-y-auto h-100">
@@ -83,9 +95,20 @@ export default class Home extends Component {
             {filtered.map((commonplace) => (
               <CommonplaceCard commonplace={commonplace} key={commonplace.createdAt} />
             ))}
-            {!!filtered && <h2>Create some commonplaces first </h2>}
+            {!filtered && <h2>Create some commonplaces first </h2>}
           </div>
         </div>
+        <Modal
+          isOpen={modalIsOpen}
+          contentLabel="New commonplace book"
+        >
+          <h2>Name your commonplace</h2>
+          <button onClick={() => this.closeModal() }>close</button>
+          <button onClick={() => this.createCommonplace() }>Save</button>
+          <form>
+          <input type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
+          </form>
+        </Modal>
       </div>
     );
   }
