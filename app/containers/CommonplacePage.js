@@ -4,9 +4,8 @@ import { observer, inject } from 'mobx-react'
 
 @inject('booksStore', 'amazonStore', 'analytics')
 @observer
-class CommonplacePage extends Component {
+export default class CommonplacePage extends Component {
   props: {
-    match: { params: { asin: string } },
     booksStore: BookStore,
     amazonStore: AmazonStore,
     analytics: any
