@@ -34,7 +34,7 @@ export default class NoteStore {
     return this.commonplaces
   }
 
-  @action createCommonplace(title: string): void {
+  @action createCommonplace(title: string): Commonplace {
     const id = uuid()
     const titleSlug = slug(title, { lower: true })
     const commonplace = new Commonplace({
@@ -44,6 +44,8 @@ export default class NoteStore {
       slug: titleSlug
     })
     this.commonplaces.push(commonplace)
+
+    return commonplace
   }
 
   find(id: string): ?Commonplace {
