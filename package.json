@@ -213,6 +213,7 @@
     "react-router-dom": "^4.0.0",
     "react-throttle": "^0.3.0",
     "react-timeago": "^3.4.3",
+    "serializr": "^1.1.14",
     "slug": "^0.9.1",
     "source-map-support": "^0.4.10",
     "tachyons": "^4.7.0",
