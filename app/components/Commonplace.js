@@ -63,7 +63,7 @@ export default class CommonplaceView extends Component {
               isKindleBook={annotation.isKindleBook}
               isHighlighted={annotation === selectedAnnotation}
               selectAnnotation={(selected) => this.selectAnnotation(selected)}
-              showBookTitle={true}
+              showBookTitle
             />
           </div>
         )}

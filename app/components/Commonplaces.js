@@ -68,7 +68,7 @@ export default class Home extends Component {
     const { rootStore } = this.props
     const { commonplaceName } = this.state
     const { id } = rootStore.commonplaceStore.createCommonplace(commonplaceName)
-    this.setState({ commonplaceName: '', modalIsOpen: false})
+    this.setState({ commonplaceName: '', modalIsOpen: false })
     history.push(`/commonplace-books/${id}`)
   }
 
@@ -83,7 +83,7 @@ export default class Home extends Component {
     const filtered = commonplaces.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
 
     const SaveButton = withRouter(({ history }) => (
-      <button onClick={() => this.createCommonplace(history) }>Save</button>
+      <button onClick={() => this.createCommonplace(history)}>Save</button>
     ))
 
     return (
@@ -92,7 +92,7 @@ export default class Home extends Component {
           <SearchInput className="search-input paragraph mw-100" onChange={(term) => this.searchUpdated(term)} />
           <div className="w-100 tr">
             <button className="btn" onClick={() => this.setState({ modalIsOpen: true })}>
-              <i className="fa fa-plus white" aria-hidden="true"></i>&nbsp;New commonplace book
+              <i className="fa fa-plus white" aria-hidden="true" />&nbsp;New commonplace book
             </button>
           </div>
         </header>
@@ -109,10 +109,10 @@ export default class Home extends Component {
           contentLabel="New commonplace book"
         >
           <h2>Name your commonplace</h2>
-          <button onClick={() => this.closeModal() }>close</button>
+          <button onClick={() => this.closeModal()}>close</button>
           <SaveButton />
           <form>
-          <input type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
+            <input type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
           </form>
         </Modal>
       </div>

@@ -38,11 +38,11 @@ export default class Home extends Component {
 
     const syncButton = (amazonStore.syncingFromDevice) ? (
       <button className="btn" onClick={() => amazonStore.runKindleCrawler()}>
-        <i className="fa fa-refresh white" aria-hidden="true"></i>&nbsp;Fetch From Device
+        <i className="fa fa-refresh white" aria-hidden="true" />&nbsp;Fetch From Device
       </button>
     ) : (
       <button className="btn" onClick={() => amazonStore.runCrawler()}>
-        <i className="fa fa-refresh white" aria-hidden="true"></i>&nbsp;Fetch Books
+        <i className="fa fa-refresh white" aria-hidden="true" />&nbsp;Fetch Books
       </button>
     )
 

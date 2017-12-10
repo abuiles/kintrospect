@@ -95,56 +95,57 @@ class NotesEditor extends React.Component {
         <Debounce time="500" handler="onChange">
           <Container
             className="flex flex-column w-100 h-100 bg-white pa2"
-            spellcheck={true}
+            spellcheck
             cards={CARDS}
             didCreateEditor={(e) => this.didCreateEditor(e)}
             mobiledoc={doc}
-            onChange={(mobiledoc) => this.onMobiledocChange(mobiledoc)}>
+            onChange={(mobiledoc) => this.onMobiledocChange(mobiledoc)}
+          >
 
             <div className="bb b--light-gray pv2 ph4 flex items-center justify-between cf w-100">
-              <ul className="pa0 mv0 cf lh-solid" style={{marginRight: 'auto'}}>
+              <ul className="pa0 mv0 cf lh-solid" style={{ marginRight: 'auto' }}>
                 <li className="dib mr4">
                   <MarkupButton tag="strong" className="bn pa0 bg-inherit lh-solid">
-                    <i className="silver fa fa-bold" aria-hidden="true"></i>
+                    <i className="silver fa fa-bold" aria-hidden="true" />
                   </MarkupButton>
                 </li>
                 <li className="dib mr4">
                   <MarkupButton tag="em" className="bn pa0 bg-inherit lh-solid">
-                    <i className="silver fa fa-italic" aria-hidden="true"></i>
+                    <i className="silver fa fa-italic" aria-hidden="true" />
                   </MarkupButton>
                 </li>
                 <li className="dib mr4">
                   <button
                     className="bn pa0 bg-inherit lh-solid"
                     onClick={() => this.addLink()}
-                    >
-                    <i className="silver fa fa-link" aria-hidden="true"></i>
+                  >
+                    <i className="silver fa fa-link" aria-hidden="true" />
 
                   </button>
                 </li>
                 <li className="dib mr4">
                   <SectionButton tag="h1" className="bn pa0 bg-inherit lh-solid">
-                    <i className="silver fa fa-header" aria-hidden="true"></i>
+                    <i className="silver fa fa-header" aria-hidden="true" />
                   </SectionButton>
                 </li>
                 <li className="dib mr4">
                   <SectionButton tag="h2" className="bn pa0 bg-inherit lh-solid">
-                    <i className="silver fa fa-header f7" aria-hidden="true"></i>
+                    <i className="silver fa fa-header f7" aria-hidden="true" />
                   </SectionButton>
                 </li>
                 <li className="dib mr4">
                   <SectionButton tag="blockquote" className="bn pa0 bg-inherit lh-solid">
-                    <i className="silver fa fa-quote-right" aria-hidden="true"></i>
+                    <i className="silver fa fa-quote-right" aria-hidden="true" />
                   </SectionButton>
                 </li>
                 <li className="dib mr4">
                   <SectionButton tag="ul" className="bn pa0 bg-inherit lh-solid">
-                    <i className="silver fa fa-list" aria-hidden="true"></i>
+                    <i className="silver fa fa-list" aria-hidden="true" />
                   </SectionButton>
                 </li>
                 <li className="dib mr4">
                   <SectionButton tag="ol" className="bn pa0 bg-inherit lh-solid">
-                    <i className="silver fa fa-o-list" aria-hidden="true"></i>
+                    <i className="silver fa fa-o-list" aria-hidden="true" />
                   </SectionButton>
                 </li>
               </ul>

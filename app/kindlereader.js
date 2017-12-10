@@ -92,7 +92,7 @@ module.exports = class ParseKindleDirectory {
     const parsedFileFromKindle = this.parseFileFromKindle()
     const charsToAvoid = ['<', '>', ':', '"', '/', '\\', '|', '?', '*']
 
-    parsedFileFromKindle.forEach(function(item) {
+    parsedFileFromKindle.forEach((item) => {
       const { title, highlights } = item
 
       // Author and Title
@@ -107,7 +107,7 @@ module.exports = class ParseKindleDirectory {
 
       const searchTitle = simpleTitle.split('')
       let newSearchTitle = ''
-      searchTitle.forEach(function(char, index) {
+      searchTitle.forEach((char, index) => {
         if (charsToAvoid.includes(char)) {
           searchTitle[index] = '_'
         }
@@ -118,7 +118,7 @@ module.exports = class ParseKindleDirectory {
       // ASIN
       let asin = directories.get(simpleTitle) || ''
       if (!asin) {
-        directories.forEach(function(value, key) {
+        directories.forEach((value, key) => {
           if (newSearchTitle.includes(key)) {
             asin = value
           } else if (key.includes(newSearchTitle)) {
@@ -135,10 +135,10 @@ module.exports = class ParseKindleDirectory {
       if (asin) {
         // Annotations
         const annotations = []
-        highlights.forEach(function(annotation, index) {
+        highlights.forEach((annotation, index) => {
           const { metadata, text } = annotation
 
-          const location = Math.ceil(parseInt(metadata.substring(metadata.indexOf('Location ') + 9))/150)
+          const location = Math.ceil(parseInt(metadata.substring(metadata.indexOf('Location ') + 9)) / 150)
           annotations.push({
             highlight: text,
             location,

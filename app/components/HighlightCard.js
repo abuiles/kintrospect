@@ -17,20 +17,19 @@ class HighlightCard extends React.Component {
           {this.props.payload.annotation.name}
         </h2>
       )
-    } else {
-      return (
-        <blockquote className="serif pl4 bl bw2 b--blue ma0">
-          <p className="f4 lh-copy measure mb3">
-            {highlight}
-          </p>
-          <cite>
-            <a className="f5" href={`kindle://book?action=open&asin=${asin}&location=${location}`}>
+    }
+    return (
+      <blockquote className="serif pl4 bl bw2 b--blue ma0">
+        <p className="f4 lh-copy measure mb3">
+          {highlight}
+        </p>
+        <cite>
+          <a className="f5" href={`kindle://book?action=open&asin=${asin}&location=${location}`}>
               Read more
             </a>
-          </cite>
-        </blockquote>
-      )
-    }
+        </cite>
+      </blockquote>
+    )
   }
 }
 

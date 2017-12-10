@@ -102,7 +102,7 @@ new Promise(function(resolve) {
 
     if (!this.running) {
       this.toggleRunning()
-      const { webview, analytics } =  this
+      const { webview, analytics } = this
 
       if (document.location.hash === '#/') {
         this.getBooksData()
@@ -290,7 +290,7 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
 
     const loadHighlights = (highlights, meta) => {
       webview.addEventListener('did-finish-load', ({ currentTarget }) => {
-        currentTarget.executeJavaScript(this.newExtraCode(), false, function(result) {
+        currentTarget.executeJavaScript(this.newExtraCode(), false, (result) => {
           result;
           const data = JSON.parse(result)
           highlights = highlights.concat(data.highlights)
@@ -307,7 +307,6 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
             console.log('loading more items')
             loadHighlights(highlights, data)
           }
-
         })
       }, { once: true })
 
