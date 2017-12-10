@@ -81,7 +81,7 @@ ipcMain.on('save-notes', (event, asin, doc) => {
 ipcMain.on('highlights-crawled', (event, asin, items) => {
   const books = config.get('books')
   const book = books.find((b) => b.asin === asin)
-  
+
   book.annotations = items.map((item) => {
     const copy = Object.assign({}, item)
     copy.highlight = he.decode(item.highlight)
@@ -98,9 +98,15 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
   event.sender.send('books-loaded', books)
 })
 
+ipcMain.on('commonplaces-updated', (event, commonplaces) => {
+  config.set('commonplaces', commonplaces)
+  event.sender.send('commonplaces-loaded', commonplaces)
+})
+
 ipcMain.on('load-books', (event) => {
   event.sender.send('books-loaded', config.get('books') || [])
   event.sender.send('notes-loaded', config.get('notes') || {})
+  event.sender.send('commonplaces-loaded', config.get('commonplaces') || [])
 
   nodeFetch('https://kintrospect.com/version.json').then((response) => {
     response.json().then(({ epoch }) => event.sender.send('app-version', epoch))

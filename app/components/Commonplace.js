@@ -81,7 +81,7 @@ export default class CommonplaceView extends Component {
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
           </div>
           <div className="overflow-y-auto h-100 ph3">
-            {annotations.length ? <AnnotationsList list={filteredAnnotations} /> : !isRunning && <h3>Create some highlights first</h3>}
+            <AnnotationsList list={filteredAnnotations} />}
           </div>
         </div>
 
