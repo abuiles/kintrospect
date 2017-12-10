@@ -77,6 +77,7 @@ export default class BookView extends React.Component {
               annotation={annotation}
               asin={book.asin}
               isKindleBook={book.isKindleBook}
+              showBookTitle={false}
               isHighlighted={annotation === selectedAnnotation}
               selectAnnotation={(selected) => this.selectAnnotation(selected)}
             />
