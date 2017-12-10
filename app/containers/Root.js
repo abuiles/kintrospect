@@ -44,6 +44,10 @@ ipcRenderer.on('notes-loaded', (event, notes) => {
   notesStore.setLoading(false)
 })
 
+ipcRenderer.on('commonplaces-loaded', (event, commonplaces) => {
+  rootStore.addCommonplaces(commonplaces)
+})
+
 ipcRenderer.on('notes-loaded', (event, notes) => {
   notesStore.addNotes(notes)
   notesStore.setLoading(false)
