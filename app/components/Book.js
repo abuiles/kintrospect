@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import Drawer from 'react-motion-drawer';
 import TimeAgo from 'react-timeago';
 
 import {
@@ -21,8 +20,6 @@ import NoteStore from '../stores/Note'
 
 interface BookState {
   open: boolean,
-  currentLocation: number,
-  locations: number[],
   searchTerm: string,
   selectedAnnotation: any
 }
@@ -32,17 +29,9 @@ interface BookState {
 export default class BookView extends React.Component {
   constructor(props: { book: Book }) {
     super(props);
-    // assume annotations are sorted
-    let location: number = 0
-
-    if (this.props.book.annotations[0]) {
-      location = this.props.book.annotations[0].location
-    }
 
     this.state = {
       open: false,
-      currentLocation: location,
-      locations: [location],
       searchTerm: '',
       selectedAnnotation: null
     };
@@ -56,43 +45,10 @@ export default class BookView extends React.Component {
     notesStore: NoteStore
   }
 
-  // handleToggle() {
-  //   // this.setState({ open: !this.state.open });
-  // }
-
   selectAnnotation(annotation: any) {
     this.setState({
       selectedAnnotation: this.state.selectedAnnotation === annotation ? null : annotation
     })
-  }
-
-  updateLocation(isCurrent: boolean, { location }: Annotation) {
-    const { locations } = this.state;
-    if (isCurrent) {
-      if (locations.indexOf(location) < 0) {
-        locations.unshift(location);
-      }
-
-      this.setState({
-        currentLocation: location,
-        locations
-      });
-    } else if (locations.length) {
-      locations.shift();
-
-      this.setState({
-        currentLocation: locations[0],
-        locations
-      });
-    }
-  }
-
-  scrollToChapter(chapter: Annotation) {
-    const tag = document.getElementById(chapter.linkId);
-
-    if (tag) {
-      tag.scrollIntoView();
-    }
   }
 
   searchUpdated(term: string) {
@@ -102,9 +58,6 @@ export default class BookView extends React.Component {
   addAllAnnotationsToEditor() {
     const { book, notesStore } = this.props
     const { annotations, isKindleBook } = book
-    annotations.forEach(function(annotation) {
-      annotation.isKindleBook = isKindleBook
-    })
     notesStore.addAnnotations(annotations)
   }
 
@@ -125,30 +78,11 @@ export default class BookView extends React.Component {
               asin={book.asin}
               isKindleBook={book.isKindleBook}
               isHighlighted={annotation === selectedAnnotation}
-              updateLocation={(isSticky, chapter) => this.updateLocation(isSticky, chapter)}
               selectAnnotation={(selected) => this.selectAnnotation(selected)}
             />
           </div>
         )}
       </div>
-    )
-
-    const drawer = (
-      <Drawer className="bg-washed-blue" open={open} containerStyle={{ zIndex: 4000 }}>
-        <button type="button" className="f3" >
-          Table of contents
-        </button>
-        <ul className="list pl0 ml0 center mw6 ba b--light-silver br2" >
-          {chapters.map((a) =>
-            <li className="ph3 pv3 bb b--light-silver" key={a.uniqueKey}>
-              <button type="button" onClick={() => this.scrollToChapter(a)}>
-                {a.name}
-              </button>
-            </li>
-          )}
-        </ul>
-        <img alt="book cover" src={`http://images.amazon.com/images/P/${book.asin}`} />
-      </Drawer>
     )
 
     return (
