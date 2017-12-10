@@ -78,6 +78,10 @@ export class Annotation implements AnnotationObjectAttrs {
     return this.book.isKindleBook
   }
 
+  get bookTitle(): string {
+    return this.book.title
+  }
+
   get isChapter(): boolean {
     return this.type === 'chapter';
   }
