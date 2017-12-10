@@ -7,7 +7,7 @@ import {
   Link
 } from 'react-router-dom'
 
-import AmazonStore, { syncOptions } from '../stores/Amazon'
+import AmazonStore from '../stores/Amazon'
 
 const KEYS_TO_FILTERS = ['title']
 
@@ -36,7 +36,7 @@ export default class Home extends Component {
     const books = this.props.books || [];
     const filteredBooks = books.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
 
-    const syncButton = (amazonStore.userPreferences.syncOption === syncOptions.FetchFromDevice) ? (
+    const syncButton = (amazonStore.syncingFromDevice) ? (
       <button className="btn" onClick={() => amazonStore.runKindleCrawler()}>
         <i className="fa fa-refresh white" aria-hidden="true"></i>&nbsp;Fetch From Device
       </button>

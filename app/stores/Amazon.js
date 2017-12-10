@@ -11,12 +11,6 @@ export const syncOptions = {
   Unknown: ''
 }
 
-// type SyncOption = $Keys<typeof syncOptions>;
-
-// interface UserPreferences {
-//   syncOption: SyncOption
-// }
-
 export default class AmazonStore {
   @observable running = false
   @observable kindleSignedIn = false
@@ -34,6 +28,27 @@ export default class AmazonStore {
 
   @computed get hasWebview(): boolean {
     return !!this.webview
+  }
+
+  @computed get syncingFromDevice(): boolean {
+    return this.userPreferences.syncOption === syncOptions.FetchFromDevice
+  }
+
+  @computed get syncingFromCloud(): boolean {
+    return this.userPreferences.syncOption === syncOptions.SyncFromCloud
+  }
+
+  @action syncFromCloud() {
+    return this.setUserPreferences({
+      syncOption: syncOptions.SyncFromCloud
+    })
+  }
+
+  @action syncFromDevice(kindlePath) {
+    return this.setUserPreferences({
+      syncOption: syncOptions.FetchFromDevice,
+      kindlePath: kindlePath.toString()
+    })
   }
 
   @action setAnalytics(analytics) {
@@ -81,7 +96,10 @@ new Promise(function(resolve) {
   }
 
   @action runCrawler(): void {
-    // document.location.hash
+    if (this.syncingFromDevice) {
+      return this.runKindleCrawler()
+    }
+
     if (!this.running) {
       this.toggleRunning()
       const { webview, analytics } =  this
@@ -93,18 +111,9 @@ new Promise(function(resolve) {
         const { booksStore } = this
 
         console.log('load highlights', asin)
-        // booksStore.setLoading(true)
         const store = this
 
-        this.getHighlights(asin)// .then((highlights) =>  {
-        //   booksStore.setLoading(false)
-        //   store.toggleRunning()
-
-        //   if (analytics) {
-        //     analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
-        //   }
-        //   ipcRenderer.send('highlights-crawled', asin, highlights)
-        // });
+        this.getHighlights(asin)
       }
     }
   }
@@ -115,11 +124,16 @@ new Promise(function(resolve) {
       ipcRenderer.send('read-from-kindle', this.userPreferences.kindlePath)
     }
   }
-  
+
   @action crawlerDidFinish() {
     this.runnnig = false
   }
-  
+
+  @action setUserPreferences(preferences) {
+    const merged = { ...this.userPreferences, ...preferences }
+    this.userPreferences = merged
+  }
+
   @action signOut() {
     const clearSession = 'KindleApp.deregister()'
 
@@ -128,12 +142,17 @@ new Promise(function(resolve) {
         // for some reason we need to force a reload on the webview to
         // display the sign in fields
         this.reload = true
-        this.userPreferences.syncOption = syncOptions.Unknown
+        this.setUserPreferences({
+          syncOption: syncOptions.Unknown
+        })
         this.kindleSignedIn = false
       })
     } else {
-      this.userPreferences.syncOption = syncOptions.Unknown
-      this.userPreferences.kindlePath = ''
+      this.setUserPreferences({
+        syncOption: syncOptions.Unknown,
+        kindlePath: ''
+      })
+
       this.kindleSignedIn = false
     }
   }

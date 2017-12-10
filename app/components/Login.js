@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react'
 import WebView from 'react-electron-web-view'
 import ParseKindleDirectory from '../kindlereader'
 
-import AmazonStore, { syncOptions } from '../stores/Amazon'
+import AmazonStore from '../stores/Amazon'
 
 const { dialog, nativeImage } = require('electron').remote
 
@@ -20,11 +20,6 @@ export default class Login extends Component {
 
   props: {
     amazonStore: AmazonStore
-  }
-
-  syncFromCloud() {
-    const { amazonStore } = this.props
-    amazonStore.userPreferences.syncOption = syncOptions.SyncFromCloud
   }
 
   fetchFromDevice() {
@@ -46,10 +41,9 @@ export default class Login extends Component {
             const reader = new ParseKindleDirectory(path.toString())
             if (reader.hasValidPath()) {
               const { amazonStore } = this.props
-              amazonStore.userPreferences.syncOption = syncOptions.FetchFromDevice
-              amazonStore.userPreferences.kindlePath = path.toString()
+              amazonStore.syncFromDevice(path)
               amazonStore.kindleSignedIn = true
-              amazonStore.runKindleCrawler()
+              amazonStore.runCrawler()
             } else {
               dialog.showMessageBox({
                 type: 'error',
@@ -66,9 +60,7 @@ export default class Login extends Component {
 
   render() {
     const { amazonStore } = this.props
-    const { kindleSignedIn, hasWebview, userPreferences } = amazonStore
-    const { syncOption } = userPreferences
-
+    const { kindleSignedIn, hasWebview } = amazonStore
     let logInDisclaimer = null
     let syncComponent = (
     <div>
@@ -76,12 +68,12 @@ export default class Login extends Component {
       Choose a sync option
         <div>
           <button className="btn f6 mt4 mr4" onClick={() => { this.fetchFromDevice() }} >Fetch from Device</button>
-          <button className="btn f6 mt4" onClick={() => { this.syncFromCloud() }} >Sync from Cloud</button>
+          <button className="btn f6 mt4" onClick={() => { amazonStore.syncFromCloud() }} >Sync from Cloud</button>
         </div>
       </h1>
     </div>)
 
-    if (syncOption === syncOptions.SyncFromCloud) {
+    if (amazonStore.syncingFromCloud) {
       syncComponent = (
       <WebView
         src={amazonStore.amazonUrl()}
@@ -89,12 +81,13 @@ export default class Login extends Component {
         onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
       />)
       logInDisclaimer = (<p className="f3 ma0">Login first into the Kindle Cloud Reader using the account associated with your Kindle - we don't store or have access to your email or password.</p>)
-    } else if (syncOption === syncOptions.FetchFromDevice) {
+    } else if (amazonStore.syncingFromDevice) {
       syncComponent = (
-      <div>
-        <h2 className="f3 blue">Something went wrong!</h2>
-        <h1 className="f3 blue">Make sure your device is connected.</h1>
-      </div>)
+        <div>
+          <h2 className="f3 blue">Something went wrong!</h2>
+          <h1 className="f3 blue">Make sure your device is connected.</h1>
+        </div>
+      )
     }
 
     return (

@@ -4,7 +4,7 @@ import {
   Link
 } from 'react-router-dom'
 
-import AmazonStore, { syncOptions } from '../stores/Amazon'
+import AmazonStore from '../stores/Amazon'
 import BookStore from '../stores/Book'
 
 @inject('amazonStore','booksStore')
@@ -17,7 +17,7 @@ export default class Sidebar extends Component {
 
   render() {
     const { booksStore, amazonStore } = this.props
-    const { isRunning, kindleSignedIn, userPreferences } = amazonStore
+    const { isRunning, kindleSignedIn } = amazonStore
 
     return (
       <div className={`bg-blue ph3 pv4 tc ${booksStore.appExpired ? 'dn' : ''}`}>
@@ -27,11 +27,7 @@ export default class Sidebar extends Component {
 
         {kindleSignedIn && !booksStore.appExpired && !isRunning &&
           <button className="bn mt1 mb3 pa0 bg-inherit f4" title="Fetch Books" onClick={() => {
-            if (userPreferences.syncOption === syncOptions.FetchFromDevice) {
-              amazonStore.runKindleCrawler()
-            } else {
               amazonStore.runCrawler()
-            }
           }}>
             <i className="fa fa-refresh white" aria-hidden="true"></i>
           </button>
