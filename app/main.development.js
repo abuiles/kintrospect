@@ -78,6 +78,10 @@ ipcMain.on('save-notes', (event, asin, doc) => {
   config.set('notes', notes)
 })
 
+ipcMain.on('save-user-preferences', (event, userPreferences) => {
+  config.set('userPreferences', userPreferences)
+})
+
 ipcMain.on('highlights-crawled', (event, asin, items) => {
   const books = config.get('books')
   const book = books.find((b) => b.asin === asin)
@@ -104,9 +108,11 @@ ipcMain.on('commonplaces-updated', (event, commonplaces) => {
 })
 
 ipcMain.on('load-books', (event) => {
+  event.sender.send('user-preferences-loaded', config.get('userPreferences') || {})
   event.sender.send('books-loaded', config.get('books') || [])
   event.sender.send('notes-loaded', config.get('notes') || {})
   event.sender.send('commonplaces-loaded', config.get('commonplaces') || [])
+
 
   nodeFetch('https://kintrospect.com/version.json').then((response) => {
     response.json().then(({ epoch }) => event.sender.send('app-version', epoch))
