@@ -10,7 +10,7 @@ import { Commonplace } from '../stores/Commonplace'
 import NoteStore from '../stores/Note'
 import RootStore from '../stores/Root'
 
-const KEYS_TO_FILTERS = ['highlight', 'name']
+const KEYS_TO_FILTERS = ['highlight', 'name', 'bookTitle']
 
 @inject('notesStore', 'rootStore')
 @observer
@@ -63,6 +63,7 @@ export default class CommonplaceView extends Component {
               isKindleBook={annotation.isKindleBook}
               isHighlighted={annotation === selectedAnnotation}
               selectAnnotation={(selected) => this.selectAnnotation(selected)}
+              showBookTitle={true}
             />
           </div>
         )}
