@@ -59,6 +59,8 @@ export class Annotation implements AnnotationObjectAttrs {
 
     if (payload.asin) {
       this.asin = payload.asin;
+    } else {
+      this.asin = book.asin
     }
 
     if (payload.location) {
