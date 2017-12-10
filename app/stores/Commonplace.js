@@ -3,6 +3,12 @@ import { observable, action, computed } from 'mobx'
 import { PropTypes } from 'mobx-react'
 import slug from 'slug'
 import uuid from 'uuid/v4'
+import { ipcRenderer } from 'electron';
+import {
+  serialize,
+  deserialize,
+  serializable
+} from 'serializr';
 
 import RootStore from './Root'
 
@@ -16,17 +22,10 @@ export interface ICommonplace {
 }
 
 export class Commonplace {
-  id: string
-  slug: string
-  title: string
-  createdAt: string
-
-  constructor({ title, createdAt, id, slug }) {
-    this.title = title
-    this.createdAt = createdAt
-    this.id = id
-    this.slug = slug
-  }
+  @serializable(identifier()) id = uuid()
+  @serializable slug = ''
+  @serializable title = ''
+  @serializable createdAt = ''
 
   get asin(): string {
     return this.id
@@ -46,17 +45,24 @@ export default class CommonplaceStore {
   }
 
   @action createCommonplace(title: string): Commonplace {
-    const id = uuid()
     const titleSlug = slug(title, { lower: true })
-    const commonplace = new Commonplace({
+    const commonplace = deserialize(Commonplace, {
       title,
       createdAt: new Date().toISOString(),
-      id,
       slug: titleSlug
     })
+
     this.commonplaces.push(commonplace)
 
+    const serialized = serialize(this.commonplaces.toJS())
+
+    ipcRenderer.send('commonplaces-updated', serialized)
+
     return commonplace
+  }
+
+  @action addCommonplaces(commonplaces): void {
+    this.commonplaces = deserialize(Commonplace, commonplaces)
   }
 
   find(id: string): ?Commonplace {
