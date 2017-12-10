@@ -31,6 +31,10 @@ const rootStore = new RootStore(booksStore, notesStore, amazonStore)
 
 amazonStore.setBookStore(booksStore)
 
+ipcRenderer.on('user-preferences-loaded', (event, preferences) => {
+  amazonStore.bootstrapPreferences(preferences, false)
+})
+
 ipcRenderer.on('books-loaded', (event, books) => {
   if (amazonStore.isRunning) {
     amazonStore.toggleRunning()

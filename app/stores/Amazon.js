@@ -129,9 +129,22 @@ new Promise(function(resolve) {
     this.runnnig = false
   }
 
-  @action setUserPreferences(preferences) {
+  @action setUserPreferences(preferences, saveToDisk = true) {
     const merged = { ...this.userPreferences, ...preferences }
     this.userPreferences = merged
+
+    if (saveToDisk) {
+      ipcRenderer.send('save-user-preferences', merged)
+    }
+  }
+
+  @action bootstrapPreferences(preferences) {
+    this.setUserPreferences(preferences, false)
+
+    if (this.syncingFromDevice) {
+      this.kindleSignedIn = true
+      this.runCrawler()
+    }
   }
 
   @action signOut() {
