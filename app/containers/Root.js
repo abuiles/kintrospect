@@ -81,7 +81,7 @@ export default class Root extends React.Component {
   render() {
     const { kindleSignedIn, isRunning } = amazonStore
 
-    let style = {}
+    const style = {}
     if (isRunning) {
       style.pointerEvents = 'none'
     }
@@ -95,7 +95,7 @@ export default class Root extends React.Component {
             }
 
             {kindleSignedIn &&
-              <div className={ `fixed absolute--fill flex ${isRunning ? 'o-20':''}`} style={style}>
+              <div className={`fixed absolute--fill flex ${isRunning ? 'o-20' : ''}`} style={style}>
                 <Sidebar />
                 <Route exact path="/" component={HomePage} />
                 <Route path="/book/:asin" component={BookPage} />

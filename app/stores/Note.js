@@ -49,14 +49,14 @@ export default class NoteStore {
 
     const section = postEditor.builder.createMarkupSection('blockquote', markupSectionAttributes)
     const newlineSection = postEditor.builder.createMarkupSection('p')
-    
+
     postEditor.insertSection(newlineSection)
     postEditor.insertSection(section)
   }
 
   addAnnotation(annotation) {
     this.mobiledocEditor.run((postEditor) => {
-        this._addAnnotation(postEditor, annotation)
+      this._addAnnotation(postEditor, annotation)
     });
   }
 
@@ -66,7 +66,7 @@ export default class NoteStore {
         this._addAnnotation(postEditor, annotations[i])
       }
     });
-  } 
+  }
 
   findNotes(book) {
     if (this.all[book.asin]) {

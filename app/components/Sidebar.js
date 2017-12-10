@@ -7,7 +7,7 @@ import {
 import AmazonStore from '../stores/Amazon'
 import BookStore from '../stores/Book'
 
-@inject('amazonStore','booksStore')
+@inject('amazonStore', 'booksStore')
 @observer
 export default class Sidebar extends Component {
   props: {
@@ -26,15 +26,17 @@ export default class Sidebar extends Component {
         </Link>
 
         {kindleSignedIn && !booksStore.appExpired && !isRunning &&
-          <button className="bn mt1 mb3 pa0 bg-inherit f4" title="Fetch Books" onClick={() => {
+          <button
+            className="bn mt1 mb3 pa0 bg-inherit f4" title="Fetch Books" onClick={() => {
               amazonStore.runCrawler()
-          }}>
-            <i className="fa fa-refresh white" aria-hidden="true"></i>
+            }}
+          >
+            <i className="fa fa-refresh white" aria-hidden="true" />
           </button>
         }
         {kindleSignedIn &&
           <button className="bn pa0 bg-inherit f4" title="Sign Out" onClick={() => amazonStore.signOut()}>
-            <i className="fa fa-sign-out white" aria-hidden="true"></i>
+            <i className="fa fa-sign-out white" aria-hidden="true" />
           </button>
         }
 

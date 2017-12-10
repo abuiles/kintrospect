@@ -63,23 +63,23 @@ export default class Login extends Component {
     const { kindleSignedIn, hasWebview } = amazonStore
     let logInDisclaimer = null
     let syncComponent = (
-    <div>
-      <h1 className="f3 blue">
+      <div>
+        <h1 className="f3 blue">
       Choose a sync option
         <div>
           <button className="btn f6 mt4 mr4" onClick={() => { this.fetchFromDevice() }} >Fetch from Device</button>
           <button className="btn f6 mt4" onClick={() => { amazonStore.syncFromCloud() }} >Sync from Cloud</button>
         </div>
-      </h1>
-    </div>)
+        </h1>
+      </div>)
 
     if (amazonStore.syncingFromCloud) {
       syncComponent = (
-      <WebView
-        src={amazonStore.amazonUrl()}
-        allowpopups
-        onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
-      />)
+        <WebView
+          src={amazonStore.amazonUrl()}
+          allowpopups
+          onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
+        />)
       logInDisclaimer = (<p className="f3 ma0">Login first into the Kindle Cloud Reader using the account associated with your Kindle - we don't store or have access to your email or password.</p>)
     } else if (amazonStore.syncingFromDevice) {
       syncComponent = (

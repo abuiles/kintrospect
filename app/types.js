@@ -6,7 +6,7 @@ export type BookType = {
   asin: string,
   url: string,
   highlightsUpdatedAt: ?Date
-}
+};
 
 // export type FilterType = 'all' | 'active' | 'completed';
 // export type FiltersType = Array<FilterType>;

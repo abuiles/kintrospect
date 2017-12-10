@@ -1,4 +1,4 @@
-import CommonplaceStore,  { Commonplace } from './Commonplace'
+import CommonplaceStore, { Commonplace } from './Commonplace'
 import BookStore from './Book'
 import NoteStore from './Note'
 import AmazonStore from './Amazon'
@@ -21,7 +21,7 @@ export default class RootStore {
     this.commonplaceStore.addCommonplaces(commonplaces)
   }
 
-  findCommonplace(id: string) : ?Commonplace {
+  findCommonplace(id: string): ?Commonplace {
     return this.commonplaceStore.find(id)
   }
 }

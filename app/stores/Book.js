@@ -97,11 +97,10 @@ export class Annotation implements AnnotationObjectAttrs {
   get card(): any {
     if (this.isChapter) {
       return { name: this.name }
-    } else {
-      const { isChapter, location, asin, highlight } = this
-
-      return { isChapter, location, asin, highlight };
     }
+    const { isChapter, location, asin, highlight } = this
+
+    return { isChapter, location, asin, highlight };
   }
 
   get kindleLink(): string {

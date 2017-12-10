@@ -22,12 +22,12 @@ class LinkCard extends React.Component {
   }
 
   render() {
-    let { payload, isInEditor, isEditing, cancel, edit } = this.props
+    const { payload, isInEditor, isEditing, cancel, edit } = this.props
 
     let editMode = (
       <div>
         <a href={payload.href} target="_blank" rel="noopener noreferrer">{payload.href}</a>
-        <i className="ml1 fa fa-edit" aria-hidden="true" onClick={() => edit()}/>
+        <i className="ml1 fa fa-edit" aria-hidden="true" onClick={() => edit()} />
       </div>
     )
 
