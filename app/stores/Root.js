@@ -3,12 +3,18 @@ import BookStore from './Book'
 import NoteStore from './Note'
 import AmazonStore from './Amazon'
 
+import { observable, action, computed } from 'mobx';
+
 export default class RootStore {
   constructor(book, notes, amazon) {
     this.commonplaceStore = new CommonplaceStore(this)
     this.bookStore = book
     this.notesStore = notes
     this.amazonStore = amazon
+  }
+
+  @computed get allAnnotations() {
+    return this.bookStore.allAnnotations;
   }
 
   findCommonplace(id: string) : ?Commonplace {

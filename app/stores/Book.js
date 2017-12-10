@@ -11,7 +11,8 @@ interface AnnotationObjectAttrs {
   modifiedTimestamp: number,
   asin: string,
   annotations: Annotation[],
-  startLocation: number
+  startLocation: number,
+  book: Book
 }
 
 export class Annotation implements AnnotationObjectAttrs {
@@ -26,8 +27,9 @@ export class Annotation implements AnnotationObjectAttrs {
   annotations: Annotation[];
   startLocation: number;
   linkId: string;
+  book: Book;
 
-  constructor(payload) {
+  constructor(payload, book) {
     this.annotations = [];
     this.startLocation = 0;
 
@@ -57,21 +59,27 @@ export class Annotation implements AnnotationObjectAttrs {
 
     if (payload.asin) {
       this.asin = payload.asin;
+    } else {
+      this.asin = book.asin
     }
 
     if (payload.location) {
       this.location = payload.location
     }
 
-    // if (payload.start) {
-    //   // https://www.amazon.com/forum/kindle/Tx2S4K44LSXEWRI?_encoding=UTF8&cdForum=Fx1D7SY3BVSESG
-    //   this.location = Math.ceil(payload.start / 150);
-    // }
+    this.book = book
+  }
 
-    if (this.isChapter) {
-      this.linkId = `chapter-${this.location}`;
-      this.annotations = payload.annotations.map((annotation) => new Annotation(annotation));
-    }
+  get book(): Book {
+    return this.book
+  }
+
+  get isKindleBook(): boolean {
+    return this.book.isKindleBook
+  }
+
+  get bookTitle(): string {
+    return this.book.title
   }
 
   get isChapter(): boolean {
@@ -126,7 +134,7 @@ export class Book {
     this.asin = asin;
     this.isKindleBook = this.asin.length === 10
     this.highlightsUpdatedAt = highlightsUpdatedAt
-    this.annotations = annotations ? annotations.map((annotation) => new Annotation(annotation)) : []
+    this.annotations = annotations ? annotations.map((annotation) => new Annotation(annotation, this)) : []
   }
 }
 
@@ -140,6 +148,17 @@ export default class BookStore {
 
   @computed get all() {
     return this.items
+  }
+
+  @computed get allAnnotations() {
+    let annotations = []
+
+    this.items.forEach((book) => {
+      // this is the same as concat but using ES6 spread
+      annotations = [...annotations, ...book.annotations]
+    })
+
+    return annotations;
   }
 
   @computed get loading() {

@@ -19,7 +19,6 @@ const highlightSource = {
     const dropResult = monitor.getDropResult();
     console.log('dragging', props.annotation);
 
-    item.annotation.isKindleBook = props.isKindleBook
     if (monitor.didDrop()) {
       // do this in the notes store
       dropResult.component.wrappedInstance.addHighlight(item)
@@ -34,14 +33,14 @@ class AnnotationView extends React.Component {
     isHighlighted: boolean,
     asin: string,
     isKindleBook: boolean,
-    updateLocation: (boolean, any) => void,
+    showBookTitle: boolean,
     connectDragSource: () => void,
     selectAnnotation: (any) => void
   }
 
   render() {
     let content;
-    const { annotation, asin, isHighlighted, selectAnnotation } = this.props
+    const { annotation, asin, isHighlighted, selectAnnotation, showBookTitle } = this.props
     const { isKindleBook, isDragging, connectDragSource } = this.props
 
     const styles = {
@@ -59,11 +58,18 @@ class AnnotationView extends React.Component {
       let openInKindle = null
       if (isKindleBook) {
         const location = annotation.location;
+        let text = 'Open in Kindle'
+        if (showBookTitle) {
+          text = `${annotation.book.title} - ${text}`
+        }
+
         openInKindle = (
           <a href={`kindle://book?action=open&asin=${asin}&location=${location}`} className={`link underline ${isHighlighted ? 'white' : 'blue'}`} >
-            Open in Kindle
+            {text}
           </a>
           )
+      } else if (showBookTitle) {
+        openInKindle = (<p className="link underline blue">{annotation.book.title}</p>)
       }
 
       content = (
