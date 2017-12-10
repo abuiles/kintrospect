@@ -5,6 +5,7 @@ import slug from 'slug'
 import uuid from 'uuid/v4'
 import { ipcRenderer } from 'electron';
 import {
+  identifier,
   serialize,
   deserialize,
   serializable
