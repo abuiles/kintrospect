@@ -11,7 +11,8 @@ interface AnnotationObjectAttrs {
   modifiedTimestamp: number,
   asin: string,
   annotations: Annotation[],
-  startLocation: number
+  startLocation: number,
+  book: Book
 }
 
 export class Annotation implements AnnotationObjectAttrs {
@@ -26,8 +27,9 @@ export class Annotation implements AnnotationObjectAttrs {
   annotations: Annotation[];
   startLocation: number;
   linkId: string;
+  book: Book;
 
-  constructor(payload) {
+  constructor(payload, book) {
     this.annotations = [];
     this.startLocation = 0;
 
@@ -63,15 +65,20 @@ export class Annotation implements AnnotationObjectAttrs {
       this.location = payload.location
     }
 
+    this.book = book
+
     // if (payload.start) {
     //   // https://www.amazon.com/forum/kindle/Tx2S4K44LSXEWRI?_encoding=UTF8&cdForum=Fx1D7SY3BVSESG
     //   this.location = Math.ceil(payload.start / 150);
     // }
+    // if (this.isChapter) {
+    //   this.linkId = `chapter-${this.location}`;
+    //   this.annotations = payload.annotations.map((annotation) => new Annotation(annotation));
+    // }
+  }
 
-    if (this.isChapter) {
-      this.linkId = `chapter-${this.location}`;
-      this.annotations = payload.annotations.map((annotation) => new Annotation(annotation));
-    }
+  get book() {
+    return this.book
   }
 
   get isChapter(): boolean {
@@ -126,7 +133,7 @@ export class Book {
     this.asin = asin;
     this.isKindleBook = this.asin.length === 10
     this.highlightsUpdatedAt = highlightsUpdatedAt
-    this.annotations = annotations ? annotations.map((annotation) => new Annotation(annotation)) : []
+    this.annotations = annotations ? annotations.map((annotation) => new Annotation(annotation, this)) : []
   }
 }
 
