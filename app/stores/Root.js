@@ -17,6 +17,10 @@ export default class RootStore {
     return this.bookStore.allAnnotations;
   }
 
+  @action addCommonplaces(commonplaces): void {
+    this.commonplaceStore.addCommonplaces(commonplaces)
+  }
+
   findCommonplace(id: string) : ?Commonplace {
     return this.commonplaceStore.find(id)
   }
