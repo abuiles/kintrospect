@@ -66,19 +66,14 @@ export class Annotation implements AnnotationObjectAttrs {
     }
 
     this.book = book
-
-    // if (payload.start) {
-    //   // https://www.amazon.com/forum/kindle/Tx2S4K44LSXEWRI?_encoding=UTF8&cdForum=Fx1D7SY3BVSESG
-    //   this.location = Math.ceil(payload.start / 150);
-    // }
-    // if (this.isChapter) {
-    //   this.linkId = `chapter-${this.location}`;
-    //   this.annotations = payload.annotations.map((annotation) => new Annotation(annotation));
-    // }
   }
 
-  get book() {
+  get book(): Book {
     return this.book
+  }
+
+  get isKindleBook(): boolean {
+    return this.book.isKindleBook
   }
 
   get isChapter(): boolean {
@@ -147,6 +142,17 @@ export default class BookStore {
 
   @computed get all() {
     return this.items
+  }
+
+  @computed get allAnnotations() {
+    let annotations = []
+
+    this.items.forEach((book) => {
+      // this is the same as concat but using ES6 spread
+      annotations = [...annotations, ...book.annotations]
+    })
+
+    return annotations;
   }
 
   @computed get loading() {
