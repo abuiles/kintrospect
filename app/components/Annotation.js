@@ -19,7 +19,6 @@ const highlightSource = {
     const dropResult = monitor.getDropResult();
     console.log('dragging', props.annotation);
 
-    item.annotation.isKindleBook = props.isKindleBook
     if (monitor.didDrop()) {
       // do this in the notes store
       dropResult.component.wrappedInstance.addHighlight(item)
@@ -34,7 +33,6 @@ class AnnotationView extends React.Component {
     isHighlighted: boolean,
     asin: string,
     isKindleBook: boolean,
-    updateLocation: (boolean, any) => void,
     connectDragSource: () => void,
     selectAnnotation: (any) => void
   }
