@@ -61,37 +61,37 @@ export default class CommonplaceView extends Component {
 
     const rowRenderer = (({key, index, isScrolling, isVisible, style}) => {
       const annotation = filteredAnnotations[index]
-      //       <CellMeasurer
-      //   cache={cache}
-      //   columnIndex={0}
-      //   key={key}
-      //   rowIndex={index}
-      //   parent={parent}>
-      // {({measure}) => (
-      // }
-      //   </CellMeasurer>
-      debugger
+      debugger;
 
       return (
-        <div className="pt1" style={style} key={key}>
-          <div key={annotation.uniqueKey}>
-            <AnnotationView
-              annotation={annotation}
-              asin={annotation.asin}
-              isKindleBook={annotation.isKindleBook}
-              isHighlighted={annotation === selectedAnnotation}
-              selectAnnotation={(selected) => this.selectAnnotation(selected)}
-              showBookTitle
-              />
+        <CellMeasurer
+          cache={cache}
+          columnIndex={0}
+          key={key}
+          rowIndex={index}
+          parent={parent}
+        >
+          <div className="pt1" style={style} key={key}>
+            <div key={annotation.uniqueKey}>
+              <AnnotationView
+                annotation={annotation}
+                asin={annotation.asin}
+                isKindleBook={annotation.isKindleBook}
+                isHighlighted={annotation === selectedAnnotation}
+                selectAnnotation={(selected) => this.selectAnnotation(selected)}
+                showBookTitle
+                />
+            </div>
           </div>
-        </div>
+        </CellMeasurer>
       )
     })
 
     const AnnotationsList = (({ list }) => (
       <List
-        width={300}
-        height={300}
+        deferredMeasurementCache={cache}
+        width={800}
+        height={400}
         rowHeight={20}
         rowCount={list.length}
         rowRenderer={rowRenderer}
