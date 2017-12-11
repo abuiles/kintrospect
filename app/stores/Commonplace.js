@@ -26,6 +26,7 @@ export class Commonplace {
   @serializable(identifier()) id = uuid()
   @serializable slug = ''
   @serializable title = ''
+  @serializable description = ''
   @serializable createdAt = ''
 
   get asin(): string {
@@ -45,10 +46,11 @@ export default class CommonplaceStore {
     return this.commonplaces
   }
 
-  @action createCommonplace(title: string): Commonplace {
+  @action createCommonplace({ title, description }): Commonplace {
     const titleSlug = slug(title, { lower: true })
     const commonplace = deserialize(Commonplace, {
       title,
+      description,
       createdAt: new Date().toISOString(),
       slug: titleSlug
     })

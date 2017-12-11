@@ -20,7 +20,7 @@ class CommonplaceCard extends Component {
   }
 
   render() {
-    const { commonplace: { title, createdAt, slug, id } } = this.props
+    const { commonplace: { description, title, createdAt, slug, id } } = this.props
 
     return (
       <div className="w-20-l w-third-m w-100 pa3-ns pb3 f5 v-top flex">
@@ -31,6 +31,11 @@ class CommonplaceCard extends Component {
                 <div className="ph4">
                   <h1 className="lh-title f3 gray">
                     <i className="fa fa-book gray mr1" aria-hidden="true" /> {title}
+                  </h1>
+                </div>
+                <div className="ph4">
+                  <h1 className="lh-title f3 gray">
+                    {description}
                   </h1>
                 </div>
               </div>
@@ -53,13 +58,15 @@ export default class Home extends Component {
   state: {
     searchTerm: string,
     modalIsOpen: boolean,
-    commonplaceName: string
+    commonplaceName: string,
+    commonplaceDescription: string
   }
 
   state = {
     searchTerm: '',
     modalIsOpen: false,
-    commonplaceName: ''
+    commonplaceName: '',
+    commonplaceDescription: ''
   }
 
   props: {
@@ -72,11 +79,15 @@ export default class Home extends Component {
 
   createCommonplace(history) {
     const { rootStore } = this.props
-    const { commonplaceName } = this.state
+    const { commonplaceName, commonplaceDescription } = this.state
 
     if (commonplaceName) {
-      const { id } = rootStore.commonplaceStore.createCommonplace(commonplaceName)
-      this.setState({ commonplaceName: '', modalIsOpen: false })
+      const { id } = rootStore.commonplaceStore.createCommonplace({
+        title: commonplaceName,
+        description: commonplaceDescription || ''
+      })
+
+      this.setState({ commonplaceDescription: '', commonplaceName: '', modalIsOpen: false })
       history.push(`/commonplace-books/${id}`)
     }
   }
@@ -87,7 +98,7 @@ export default class Home extends Component {
 
   render() {
     const { rootStore } = this.props
-    const { modalIsOpen, searchTerm, commonplaceName } = this.state
+    const { modalIsOpen, searchTerm, commonplaceName, commonplaceDescription } = this.state
     const commonplaces = rootStore.commonplaceStore.all
     const filtered = commonplaces.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
 
@@ -126,6 +137,8 @@ export default class Home extends Component {
             <fieldset className="ba b--transparent ph0 mh0 db">
               <label className="db fw4 lh-copy f6" htmlFor="name">Name</label>
               <input type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
+              <label className="db fw4 lh-copy f6" htmlFor="name">Description</label>
+              <input type="text" value={commonplaceDescription} onChange={(event) => this.setState({ commonplaceDescription: event.target.value })} />
             </fieldset>
             <div className="mt3">
               <SaveButton />
