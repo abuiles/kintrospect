@@ -55,11 +55,10 @@ export default class CommonplaceView extends Component {
     const filteredAnnotations = annotations.filter(createFilter(searchTerm, KEYS_TO_FILTERS))
 
     const cache = new CellMeasurerCache({
-      fixedWidth: true,
-      minHeight: 20
+      fixedWidth: true
     });
 
-    const rowRenderer = (({key, index, isScrolling, isVisible, style}) => {
+    const rowRenderer = (({key, index, isScrolling, isVisible, style, parent}) => {
       const annotation = filteredAnnotations[index]
 
       return (
@@ -101,7 +100,7 @@ export default class CommonplaceView extends Component {
                 <List
                   deferredMeasurementCache={cache}
                   width={width}
-                  height={1000}
+                  height={height}
                   rowHeight={cache.rowHeight}
                   rowCount={filteredAnnotations.length}
                   rowRenderer={rowRenderer}
