@@ -3,9 +3,11 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import SearchInput, { createFilter } from 'react-search-input'
 import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized'
+import Drawer from 'react-motion-drawer';
 
 import NotesEditor from './NotesEditor';
 import AnnotationView from './Annotation';
+import BookCover from './BookCover'
 
 import { Commonplace } from '../stores/Commonplace'
 import NoteStore from '../stores/Note'
@@ -19,12 +21,14 @@ export default class CommonplaceView extends Component {
 
   state: {
     searchTerm: string,
-    selectedAnnotation: any
+    selectedAnnotation: any,
+    isDrawerOpen: boolean
   }
 
   state = {
     searchTerm: '',
-    selectedAnnotation: null
+    selectedAnnotation: null,
+    isDrawerOpen: false
   }
 
   props: {
@@ -45,10 +49,15 @@ export default class CommonplaceView extends Component {
     })
   }
 
+  openDrawer() {
+    this.setState({
+      isDrawerOpen: !this.state.isDrawerOpen
+    })
+  }
 
   render() {
     const { commonplace, notesStore, rootStore } = this.props
-    const { searchTerm, selectedAnnotation } = this.state
+    const { searchTerm, selectedAnnotation, isDrawerOpen } = this.state
     const { title } = commonplace
 
     const annotations = rootStore.allAnnotations
@@ -92,6 +101,16 @@ export default class CommonplaceView extends Component {
         rootStore.saveCommonplaces()
       }
     }
+    const books = rootStore.allBooks
+
+    const drawer = (
+      <Drawer open={isDrawerOpen} className="bg-washed-blue" containerStyle={{ zIndex: 4000 }} onChange={() => { this.openDrawer() }}>
+        <ul className="list center mw6 ba b--light-silver br2" >
+          {books.map((book) => (
+            <BookCover book={book} key={book.asin} />
+          ))}
+        </ul>
+      </Drawer>)
 
     return (
       <div className="flex w-100 h-100">
@@ -100,6 +119,10 @@ export default class CommonplaceView extends Component {
             <h2 className="f3 lh-title serif">
               {title}
             </h2>
+            <button className="btn" onClick={() => { this.openDrawer() }}>
+              Filter
+            </button>
+            {drawer}
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
           </div>
           <div className="overflow-y-auto h-100 ph3">
