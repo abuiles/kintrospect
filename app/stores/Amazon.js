@@ -302,7 +302,6 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
               analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
             }
             ipcRenderer.send('highlights-crawled', asin, highlights)
-            webview.loadURL('https://read.amazon.com')
           } else {
             console.log('loading more items')
             loadHighlights(highlights, data)
