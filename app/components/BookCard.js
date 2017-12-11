@@ -32,7 +32,18 @@ export default class BookCard extends React.Component {
     if (isKindleBook) {
       cover = (<img alt="book cover" className="img db w-100 aspect-ratio--object" src={`http://images.amazon.com/images/P/${book.asin}`} />)
     } else {
-      cover = (<h1 className="f5 fw4 gray mt0">{title}</h1>)
+      cover = (
+        <div className="tc">
+          <div className="ml1 mt4 bg-red h2 w-40">
+            <p className="ml1 pt1 f5 white">PDF</p>
+          </div>
+          <div className="ph4">
+            <h1 className="lh-title f3 gray">
+              {title}
+            </h1>
+          </div>
+        </div>
+      )
     }
 
 

@@ -27,7 +27,13 @@ class CommonplaceCard extends Component {
         <div className="bg-white flex flex-column shadow-1 w-100">
           <Link className="no-underline" to={`/commonplace-books/${id}`} >
             <div className="aspect-ratio aspect-ratio--5x8">
-              {title}
+              <div className="tc">
+                <div className="ph4">
+                  <h1 className="lh-title f3 gray">
+                    <i className="fa fa-book gray mr1" aria-hidden="true" /> {title}
+                  </h1>
+                </div>
+              </div>
             </div>
             <div className="pa3 cf bt b--light-gray tr">
               <p>
@@ -67,9 +73,12 @@ export default class Home extends Component {
   createCommonplace(history) {
     const { rootStore } = this.props
     const { commonplaceName } = this.state
-    const { id } = rootStore.commonplaceStore.createCommonplace(commonplaceName)
-    this.setState({ commonplaceName: '', modalIsOpen: false })
-    history.push(`/commonplace-books/${id}`)
+
+    if (commonplaceName) {
+      const { id } = rootStore.commonplaceStore.createCommonplace(commonplaceName)
+      this.setState({ commonplaceName: '', modalIsOpen: false })
+      history.push(`/commonplace-books/${id}`)
+    }
   }
 
   closeModal() {
@@ -83,7 +92,9 @@ export default class Home extends Component {
     const filtered = commonplaces.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
 
     const SaveButton = withRouter(({ history }) => (
-      <button onClick={() => this.createCommonplace(history)}>Save</button>
+      <button onClick={() => this.createCommonplace(history)} className="b ph3 pv2 ba b--black bg-transparent grow pointer f6" >
+        Save
+      </button>
     ))
 
     return (
@@ -107,12 +118,19 @@ export default class Home extends Component {
         <Modal
           isOpen={modalIsOpen}
           contentLabel="New commonplace book"
+          className="fixed absolute--fill flex justify-center items-center bg-white"
         >
-          <h2>Name your commonplace</h2>
-          <button onClick={() => this.closeModal()}>close</button>
-          <SaveButton />
-          <form>
-            <input type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
+          <form onSubmit={(event) => event.preventDefault()} acceptCharset="utf-8">
+
+            <h1>New commonplace book</h1>
+            <fieldset className="ba b--transparent ph0 mh0 db">
+              <label className="db fw4 lh-copy f6" htmlFor="name">Name</label>
+              <input type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
+            </fieldset>
+            <div className="mt3">
+              <SaveButton />
+              <button className="ml2 b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6" onClick={() => this.closeModal()}>Cancel</button>
+            </div>
           </form>
         </Modal>
       </div>

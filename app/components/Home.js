@@ -36,25 +36,17 @@ export default class Home extends Component {
     const books = this.props.books || [];
     const filteredBooks = books.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
 
-    const syncButton = (amazonStore.syncingFromDevice) ? (
-      <button className="btn" onClick={() => amazonStore.runKindleCrawler()}>
-        <i className="fa fa-refresh white" aria-hidden="true" />&nbsp;Fetch From Device
-      </button>
-    ) : (
-      <button className="btn" onClick={() => amazonStore.runCrawler()}>
-        <i className="fa fa-refresh white" aria-hidden="true" />&nbsp;Fetch Books
-      </button>
-    )
-
     return (
       <div className="h-100 flex flex-column ph3 bl b--near-white bg-light-gray relative">
         <header className="pv4 ph3 flex cf">
-          <Link className="no-underline mr4" to="/commonplace-books" >
-            Commonplace
-          </Link>
           <SearchInput className="search-input paragraph mw-100" onChange={(term) => this.searchUpdated(term)} />
           <div className="w-100 tr">
-            {syncButton}
+            <Link className="btn no-underline mr2" to="/commonplace-books" >
+              <i className="fa fa-book white" aria-hidden="true" /> Commonplace Books
+            </Link>
+            <button className="btn" onClick={() => amazonStore.runCrawler()}>
+              <i className="fa fa-refresh white" aria-hidden="true" />&nbsp;Fetch Books
+            </button>
           </div>
         </header>
         <div className="overflow-y-auto h-100">
