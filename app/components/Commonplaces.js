@@ -79,9 +79,12 @@ export default class Home extends Component {
   createCommonplace(history) {
     const { rootStore } = this.props
     const { commonplaceName } = this.state
-    const { id } = rootStore.commonplaceStore.createCommonplace(commonplaceName)
-    this.setState({ commonplaceName: '', modalIsOpen: false })
-    history.push(`/commonplace-books/${id}`)
+
+    if (commonplaceName) {
+      const { id } = rootStore.commonplaceStore.createCommonplace(commonplaceName)
+      this.setState({ commonplaceName: '', modalIsOpen: false })
+      history.push(`/commonplace-books/${id}`)
+    }
   }
 
   closeModal() {
@@ -95,7 +98,9 @@ export default class Home extends Component {
     const filtered = commonplaces.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
 
     const SaveButton = withRouter(({ history }) => (
-      <button onClick={() => this.createCommonplace(history)}>Save</button>
+      <button onClick={() =>  this.createCommonplace(history)} className="b ph3 pv2 ba b--black bg-transparent grow pointer f6" >
+        Save
+      </button>
     ))
 
     return (
@@ -119,12 +124,19 @@ export default class Home extends Component {
         <Modal
           isOpen={modalIsOpen}
           contentLabel="New commonplace book"
+          className="fixed absolute--fill flex justify-center items-center bg-white"
         >
-          <h2>Name your commonplace</h2>
-          <button onClick={() => this.closeModal()}>close</button>
-          <SaveButton />
-          <form>
+        <form onSubmit={(event) => event.preventDefault() } accept-charset="utf-8">
+
+          <h1>New commonplace book</h1>
+          <fieldset className="ba b--transparent ph0 mh0 db">
+            <label className="db fw4 lh-copy f6" htmlFor="name">Name</label>
             <input type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
+          </fieldset>
+          <div className="mt3">
+            <SaveButton />
+            <button className="ml2 b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6" onClick={() => this.closeModal()}>Cancel</button>
+          </div>
           </form>
         </Modal>
       </div>
