@@ -28,15 +28,9 @@ class CommonplaceCard extends Component {
           <Link className="no-underline" to={`/commonplace-books/${id}`} >
             <div className="aspect-ratio aspect-ratio--5x8">
               <div className="tc">
-                <div className="center mt4 bg-blue h2 w-90">
-                  <p className="ml1 pt1 f5 white">
-                    <i className="fa fa-book white mr1" aria-hidden="true" />
-                    Commonplace Book
-                  </p>
-                </div>
                 <div className="ph4">
                   <h1 className="lh-title f3 gray">
-                    {title}
+                    <i className="fa fa-book gray mr1" aria-hidden="true" /> {title}
                   </h1>
                 </div>
               </div>
