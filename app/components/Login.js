@@ -14,7 +14,9 @@ export default class Login extends Component {
   onDidFinishLoad({ currentTarget }) {
     const { amazonStore } = this.props
 
-    currentTarget.style.height = '400px'
+    currentTarget.style.height = '700px'
+    // currentTarget.style.flex = '0 1'
+    // style={{ width: "0px", height: "0px", flex: "0 1" }}
     amazonStore.setWebview(currentTarget)
   }
 
@@ -30,7 +32,7 @@ export default class Login extends Component {
       icon: appIcon,
       buttons: ['Ok', 'Cancel'],
       title: 'Syncing from Kindle device',
-      message: 'Select next the directory containing "My Clippings.txt" inside your Kindle device.',
+      message: 'Next, select the directory containing "My Clippings.txt" inside your Kindle device.',
       detail: 'If your language is not English, just select the directory that contains the equivalent.',
     }, (response) => {
       if (response === 0) {
@@ -64,14 +66,25 @@ export default class Login extends Component {
     let logInDisclaimer = null
     let syncComponent = (
       <div>
-        <h1 className="f3 blue">
-      Choose a sync option
-        <div>
-          <button className="btn f6 mt4 mr4" onClick={() => { this.fetchFromDevice() }} >Fetch from Device</button>
-          <button className="btn f6 mt4" onClick={() => { amazonStore.syncFromCloud() }} >Sync from Cloud</button>
-        </div>
-        </h1>
-      </div>)
+        <h2 className="white">1. Select a data source:</h2>
+        <ul className="list pl0 mt0 measure center">
+          <li className="flex items-center lh-copy pa3 ph0-l bb b--black-10">
+            <div className="pl3 flex-auto">
+              <a className="pointer f3 link dim br-pill ba ph3 pv2 mb2 dib white" onClick={() => { this.fetchFromDevice() }} >
+                <icon className="fa fa-tablet fa-3 white" /> Use Kindle Device (Via USB).
+              </a>
+            </div>
+          </li>
+          <li className="flex items-center lh-copy pa3 ph0-l bb b--black-10">
+            <div className="pl3 flex-auto">
+              <a className="pointer f3 link dim br-pill ba ph3 pv2 mb2 dib white" onClick={() => { amazonStore.syncFromCloud() }} >
+                <icon className="fa fa-cloud fa-3 white" /> Use the Kindle Cloud Reader.
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    )
 
     if (amazonStore.syncingFromCloud) {
       syncComponent = (
@@ -80,7 +93,7 @@ export default class Login extends Component {
           allowpopups
           onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
         />)
-      logInDisclaimer = (<p className="f3 ma0">Login first into the Kindle Cloud Reader using the account associated with your Kindle - we don't store or have access to your email or password.</p>)
+      logInDisclaimer = (<p className="f3 ma0">Sign into the Kindle Cloud Reader account associated with your Kindle - we don't store or have access to your email or password.</p>)
     } else if (amazonStore.syncingFromDevice) {
       syncComponent = (
         <div>
@@ -92,11 +105,11 @@ export default class Login extends Component {
 
     return (
       <div className={`bg-blue vh-100 tc ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
-        <header className="paragraph mw-100 center tc white pt5 pb4">
+        <header className="paragraph mw-100 center tc white pt5 pb2">
           <h2 className="f1 mb2">Welcome to Kintrospect!</h2>
           {logInDisclaimer}
         </header>
-        <div className="center pa4 bg-white paragraph mw-100 br2">
+        <div className="center pa2 paragraph mw-100 br2">
           {syncComponent}
         </div>
       </div>
