@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import SearchInput, { createFilter } from 'react-search-input'
+import { AutoSizer, CellMeasurer, CellMeasurerCache, List } from 'react-virtualized'
 
 import NotesEditor from './NotesEditor';
 import AnnotationView from './Annotation';
@@ -53,23 +54,37 @@ export default class CommonplaceView extends Component {
 
     const filteredAnnotations = annotations.filter(createFilter(searchTerm, KEYS_TO_FILTERS))
 
-    const AnnotationsList = (({ list }) => (
-      <div className="pt1">
-        {list.map((annotation) =>
-          <div id={annotation.linkId} key={annotation.uniqueKey}>
-            <AnnotationView
-              annotation={annotation}
-              asin={annotation.asin}
-              isKindleBook={annotation.isKindleBook}
-              isHighlighted={annotation === selectedAnnotation}
-              selectAnnotation={(selected) => this.selectAnnotation(selected)}
-              showBookTitle
-            />
-          </div>
-        )}
-      </div>
-    ))
+    const cache = new CellMeasurerCache({
+      fixedWidth: true,
+      minHeight: 20
+    });
 
+    const rowRenderer = (({key, index, isScrolling, isVisible, style}) => {
+      const annotation = filteredAnnotations[index]
+
+      return (
+        <CellMeasurer
+          cache={cache}
+          columnIndex={0}
+          key={key}
+          rowIndex={index}
+          parent={parent}
+        >
+          <div className="pt1" style={style} key={key}>
+            <div key={annotation.uniqueKey}>
+              <AnnotationView
+                annotation={annotation}
+                asin={annotation.asin}
+                isKindleBook={annotation.isKindleBook}
+                isHighlighted={annotation === selectedAnnotation}
+                selectAnnotation={(selected) => this.selectAnnotation(selected)}
+                showBookTitle
+                />
+            </div>
+          </div>
+        </CellMeasurer>
+      )
+    })
 
     return (
       <div className="flex w-100 h-100">
@@ -81,7 +96,18 @@ export default class CommonplaceView extends Component {
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
           </div>
           <div className="overflow-y-auto h-100 ph3">
-            <AnnotationsList list={filteredAnnotations} />}
+            <AutoSizer>
+              {({ height, width }) => (
+                <List
+                  deferredMeasurementCache={cache}
+                  width={width}
+                  height={1000}
+                  rowHeight={cache.rowHeight}
+                  rowCount={filteredAnnotations.length}
+                  rowRenderer={rowRenderer}
+                />
+              )}
+            </AutoSizer>
           </div>
         </div>
 
