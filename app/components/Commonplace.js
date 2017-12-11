@@ -56,12 +56,11 @@ export default class CommonplaceView extends Component {
 
     const cache = new CellMeasurerCache({
       fixedWidth: true,
-      minHeight: 50
+      minHeight: 20
     });
 
     const rowRenderer = (({key, index, isScrolling, isVisible, style}) => {
       const annotation = filteredAnnotations[index]
-      debugger;
 
       return (
         <CellMeasurer
@@ -87,17 +86,6 @@ export default class CommonplaceView extends Component {
       )
     })
 
-    const AnnotationsList = (({ list }) => (
-      <List
-        deferredMeasurementCache={cache}
-        width={800}
-        height={400}
-        rowHeight={20}
-        rowCount={list.length}
-        rowRenderer={rowRenderer}
-      />
-    ))
-
     return (
       <div className="flex w-100 h-100">
         <div className="w-40 bl b--near-white bg-light-gray flex flex-column pv3">
@@ -108,7 +96,18 @@ export default class CommonplaceView extends Component {
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
           </div>
           <div className="overflow-y-auto h-100 ph3">
-            <AnnotationsList list={filteredAnnotations} />
+            <AutoSizer>
+              {({ height, width }) => (
+                <List
+                  deferredMeasurementCache={cache}
+                  width={width}
+                  height={1000}
+                  rowHeight={cache.rowHeight}
+                  rowCount={filteredAnnotations.length}
+                  rowRenderer={rowRenderer}
+                />
+              )}
+            </AutoSizer>
           </div>
         </div>
 
