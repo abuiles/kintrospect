@@ -3,11 +3,7 @@ import { observer, inject } from 'mobx-react'
 import WebView from 'react-electron-web-view'
 import ParseKindleDirectory from '../kindlereader'
 
-<<<<<<< HEAD
 import AmazonStore from '../stores/Amazon'
-=======
-import AmazonStore, { syncOptions } from '../stores/Amazon'
->>>>>>> fa630fd... Adds a button to let the user go back when syncing from cloud.
 
 const { dialog, nativeImage } = require('electron').remote
 
@@ -103,12 +99,8 @@ export default class Login extends Component {
           allowpopups
           onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
         />)
-<<<<<<< HEAD
       logInDisclaimer = (<p className="f3 ma0">Sign into the Kindle Cloud Reader account associated with your Kindle - we don't store or have access to your email or password.</p>)
-=======
-      logInDisclaimer = (<p className="f3 ma0">Login first into the Kindle Cloud Reader using the account associated with your Kindle - we don't store or have access to your email or password.</p>)
       backArrow = (<button className="mt0 lh-solid f2 fw9 white" onClick={() => { this.goBack() }}>Back</button>)
->>>>>>> fa630fd... Adds a button to let the user go back when syncing from cloud.
     } else if (amazonStore.syncingFromDevice) {
       syncComponent = (
         <div>
@@ -120,12 +112,8 @@ export default class Login extends Component {
 
     return (
       <div className={`bg-blue vh-100 tc ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
-<<<<<<< HEAD
-        <header className="paragraph mw-100 center tc white pt5 pb2">
-=======
         {backArrow}
         <header className="paragraph mw-100 center tc white pt5 pb4">
->>>>>>> fa630fd... Adds a button to let the user go back when syncing from cloud.
           <h2 className="f1 mb2">Welcome to Kintrospect!</h2>
           {logInDisclaimer}
         </header>
