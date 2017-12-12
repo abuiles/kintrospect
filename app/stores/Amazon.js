@@ -1,6 +1,9 @@
 // @flow
 import { observable, action, computed } from 'mobx';
 import { ipcRenderer } from 'electron';
+const { BrowserWindow } = require('electron').remote
+const { dialog, nativeImage } = require('electron').remote
+
 import BookStore from './Book'
 
 const AmazonUrl = 'https://www.amazon.com/ap/signin?openid.assoc_handle=amzn_kweb&openid.return_to=https%3A%2F%2Fread.amazon.com%2F&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&pageId=amzn_kcr'
@@ -32,6 +35,10 @@ export default class AmazonStore {
 
   @computed get syncingFromDevice(): boolean {
     return this.userPreferences.syncOption === syncOptions.FetchFromDevice
+  }
+
+  @computed get syncingUnknown(): boolean {
+    return this.userPreferences.syncOption === syncOptions.Unknown
   }
 
   @computed get syncingFromCloud(): boolean {
@@ -78,12 +85,11 @@ new Promise(function(resolve) {
         this.runCrawler()
       }
     } else {
-      if (this.reload) {
-        this.reload = false
-        webview.reload()
-      }
-      this.reloadOnSignIn = true
       this.kindleSignedIn = false
+
+      if (this.syncingUnknown) {
+        this.webview = null
+      }
     }
   }
 
@@ -149,17 +155,44 @@ new Promise(function(resolve) {
 
   @action signOut() {
     const clearSession = 'KindleApp.deregister()'
+    const appIcon = nativeImage.createFromPath('./resources/icon.png')
 
     if (this.webview && this.userPreferences.syncOption === syncOptions.SyncFromCloud) {
-      this.webview.executeJavaScript(clearSession, false, () => {
-        // for some reason we need to force a reload on the webview to
-        // display the sign in fields
-        this.reload = true
-        this.setUserPreferences({
-          syncOption: syncOptions.Unknown
-        })
-        this.kindleSignedIn = false
+      dialog.showMessageBox({
+        type: 'info',
+        icon: appIcon,
+        buttons: ['Ok', 'Cancel'],
+        title: 'Signing out',
+        message: 'In the next screen, click on the settings icon on the top and then click Sign out .',
+        detail: 'Close the window after that.',
+      }, (response) => {
+        if (response === 0) {
+          let win = new BrowserWindow()
+
+          win.on('closed', () => {
+            win = null
+            this.win = null
+            this.setUserPreferences({
+              syncOption: syncOptions.Unknown
+            })
+            this.kindleSignedIn = false
+            this.webview = null
+          })
+          this.win = win
+
+          win.loadURL('https://read.amazon.com')
+        }
       })
+
+      // this.webview.executeJavaScript(clearSession, false, () => {
+      //   // for some reason we need to force a reload on the webview to
+      //   // display the sign in fields
+      //   this.reload = true
+      //   this.setUserPreferences({
+      //     syncOption: syncOptions.Unknown
+      //   })
+      //   this.kindleSignedIn = false
+      // })
     } else {
       this.setUserPreferences({
         syncOption: syncOptions.Unknown,
