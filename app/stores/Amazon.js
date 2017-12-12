@@ -203,7 +203,6 @@ new Promise(function(resolve) {
           win.loadURL('https://read.amazon.com')
         }
       })
-
     } else {
       this.setUserPreferences({
         syncOption: syncOptions.Unknown,
