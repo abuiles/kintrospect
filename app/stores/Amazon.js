@@ -74,9 +74,9 @@ new Promise(function(resolve) {
       console.log('logged in')
       this.kindleSignedIn = true
 
-      // if (!this.booksStore.all.length) {
-      this.runCrawler()
-      // }
+      if (!this.booksStore.all.length) {
+        this.runCrawler()
+      }
     } else {
       if (this.reload) {
         this.reload = false
