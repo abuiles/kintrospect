@@ -3,7 +3,7 @@ import { observer, inject } from 'mobx-react'
 import WebView from 'react-electron-web-view'
 import ParseKindleDirectory from '../kindlereader'
 
-import AmazonStore from '../stores/Amazon'
+import { AmazonStore, syncOptions } from '../stores/Amazon'
 
 const { dialog, nativeImage } = require('electron').remote
 
@@ -26,7 +26,9 @@ export default class Login extends Component {
 
   goBack() {
     const { amazonStore } = this.props
-    amazonStore.userPreferences.syncOption = syncOptions.Unknown
+    amazonStore.setUserPreferences({
+      syncOption: syncOptions.Unknown
+    })
   }
 
   fetchFromDevice() {
