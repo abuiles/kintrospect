@@ -3,6 +3,7 @@ import { observer, inject } from 'mobx-react'
 import {
   Link
 } from 'react-router-dom'
+import { withRouter } from 'react-router'
 
 import AmazonStore from '../stores/Amazon'
 import BookStore from '../stores/Book'
@@ -15,19 +16,30 @@ export default class Sidebar extends Component {
     booksStore: BookStore
   }
 
+  goToHome({ match, history }) {
+    if (history.location.pathname.indexOf('/commonplace-books/') >= 0) {
+      history.push('/commonplace-books')
+    } else {
+      history.push('/')
+    }
+  }
+
   render() {
     const { booksStore, amazonStore } = this.props
     const { isRunning, kindleSignedIn } = amazonStore
+    const GoToHome = withRouter((routeInfo) => (
+      <a className="pointer db white no-underline mb4" onClick={() => { this.goToHome(routeInfo) }}>
+        <p className="mt0 lh-solid f2 fw9">k</p>
+      </a>
+    ))
 
     return (
       <div className={`bg-blue ph3 pv4 tc ${booksStore.appExpired ? 'dn' : ''}`}>
-        <Link className="db white no-underline mb4" to="/">
-          <p className="mt0 lh-solid f2 fw9">k</p>
-        </Link>
+        <GoToHome />
 
         {kindleSignedIn && !booksStore.appExpired && !isRunning &&
           <button
-            className="bn mt1 mb3 pa0 bg-inherit f4" title="Fetch Books" onClick={() => {
+            className="pointer bn mt1 mb3 pa0 bg-inherit f4" title="Fetch Books" onClick={() => {
               amazonStore.runCrawler()
             }}
           >
@@ -35,7 +47,7 @@ export default class Sidebar extends Component {
           </button>
         }
         {kindleSignedIn &&
-          <button className="bn pa0 bg-inherit f4" title="Sign Out" onClick={() => amazonStore.signOut()}>
+          <button className="pointer bn pa0 bg-inherit f4" title="Sign Out" onClick={() => amazonStore.signOut()}>
             <i className="fa fa-sign-out white" aria-hidden="true" />
           </button>
         }
