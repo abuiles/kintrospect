@@ -150,7 +150,7 @@ new Promise(function(resolve) {
   @action signOut() {
     const clearSession = 'KindleApp.deregister()'
 
-    if (this.webview && this.userPreferences.syncOption === syncOptions.SyncFromCloud) {
+    if (this.webview && this.syncFromCloud) {
       this.webview.executeJavaScript(clearSession, false, () => {
         // for some reason we need to force a reload on the webview to
         // display the sign in fields
@@ -201,6 +201,10 @@ new Promise(function(resolve) {
     booksStore.setLoading(true)
 
     const { webview, analytics } = this
+
+    if (document.location.hash === '#/') {
+      webview.loadURL('https://read.amazon.com')
+    }
 
     new Promise((resolve) => {
       webview.executeJavaScript(this.extractBooks(), false, (result) => {
