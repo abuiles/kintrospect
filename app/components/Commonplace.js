@@ -58,7 +58,7 @@ export default class CommonplaceView extends Component {
       fixedWidth: true
     });
 
-    const rowRenderer = (({key, index, isScrolling, isVisible, style, parent}) => {
+    const rowRenderer = (({ key, index, isScrolling, isVisible, style, parent }) => {
       const annotation = filteredAnnotations[index]
 
       return (
@@ -78,7 +78,7 @@ export default class CommonplaceView extends Component {
                 isHighlighted={annotation === selectedAnnotation}
                 selectAnnotation={(selected) => this.selectAnnotation(selected)}
                 showBookTitle
-                />
+              />
             </div>
           </div>
         </CellMeasurer>
