@@ -65,6 +65,10 @@ export default class Login extends Component {
     })
   }
 
+  fetchFromCloud() {
+    this.props.amazonStore.signIn()
+  }
+
   render() {
     const { amazonStore } = this.props
     const { kindleSignedIn, hasWebview } = amazonStore
@@ -83,7 +87,7 @@ export default class Login extends Component {
           </li>
           <li className="flex items-center lh-copy pa3 ph0-l bb b--black-10">
             <div className="pl3 flex-auto">
-              <a className="pointer f3 link dim br-pill ba ph3 pv2 mb2 dib white" onClick={() => { amazonStore.syncFromCloud() }} >
+              <a className="pointer f3 link dim br-pill ba ph3 pv2 mb2 dib white" onClick={() => { this.fetchFromCloud() }} >
                 <icon className="fa fa-cloud fa-3 white" /> Use the Kindle Cloud Reader.
               </a>
             </div>

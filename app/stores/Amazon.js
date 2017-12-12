@@ -153,6 +153,26 @@ new Promise(function(resolve) {
     }
   }
 
+  signIn() {
+    let win = new BrowserWindow()
+
+    win.on('closed', () => {
+      win = null
+      this.win = null
+      this.syncFromCloud()
+
+      // this.win = null
+      // this.setUserPreferences({
+      //   syncOption: syncOptions.Unknown
+      // })
+      // this.kindleSignedIn = false
+      // this.webview = null
+    })
+    this.win = win
+
+    win.loadURL('https://read.amazon.com')
+  }
+
   @action signOut() {
     const clearSession = 'KindleApp.deregister()'
     const appIcon = nativeImage.createFromPath('./resources/icon.png')
@@ -184,15 +204,6 @@ new Promise(function(resolve) {
         }
       })
 
-      // this.webview.executeJavaScript(clearSession, false, () => {
-      //   // for some reason we need to force a reload on the webview to
-      //   // display the sign in fields
-      //   this.reload = true
-      //   this.setUserPreferences({
-      //     syncOption: syncOptions.Unknown
-      //   })
-      //   this.kindleSignedIn = false
-      // })
     } else {
       this.setUserPreferences({
         syncOption: syncOptions.Unknown,
