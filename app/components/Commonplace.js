@@ -120,7 +120,7 @@ export default class CommonplaceView extends Component {
         </div>
 
         <div className="w-60 bg-light-gray">
-          {!notesStore.loading && <NotesEditor book={commonplace} />}
+          {!notesStore.loading && <NotesEditor book={commonplace} isCommonplace />}
         </div>
       </div>
     );

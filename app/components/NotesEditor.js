@@ -36,6 +36,10 @@ const boxTarget = {
 @inject('notesStore', 'analytics')
 @observer
 class NotesEditor extends React.Component {
+  
+  static defaultProps = {
+    isCommonplace: false
+  }
 
   componentWillUnmount() {
     const { notesStore } = this.props
@@ -54,12 +58,13 @@ class NotesEditor extends React.Component {
     isOver: boolean,
     canDrop: boolean,
     book: any,
-    notesStore: NoteStore
+    notesStore: NoteStore,
+    isCommonplace: boolean
   }
 
   addHighlight(highlight) {
-    const { notesStore } = this.props
-    notesStore.addAnnotation(highlight.annotation)
+    const { notesStore, isCommonplace } = this.props
+    notesStore.addAnnotation(highlight.annotation, isCommonplace)
   }
 
   addLink() {

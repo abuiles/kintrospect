@@ -47,14 +47,14 @@ export default class NoteStore {
     }
   }
 
-  _addAnnotation(postEditor, annotation) {
+  _addAnnotation(postEditor, annotation, showBookTitle = false) {
     const { isKindleBook, kindleLink } = annotation
 
     const markupSectionAttributes = [postEditor.builder.createMarker(`${annotation.highlight} `)]
 
-    if (isKindleBook) {
+    if (showBookTitle || isKindleBook) {
       const aMarkup = postEditor.builder.createMarkup('a', { href: kindleLink })
-      const linkMarker = postEditor.builder.createMarker('Open in Kindle', [aMarkup])
+      const linkMarker = postEditor.builder.createMarker(`${(showBookTitle) ? annotation.book.title : 'Open in Kindle'}`, [aMarkup])
       markupSectionAttributes.push(linkMarker)
     }
 
@@ -67,9 +67,9 @@ export default class NoteStore {
     this.didAddAnnotation(annotation)
   }
 
-  addAnnotation(annotation) {
+  addAnnotation(annotation, showBookTitle = false) {
     this.mobiledocEditor.run((postEditor) => {
-      this._addAnnotation(postEditor, annotation)
+      this._addAnnotation(postEditor, annotation, showBookTitle)
     });
   }
 
