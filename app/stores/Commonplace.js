@@ -28,9 +28,14 @@ export class Commonplace {
   @serializable title = ''
   @serializable description = ''
   @serializable createdAt = ''
+  usedBooks = new Set([])
 
   get asin(): string {
     return this.id
+  }
+
+  @action addUsedBook(book) {
+    this.usedBooks.add(book)
   }
 }
 

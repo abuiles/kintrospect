@@ -10,6 +10,7 @@ export default class NoteStore {
   @observable notes = {}
   @observable isLoading = false
   @observable mobiledocEditor = null
+  @observable addAnnotationCallback: any = null
 
   @computed get all() {
     return this.notes
@@ -36,6 +37,16 @@ export default class NoteStore {
     this.mobiledocEditor = editor
   }
 
+  @action setAddAnnotationCallback(callback: (annotation) => void) {
+    this.addAnnotationCallback = callback
+  }
+
+  didAddAnnotation(annotation) {
+    if (this.addAnnotationCallback) {
+      this.addAnnotationCallback(annotation)
+    }
+  }
+
   _addAnnotation(postEditor, annotation) {
     const { isKindleBook, kindleLink } = annotation
 
@@ -52,6 +63,8 @@ export default class NoteStore {
 
     postEditor.insertSection(newlineSection)
     postEditor.insertSection(section)
+
+    this.didAddAnnotation(annotation)
   }
 
   addAnnotation(annotation) {

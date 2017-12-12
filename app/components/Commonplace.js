@@ -16,6 +16,15 @@ const KEYS_TO_FILTERS = ['highlight', 'name', 'bookTitle']
 @inject('notesStore', 'rootStore')
 @observer
 export default class CommonplaceView extends Component {
+
+  constructor(props) {
+    super(props)
+    this.props.notesStore.setAddAnnotationCallback((annotation) => {
+      const { commonplace } = this.props
+      commonplace.addUsedBook(annotation.book)
+    })
+  }
+
   state: {
     searchTerm: string,
     selectedAnnotation: any
