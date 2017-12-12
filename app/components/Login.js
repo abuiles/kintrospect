@@ -24,6 +24,11 @@ export default class Login extends Component {
     amazonStore: AmazonStore
   }
 
+  goBack() {
+    const { amazonStore } = this.props
+    amazonStore.userPreferences.syncOption = syncOptions.Unknown
+  }
+
   fetchFromDevice() {
     const appIcon = nativeImage.createFromPath('./resources/icon.png')
 
@@ -64,6 +69,7 @@ export default class Login extends Component {
     const { amazonStore } = this.props
     const { kindleSignedIn, hasWebview } = amazonStore
     let logInDisclaimer = null
+    let backArrow = null
     let syncComponent = (
       <div>
         <h2 className="white">1. Select a data source:</h2>
@@ -94,6 +100,7 @@ export default class Login extends Component {
           onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
         />)
       logInDisclaimer = (<p className="f3 ma0">Sign into the Kindle Cloud Reader account associated with your Kindle - we don't store or have access to your email or password.</p>)
+      backArrow = (<button className="mt0 lh-solid f2 fw9 white" onClick={() => { this.goBack() }}>Back</button>)
     } else if (amazonStore.syncingFromDevice) {
       syncComponent = (
         <div>
@@ -105,7 +112,8 @@ export default class Login extends Component {
 
     return (
       <div className={`bg-blue vh-100 tc ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
-        <header className="paragraph mw-100 center tc white pt5 pb2">
+        {backArrow}
+        <header className="paragraph mw-100 center tc white pt5 pb4">
           <h2 className="f1 mb2">Welcome to Kintrospect!</h2>
           {logInDisclaimer}
         </header>
