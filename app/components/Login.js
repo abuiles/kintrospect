@@ -102,7 +102,7 @@ export default class Login extends Component {
           onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
         />)
       logInDisclaimer = (<p className="f3 ma0">Sign into the Kindle Cloud Reader account associated with your Kindle - we don't store or have access to your email or password.</p>)
-      backArrow = (<button className="mt0 lh-solid f2 fw9 white" onClick={() => { this.goBack() }}>Back</button>)
+      backArrow = (<button className="f1 btn" onClick={() => { this.goBack() }}>&#8592;</button>)
     } else if (amazonStore.syncingFromDevice) {
       syncComponent = (
         <div>
