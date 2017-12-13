@@ -125,9 +125,7 @@ export default class Home extends Component {
           className="fixed absolute--fill flex justify-center items-center bg-white"
         >
           <form onSubmit={(event) => event.preventDefault()} acceptCharset="utf-8">
-
             <h1 className="serif tc">New commonplace book</h1>
-
             <label className="db lh-copy f6 mb1" htmlFor="name">Name</label>
             <input className="db w-100 mb3 pa2 ba b--gray" type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
             <label className="db lh-copy f6 mb1" htmlFor="name">Description</label>

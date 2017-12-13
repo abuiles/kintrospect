@@ -22,13 +22,6 @@ p {
   padding: 0.5rem 1rem;
 }
 
-.btn--white {
-  color: white;
-  border-radius: 0.25rem;
-  border: 1px solid white;
-  padding: 0.5rem 1rem;
-}
-
 .yourReadings {
   visibility: hidden;
 }
