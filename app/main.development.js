@@ -52,7 +52,18 @@ const config = require('electron-settings');
 const he = require('he');
 
 ipcMain.on('books-crawled', (event, books) => {
-  const mergedBooks = Array.from(new Set(books.concat(config.get('books'))))
+
+  const oldBooks = config.get('books')
+  const oldBooksAsin = new Set([])
+  const mergedBooks = books
+  oldBooks.forEach(book => {
+    if (!oldBooksAsin.has(book.asin)) {
+      mergedBooks.push(book)
+      oldBooksAsin.add(book.asin)
+    }
+  });
+  console.log(oldBooksAsin, mergedBooks, mergedBooks.length)
+
   config.set('books', mergedBooks)
   event.sender.send('books-saved', mergedBooks)
   event.sender.send('books-loaded', mergedBooks)
@@ -64,8 +75,16 @@ ipcMain.on('read-from-kindle', (event, path) => {
   const reader = new KindleReader(path)
   const books = reader.getParsedFiles()
   
-  const mergedBooks = Array.from(new Set(books.concat(config.get('books'))))
-
+  const oldBooks = config.get('books')
+  const oldBooksAsin = new Set([])
+  const mergedBooks = books
+  oldBooks.forEach(book => {
+    if (!oldBooksAsin.has(book.asin)) {
+      mergedBooks.push(book)
+      oldBooksAsin.add(book.asin)
+    }
+  });
+  console.log(oldBooksAsin, mergedBooks, mergedBooks.length)
   config.set('books', mergedBooks)
 
   event.sender.send('books-saved', mergedBooks)
