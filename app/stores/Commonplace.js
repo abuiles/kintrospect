@@ -10,11 +10,10 @@ import {
   deserialize,
   serializable,
   list,
-  object
+  primitive
 } from 'serializr';
 
 import RootStore from './Root'
-import { String } from 'core-js/library/web/timers';
 
 export const CommonplaceArray = PropTypes.observableArray
 
@@ -31,7 +30,7 @@ export class Commonplace {
   @serializable title = ''
   @serializable description = ''
   @serializable createdAt = ''
-  @serializable(list(object(String))) usedBook = [];
+  @serializable(list(primitive())) usedBook = [];
 
   get asin(): string {
     return this.id
