@@ -63,8 +63,12 @@ class NotesEditor extends React.Component {
   }
 
   addHighlight(highlight) {
-    const { notesStore, isCommonplace } = this.props
+    const { notesStore, book, isCommonplace } = this.props
     notesStore.addAnnotation(highlight.annotation, isCommonplace)
+    if (isCommonplace) {
+      // book is a Commonplace object
+      book.addUsedBook(highlight.annotation.book)
+    }
   }
 
   addLink() {
