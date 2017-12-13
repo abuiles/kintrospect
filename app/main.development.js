@@ -51,18 +51,24 @@ const { ipcMain } = require('electron')
 const config = require('electron-settings');
 const he = require('he');
 
+const mergeBooks = (...books) => {
+
+  const mergedBooks = []
+  const mergedBooksAsin = new Set([])
+  books.forEach(booksArray => {
+    booksArray.forEach(book => {
+      if (!mergedBooksAsin.has(book.asin)) {
+        mergedBooks.push(book)
+        mergedBooksAsin.add(book.asin)
+      }
+    })
+  })
+}
+
 ipcMain.on('books-crawled', (event, books) => {
 
   const oldBooks = config.get('books')
-  const oldBooksAsin = new Set([])
-  const mergedBooks = books
-  oldBooks.forEach(book => {
-    if (!oldBooksAsin.has(book.asin)) {
-      mergedBooks.push(book)
-      oldBooksAsin.add(book.asin)
-    }
-  });
-  console.log(oldBooksAsin, mergedBooks, mergedBooks.length)
+  const mergedBooks = mergeBooks(books, oldBooks)
 
   config.set('books', mergedBooks)
   event.sender.send('books-saved', mergedBooks)
@@ -76,15 +82,8 @@ ipcMain.on('read-from-kindle', (event, path) => {
   const books = reader.getParsedFiles()
   
   const oldBooks = config.get('books')
-  const oldBooksAsin = new Set([])
-  const mergedBooks = books
-  oldBooks.forEach(book => {
-    if (!oldBooksAsin.has(book.asin)) {
-      mergedBooks.push(book)
-      oldBooksAsin.add(book.asin)
-    }
-  });
-  console.log(oldBooksAsin, mergedBooks, mergedBooks.length)
+  const mergedBooks = mergeBooks(books, oldBooks)
+
   config.set('books', mergedBooks)
 
   event.sender.send('books-saved', mergedBooks)
