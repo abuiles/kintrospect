@@ -104,7 +104,6 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
 
 ipcMain.on('commonplaces-updated', (event, commonplaces) => {
   config.set('commonplaces', commonplaces)
-  event.sender.send('commonplaces-loaded', commonplaces)
 })
 
 ipcMain.on('load-books', (event) => {
