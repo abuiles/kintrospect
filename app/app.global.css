@@ -21,6 +21,14 @@ p {
   padding: 0.5rem 1rem;
 }
 
+.btn--white {
+  background-color: white;
+  color: #357edd;
+  border-radius: 0.25rem;
+  border: none;
+  padding: 0.5rem 1rem;
+}
+
 .yourReadings {
   visibility: hidden;
 }
