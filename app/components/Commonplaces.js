@@ -96,7 +96,7 @@ export default class Home extends Component {
     const filtered = commonplaces.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
 
     const SaveButton = withRouter(({ history }) => (
-      <button onClick={() => this.createCommonplace(history)} className="b ph3 pv2 ba b--black bg-transparent grow pointer f6" >
+      <button onClick={() => this.createCommonplace(history)} className="btn mh2">
         Save
       </button>
     ))
@@ -126,16 +126,15 @@ export default class Home extends Component {
         >
           <form onSubmit={(event) => event.preventDefault()} acceptCharset="utf-8">
 
-            <h1>New commonplace book</h1>
-            <fieldset className="ba b--transparent ph0 mh0 db">
-              <label className="db fw4 lh-copy f6" htmlFor="name">Name</label>
-              <input type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
-              <label className="db fw4 lh-copy f6" htmlFor="name">Description</label>
-              <input type="text" value={commonplaceDescription} onChange={(event) => this.setState({ commonplaceDescription: event.target.value })} />
-            </fieldset>
-            <div className="mt3">
+            <h1 className="serif tc">New commonplace book</h1>
+
+            <label className="db lh-copy f6 mb1" htmlFor="name">Name</label>
+            <input className="db w-100 mb3 pa2 ba b--gray" type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
+            <label className="db lh-copy f6 mb1" htmlFor="name">Description</label>
+            <textarea className="db w-100 pa2 ba b--gray mb4" value={commonplaceDescription} onChange={(event) => this.setState({ commonplaceDescription: event.target.value })} />
+            <div className="tc">
+              <button className="btn mh2" onClick={() => this.closeModal()}>Cancel</button>
               <SaveButton />
-              <button className="ml2 b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6" onClick={() => this.closeModal()}>Cancel</button>
             </div>
           </form>
         </Modal>
