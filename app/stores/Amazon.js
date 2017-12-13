@@ -118,7 +118,6 @@ new Promise(function(resolve) {
         const asin = document.location.hash.split('#/book/')[1]
         const { booksStore } = this
 
-        console.log('load highlights', asin)
         const store = this
 
         this.getHighlights(asin)
