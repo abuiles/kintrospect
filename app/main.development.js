@@ -69,7 +69,8 @@ const mergeBooks = (books1, books2) => {
 ipcMain.on('books-crawled', (event, books) => {
 
   const oldBooks = config.get('books') || []
-  const mergedBooks = mergeBooks(books, oldBooks)
+  // Send oldBooks first to preserve annotations
+  const mergedBooks = mergeBooks(oldBooks, books)
 
   config.set('books', mergedBooks)
   event.sender.send('books-saved', mergedBooks)
@@ -81,9 +82,10 @@ const KindleReader = require('./kindlereader')
 ipcMain.on('read-from-kindle', (event, path) => {
   const reader = new KindleReader(path)
   const books = reader.getParsedFiles()
-  
+
   const oldBooks = config.get('books') || []
-  const mergedBooks = mergeBooks(books, oldBooks)
+  // Send oldBooks first to preserve annotations
+  const mergedBooks = mergeBooks(oldBooks, books)
 
   config.set('books', mergedBooks)
 
