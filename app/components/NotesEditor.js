@@ -4,7 +4,7 @@ import { Container, Editor, MarkupButton, SectionButton, LinkButton } from 'reac
 import { observer, inject } from 'mobx-react'
 import { DropTarget } from 'react-dnd';
 import { Debounce } from 'react-throttle';
-import { Book } from '../stores/Book';
+import { Annotation } from '../stores/Book';
 import NoteStore from '../stores/Note';
 
 import ItemTypes from './ItemTypes';
@@ -36,11 +36,6 @@ const boxTarget = {
 @inject('notesStore', 'analytics')
 @observer
 class NotesEditor extends React.Component {
-  
-  static defaultProps = {
-    isCommonplace: false
-  }
-
   componentWillUnmount() {
     const { notesStore } = this.props
     notesStore.setEditor(null)
@@ -59,15 +54,15 @@ class NotesEditor extends React.Component {
     canDrop: boolean,
     book: any,
     notesStore: NoteStore,
-    isCommonplace: boolean
+    didAddHighlight: ?(Annotation) => void
   }
 
   addHighlight(highlight) {
-    const { notesStore, book, isCommonplace } = this.props
-    notesStore.addAnnotation(highlight.annotation, isCommonplace)
-    if (isCommonplace) {
-      // book is a Commonplace object
-      book.addUsedBook(highlight.annotation.book)
+    const { notesStore, didAddHighlight, book } = this.props
+    notesStore.addAnnotation(highlight.annotation, book.isCommonplace)
+
+    if (didAddHighlight) {
+      didAddHighlight(highlight.annotation)
     }
   }
 
