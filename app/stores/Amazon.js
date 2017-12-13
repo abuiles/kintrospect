@@ -79,7 +79,6 @@ new Promise(function(resolve) {
     this.webview = webview
 
     if (webview.getURL().match('https://read.amazon.com')) {
-      console.log('logged in')
       this.syncFromCloud()
       this.kindleSignedIn = true
 
@@ -250,7 +249,6 @@ var getBooks = function(resolve)  {
 
 new Promise(function(resolve) {
   setTimeout(function(){
-    console.log('woot');
     getBooks(resolve);
   }, 5000);
 });
@@ -271,7 +269,6 @@ new Promise(function(resolve) {
       const books = Object.keys(asinsToAdd)
             .map((asin) => asinsToAdd[asin])
             .sort((a, b) => b.purchaseDate - a.purchaseDate)
-      console.log(books)
       booksStore.setLoading(false)
       this.toggleRunning()
 
@@ -344,10 +341,8 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
       return;
     }
 
-    console.log('load highlights', asin)
     booksStore.setLoading(true)
     const store = this
-
 
     const loadHighlights = (highlights, meta) => {
       webview.addEventListener('did-finish-load', ({ currentTarget }) => {
@@ -365,7 +360,6 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
             ipcRenderer.send('highlights-crawled', asin, highlights)
             webview.loadURL('https://read.amazon.com')
           } else {
-            console.log('loading more items')
             loadHighlights(highlights, data)
           }
         })
