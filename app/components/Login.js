@@ -13,10 +13,10 @@ export default class Login extends Component {
 
   onDidFinishLoad({ currentTarget }) {
     const { amazonStore } = this.props
+    currentTarget.style.flex = '0 1'
+    currentTarget.style.width = '0'
+    currentTarget.style.height = '0'
 
-    currentTarget.style.height = '700px'
-    // currentTarget.style.flex = '0 1'
-    // style={{ width: "0px", height: "0px", flex: "0 1" }}
     amazonStore.setWebview(currentTarget)
   }
 
@@ -93,16 +93,7 @@ export default class Login extends Component {
       </div>
     )
 
-    if (amazonStore.syncingFromCloud) {
-      syncComponent = (
-        <WebView
-          src={amazonStore.amazonUrl()}
-          allowpopups
-          onDidFinishLoad={(webview) => this.onDidFinishLoad(webview)}
-        />)
-      logInDisclaimer = (<p className="f3 ma0">Sign into the Kindle Cloud Reader account associated with your Kindle - we don't store or have access to your email or password.</p>)
-      backArrow = (<button className="f1 btn" onClick={() => { this.goBack() }}>&#8592;</button>)
-    } else if (amazonStore.syncingFromDevice) {
+    if (amazonStore.syncingFromDevice) {
       syncComponent = (
         <div>
           <h2 className="f3 blue">Something went wrong!</h2>
@@ -120,6 +111,14 @@ export default class Login extends Component {
         </header>
         <div className="center mw-100">
           {syncComponent}
+        </div>
+        <div className="o-0">
+          <WebView
+            style={{ width: 0, height: 0, flex: '0 1' }}
+            src={amazonStore.amazonUrl()}
+            allowpopups
+            onDidFinishLoad={(webview) => this.onDidFinishLoad(webview) }
+            />
         </div>
       </div>
     );
