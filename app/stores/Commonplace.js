@@ -8,7 +8,9 @@ import {
   identifier,
   serialize,
   deserialize,
-  serializable
+  serializable,
+  list,
+  primitive
 } from 'serializr';
 
 import RootStore from './Root'
@@ -28,9 +30,18 @@ export class Commonplace {
   @serializable title = ''
   @serializable description = ''
   @serializable createdAt = ''
+  @serializable(list(primitive())) usedBooks = [];
 
   get asin(): string {
     return this.id
+  }
+
+  get isCommonplace() {
+    return true
+  }
+
+  addUsedBook(book) {
+    this.usedBooks.push(book.asin)
   }
 }
 
@@ -56,12 +67,14 @@ export default class CommonplaceStore {
     })
 
     this.commonplaces.push(commonplace)
-
-    const serialized = serialize(this.commonplaces.toJS())
-
-    ipcRenderer.send('commonplaces-updated', serialized)
+    this.saveCommonplaces()
 
     return commonplace
+  }
+
+  saveCommonplaces(): void {
+    const serialized = serialize(this.commonplaces.toJS())
+    ipcRenderer.send('commonplaces-updated', serialized)
   }
 
   @action addCommonplaces(commonplaces): void {

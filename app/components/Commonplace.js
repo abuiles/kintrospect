@@ -16,6 +16,7 @@ const KEYS_TO_FILTERS = ['highlight', 'name', 'bookTitle']
 @inject('notesStore', 'rootStore')
 @observer
 export default class CommonplaceView extends Component {
+
   state: {
     searchTerm: string,
     selectedAnnotation: any
@@ -85,6 +86,13 @@ export default class CommonplaceView extends Component {
       )
     })
 
+    const didAddHighlight = (annotation) => {
+      if (annotation.book.isKindleBook) {
+        commonplace.addUsedBook(annotation.book.isKindleBook)
+        rootStore.saveCommonplaces()
+      }
+    }
+
     return (
       <div className="flex w-100 h-100">
         <div className="w-40 bl b--near-white bg-light-gray flex flex-column pv3">
@@ -111,7 +119,7 @@ export default class CommonplaceView extends Component {
         </div>
 
         <div className="w-60 bg-light-gray">
-          {!notesStore.loading && <NotesEditor book={commonplace} />}
+        {!notesStore.loading && <NotesEditor book={commonplace} didAddHighlight={(annotation) => didAddHighlight(annotation)} />}
         </div>
       </div>
     );
