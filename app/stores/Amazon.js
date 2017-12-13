@@ -170,14 +170,21 @@ new Promise(function(resolve) {
 
         win.on('closed', () => {
           win = null
-          this.win = null
           if (this.webview) {
             this.webview.reload()
           }
         })
-        this.win = win
 
-        win.loadURL('https://read.amazon.com')
+        win.on('page-title-updated', (evt, title) => {
+          if (title && title.includes('Cloud Reader')) {
+            if (win) win.close()
+            if (this.webview) {
+              this.webview.reload()
+            }
+          }
+        })
+
+        win.loadURL(AmazonUrl)
       }
     })
   }
@@ -199,10 +206,17 @@ new Promise(function(resolve) {
 
           win.on('closed', () => {
             win = null
-            this.win = null
             this.webview.reload()
           })
-          this.win = win
+
+          win.on('page-title-updated', (evt, title) => {
+            if (title && !title.includes('Cloud Reader')) {
+              win.close()
+              if (this.webview) {
+                this.webview.reload()
+              }
+            }
+          })
 
           win.loadURL('https://read.amazon.com')
         }
