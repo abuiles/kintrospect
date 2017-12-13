@@ -36,10 +36,6 @@ export default class NoteStore {
     this.mobiledocEditor = editor
   }
 
-  @action setAddAnnotationCallback(callback: (annotation) => void) {
-    this.addAnnotationCallback = callback
-  }
-
   _addAnnotation(postEditor, annotation, showBookTitle = false) {
     const { isKindleBook, kindleLink } = annotation
 
