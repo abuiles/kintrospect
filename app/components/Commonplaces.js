@@ -25,25 +25,18 @@ class CommonplaceCard extends Component {
     return (
       <div className="w-20-l w-third-m w-100 pa3-ns pb3 f5 v-top flex">
         <div className="bg-white flex flex-column shadow-1 w-100">
-          <Link className="no-underline" to={`/commonplace-books/${id}`} >
-            <div className="aspect-ratio aspect-ratio--5x8">
-              <div className="tc">
-                <div className="ph4">
-                  <h1 className="lh-title f3 gray">
-                    <i className="fa fa-book gray mr1" aria-hidden="true" /> {title}
-                  </h1>
-                </div>
-                <div className="ph4">
-                  <h1 className="lh-title f3 gray">
-                    {description}
-                  </h1>
-                </div>
+          <Link className="no-underline near-black" to={`/commonplace-books/${id}`} >
+            <div className="aspect-ratio aspect-ratio--5x8 overflow-hidden">
+              <div className="mt2 bg-blue tracked pv1 ph4-l ph3 w-auto dib">
+                <p className="f5 white mv0"><i className="fa fa-book white" aria-hidden="true"></i></p>
+              </div>
+              <div className="ph4-l ph3 pv3">
+                <h1 className="lh-title serif f4 ttc">{title}</h1>
+                <p className="">{description}</p>
               </div>
             </div>
-            <div className="pa3 cf bt b--light-gray tr">
-              <p>
-                Created <TimeAgo date={createdAt} minPeriod={60} />
-              </p>
+            <div className="pv3 ph4-l ph3 cf bt b--light-gray tr">
+              <p className="f7 gray">Created <TimeAgo date={createdAt} minPeriod={60} /></p>
             </div>
           </Link>
         </div>
@@ -103,7 +96,7 @@ export default class Home extends Component {
     const filtered = commonplaces.filter(createFilter(searchTerm, KEYS_TO_FILTERS));
 
     const SaveButton = withRouter(({ history }) => (
-      <button onClick={() => this.createCommonplace(history)} className="b ph3 pv2 ba b--black bg-transparent grow pointer f6" >
+      <button onClick={() => this.createCommonplace(history)} className="btn mh2">
         Save
       </button>
     ))
@@ -132,17 +125,14 @@ export default class Home extends Component {
           className="fixed absolute--fill flex justify-center items-center bg-white"
         >
           <form onSubmit={(event) => event.preventDefault()} acceptCharset="utf-8">
-
-            <h1>New commonplace book</h1>
-            <fieldset className="ba b--transparent ph0 mh0 db">
-              <label className="db fw4 lh-copy f6" htmlFor="name">Name</label>
-              <input type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
-              <label className="db fw4 lh-copy f6" htmlFor="name">Description</label>
-              <input type="text" value={commonplaceDescription} onChange={(event) => this.setState({ commonplaceDescription: event.target.value })} />
-            </fieldset>
-            <div className="mt3">
+            <h1 className="serif tc">New commonplace book</h1>
+            <label className="db lh-copy f6 mb1" htmlFor="name">Name</label>
+            <input className="db w-100 mb3 pa2 ba b--gray" type="text" value={commonplaceName} onChange={(event) => this.setState({ commonplaceName: event.target.value })} />
+            <label className="db lh-copy f6 mb1" htmlFor="name">Description</label>
+            <textarea className="db w-100 pa2 ba b--gray mb4" value={commonplaceDescription} onChange={(event) => this.setState({ commonplaceDescription: event.target.value })} />
+            <div className="tc">
+              <button className="btn mh2" onClick={() => this.closeModal()}>Cancel</button>
               <SaveButton />
-              <button className="ml2 b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6" onClick={() => this.closeModal()}>Cancel</button>
             </div>
           </form>
         </Modal>

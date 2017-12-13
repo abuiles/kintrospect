@@ -33,14 +33,12 @@ export default class BookCard extends React.Component {
       cover = (<img alt="book cover" className="img db w-100 aspect-ratio--object" src={`http://images.amazon.com/images/P/${book.asin}`} />)
     } else {
       cover = (
-        <div className="tc">
-          <div className="ml1 mt4 bg-red h2 w-40">
-            <p className="ml1 pt1 f5 white">PDF</p>
+        <div className="h-100 w-100">
+          <div className="mt2 bg-red tracked pv1 ph4-l ph3 w-auto dib">
+            <p className="f5 white mv0">PDF</p>
           </div>
-          <div className="ph4">
-            <h1 className="lh-title f3 gray">
-              {title}
-            </h1>
+          <div className="ph4-l ph3 pv3">
+            <h1 className="lh-title serif f4 ttc">{title}</h1>
           </div>
         </div>
       )
@@ -50,11 +48,11 @@ export default class BookCard extends React.Component {
     return (
       <div key={asin} className="w-20-l w-third-m w-100 pa3-ns pb3 f5 v-top flex">
         <div className="bg-white flex flex-column shadow-1 w-100">
-          <Link className="no-underline" to={`/book/${asin}`} >
-            <div className="aspect-ratio aspect-ratio--5x8">
+          <Link className="no-underline near-black" to={`/book/${asin}`} >
+            <div className="aspect-ratio aspect-ratio--5x8 overflow-hidden">
               {cover}
             </div>
-            <div className="pa3 cf bt b--light-gray tr">
+            <div className="pv3 ph4-l ph3 cf bt b--light-gray tr f6">
               {footer}
             </div>
           </Link>

@@ -78,23 +78,18 @@ export default class Login extends Component {
     let backArrow = null
     let syncComponent = (
       <div>
-        <h2 className="white">1. Select a data source:</h2>
-        <ul className="list pl0 mt0 measure center">
-          <li className="flex items-center lh-copy pa3 ph0-l bb b--black-10">
-            <div className="pl3 flex-auto">
-              <a className="pointer f3 link dim br-pill ba ph3 pv2 mb2 dib white" onClick={() => { this.fetchFromDevice() }} >
-                <icon className="fa fa-tablet fa-3 white" /> Use Kindle Device (Via USB).
-              </a>
-            </div>
-          </li>
-          <li className="flex items-center lh-copy pa3 ph0-l bb b--black-10">
-            <div className="pl3 flex-auto">
-              <a className="pointer f3 link dim br-pill ba ph3 pv2 mb2 dib white" onClick={() => { this.fetchFromCloud() }} >
-                <icon className="fa fa-cloud fa-3 white" /> Use the Kindle Cloud Reader.
-              </a>
-            </div>
-          </li>
-        </ul>
+        <p className="f3 mt0 mb5">Please select a data source to get started</p>
+        <div className="flex justify-center paragraph center">
+          <div className="tc">
+            <icon className="fa fa-tablet fa-3 db  f-6 mb1" />
+            <a className="btn mh2 pointer db" onClick={() => { this.fetchFromDevice() }} >Use Kindle Device (Via USB)</a>
+          </div>
+
+          <div className="tc">
+            <icon className="fa fa-cloud fa-3 db f-6 mb1" />
+            <a className="btn mh2 pointer db" onClick={() => { this.fetchFromCloud() }} >Use Kindle Cloud Reader</a>
+          </div>
+        </div>
       </div>
     )
 
@@ -117,13 +112,13 @@ export default class Login extends Component {
     }
 
     return (
-      <div className={`bg-blue vh-100 tc ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
+      <div className={`bg-near-white vh-100 tc ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
         {backArrow}
-        <header className="paragraph mw-100 center tc white pt5 pb4">
-          <h2 className="f1 mb2">Welcome to Kintrospect!</h2>
+        <header className="mw-100 center tc pt5">
+          <h2 className="f1 serif mb3">Welcome to Kintrospect!</h2>
           {logInDisclaimer}
         </header>
-        <div className="center pa2 paragraph mw-100 br2">
+        <div className="center mw-100">
           {syncComponent}
         </div>
       </div>
