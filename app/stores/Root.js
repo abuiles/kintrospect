@@ -24,4 +24,8 @@ export default class RootStore {
   findCommonplace(id: string): ?Commonplace {
     return this.commonplaceStore.find(id)
   }
+
+  saveCommonplaces(): void {
+    this.commonplaceStore.saveCommonplaces()
+  }
 }

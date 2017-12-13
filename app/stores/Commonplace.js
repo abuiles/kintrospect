@@ -42,7 +42,6 @@ export class Commonplace {
 
   addUsedBook(book) {
     this.usedBooks.push(book.asin)
-    console.log(this.usedBooks)
   }
 }
 
@@ -68,12 +67,14 @@ export default class CommonplaceStore {
     })
 
     this.commonplaces.push(commonplace)
-
-    const serialized = serialize(this.commonplaces.toJS())
-
-    ipcRenderer.send('commonplaces-updated', serialized)
+    this.saveCommonplaces()
 
     return commonplace
+  }
+
+  saveCommonplaces(): void {
+    const serialized = serialize(this.commonplaces.toJS())
+    ipcRenderer.send('commonplaces-updated', serialized)
   }
 
   @action addCommonplaces(commonplaces): void {
