@@ -25,25 +25,18 @@ class CommonplaceCard extends Component {
     return (
       <div className="w-20-l w-third-m w-100 pa3-ns pb3 f5 v-top flex">
         <div className="bg-white flex flex-column shadow-1 w-100">
-          <Link className="no-underline" to={`/commonplace-books/${id}`} >
-            <div className="aspect-ratio aspect-ratio--5x8">
-              <div className="tc">
-                <div className="ph4">
-                  <h1 className="lh-title f3 gray">
-                    <i className="fa fa-book gray mr1" aria-hidden="true" /> {title}
-                  </h1>
-                </div>
-                <div className="ph4">
-                  <h1 className="lh-title f3 gray">
-                    {description}
-                  </h1>
-                </div>
+          <Link className="no-underline near-black" to={`/commonplace-books/${id}`} >
+            <div className="aspect-ratio aspect-ratio--5x8 overflow-hidden">
+              <div className="mt2 bg-blue tracked pv1 ph4-l ph3 w-auto dib">
+                <p className="f5 white mv0"><i className="fa fa-book white" aria-hidden="true"></i></p>
+              </div>
+              <div className="ph4-l ph3 pv3">
+                <h1 className="lh-title serif f4 ttc">{title}</h1>
+                <p className="">{description}</p>
               </div>
             </div>
-            <div className="pa3 cf bt b--light-gray tr">
-              <p>
-                Created <TimeAgo date={createdAt} minPeriod={60} />
-              </p>
+            <div className="pv3 ph4-l ph3 cf bt b--light-gray tr">
+              <p className="f7 gray">Created <TimeAgo date={createdAt} minPeriod={60} /></p>
             </div>
           </Link>
         </div>

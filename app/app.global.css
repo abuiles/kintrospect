@@ -3,6 +3,7 @@
 body {
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
+  color:#333333;
 }
 a {
   color: #357edd;
@@ -22,10 +23,9 @@ p {
 }
 
 .btn--white {
-  background-color: white;
-  color: #357edd;
+  color: white;
   border-radius: 0.25rem;
-  border: none;
+  border: 1px solid white;
   padding: 0.5rem 1rem;
 }
 
