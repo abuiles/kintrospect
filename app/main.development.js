@@ -52,9 +52,10 @@ const config = require('electron-settings');
 const he = require('he');
 
 ipcMain.on('books-crawled', (event, books) => {
-  config.set('books', books)
-  event.sender.send('books-saved', books)
-  event.sender.send('books-loaded', books)
+  const mergedBooks = Array.from(new Set(books.concat(config.get('books'))))
+  config.set('books', mergedBooks)
+  event.sender.send('books-saved', mergedBooks)
+  event.sender.send('books-loaded', mergedBooks)
 })
 
 const KindleReader = require('./kindlereader')
@@ -62,11 +63,13 @@ const KindleReader = require('./kindlereader')
 ipcMain.on('read-from-kindle', (event, path) => {
   const reader = new KindleReader(path)
   const books = reader.getParsedFiles()
+  
+  const mergedBooks = Array.from(new Set(books.concat(config.get('books'))))
 
-  config.set('books', books)
+  config.set('books', mergedBooks)
 
-  event.sender.send('books-saved', books)
-  event.sender.send('books-loaded', books)
+  event.sender.send('books-saved', mergedBooks)
+  event.sender.send('books-loaded', mergedBooks)
 })
 
 
