@@ -30,14 +30,18 @@ export class Commonplace {
   @serializable title = ''
   @serializable description = ''
   @serializable createdAt = ''
-  @serializable(list(primitive())) usedBook = [];
+  @serializable(list(primitive())) usedBooks = [];
 
   get asin(): string {
     return this.id
   }
 
+  get isCommonplace() {
+    return true
+  }
+
   addUsedBook(book) {
-    this.usedBook.push(book.asin)
+    this.usedBooks.push(book.asin)
     console.log(this.usedBooks)
   }
 }
