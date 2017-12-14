@@ -73,8 +73,8 @@ ipcMain.on('books-crawled', (event, books) => {
   const mergedBooks = mergeBooks(oldBooks, books)
 
   config.set('books', books)
-  event.sender.send('books-saved', mergedBooks)
-  event.sender.send('books-loaded', mergedBooks)
+  event.sender.send('books-saved', books)
+  event.sender.send('books-loaded', books)
 })
 
 const KindleReader = require('./kindlereader')
@@ -89,8 +89,8 @@ ipcMain.on('read-from-kindle', (event, path) => {
 
   config.set('books', books)
 
-  event.sender.send('books-saved', mergedBooks)
-  event.sender.send('books-loaded', mergedBooks)
+  event.sender.send('books-saved', books)
+  event.sender.send('books-loaded', books)
 })
 
 
