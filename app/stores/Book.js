@@ -70,10 +70,6 @@ export class Annotation implements AnnotationObjectAttrs {
     this.book = book
   }
 
-  get book(): Book {
-    return this.book
-  }
-
   get isKindleBook(): boolean {
     return this.book.isKindleBook
   }
@@ -144,7 +140,6 @@ export default class BookStore {
   @observable isLoading = false
   @observable appExpired = false
   @observable appVersion = 1513228128000
-
 
   @computed get all() {
     return this.items
