@@ -51,27 +51,25 @@ const { ipcMain } = require('electron')
 const config = require('electron-settings');
 const he = require('he');
 
-const mergeBooks = (books1, books2) => {
-  const books = [books1, books2]
-  const mergedBooks = []
-  const mergedBooksAsin = new Set([])
-  books.forEach(booksArray => {
-    booksArray.forEach(book => {
-      if (!mergedBooksAsin.has(book.asin)) {
-        mergedBooks.push(book)
-        mergedBooksAsin.add(book.asin)
-      }
-    })
-  })
-  return mergedBooks || []
-}
+// const mergeBooks = (books1, books2) => {
+//   const books = [books1, books2]
+//   const mergedBooks = []
+//   const mergedBooksAsin = new Set([])
+//   books.forEach(booksArray => {
+//     booksArray.forEach(book => {
+//       if (!mergedBooksAsin.has(book.asin)) {
+//         mergedBooks.push(book)
+//         mergedBooksAsin.add(book.asin)
+//       }
+//     })
+//   })
+//   return mergedBooks || []
+// }
 
 ipcMain.on('books-crawled', (event, books) => {
-
-  const oldBooks = config.get('books') || []
-  // Send oldBooks first to preserve annotations
-  const mergedBooks = mergeBooks(oldBooks, books)
-
+  // const oldBooks = config.get('books') || []
+  // // Send oldBooks first to preserve annotations
+  // const mergedBooks = mergeBooks(oldBooks, books)
   config.set('books', books)
   event.sender.send('books-saved', books)
   event.sender.send('books-loaded', books)
@@ -83,12 +81,11 @@ ipcMain.on('read-from-kindle', (event, path) => {
   const reader = new KindleReader(path)
   const books = reader.getParsedFiles()
 
-  const oldBooks = config.get('books') || []
-  // Send oldBooks first to preserve annotations
-  const mergedBooks = mergeBooks(oldBooks, books)
+  // const oldBooks = config.get('books') || []
+  // // Send oldBooks first to preserve annotations
+  // const mergedBooks = mergeBooks(oldBooks, books)
 
   config.set('books', books)
-
   event.sender.send('books-saved', books)
   event.sender.send('books-loaded', books)
 })
