@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react'
 import WebView from 'react-electron-web-view'
+import FontAwesome from 'react-fontawesome'
+
 import ParseKindleDirectory from '../kindlereader'
 
 import { AmazonStore, syncOptions } from '../stores/Amazon'
@@ -81,12 +83,13 @@ export default class Login extends Component {
         <p className="f3 mt0 mb5">Please select a data source to get started</p>
         <div className="flex justify-center paragraph center">
           <div className="tc">
-            <icon className="fa fa-tablet fa-3 db  f-6 mb1" />
+            <FontAwesome name="tablet" className="fa-3 db  f-6 mb1" />
+            <icon  />
             <a className="btn mh2 pointer db" onClick={() => { this.fetchFromDevice() }} >Use Kindle Device (Via USB)</a>
           </div>
 
           <div className="tc">
-            <icon className="fa fa-cloud fa-3 db f-6 mb1" />
+            <FontAwesome name="cloud" className="fa-3 db f-6 mb1" />
             <a className="btn mh2 pointer db" onClick={() => { this.fetchFromCloud() }} >Use Kindle Cloud Reader</a>
           </div>
         </div>
