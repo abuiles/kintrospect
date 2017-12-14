@@ -49,9 +49,9 @@ export default class CommonplaceView extends Component {
     })
   }
 
-  openDrawer() {
+  toggleDrawer(open) {
     this.setState({
-      isDrawerOpen: !this.state.isDrawerOpen
+      isDrawerOpen: open
     })
   }
 
@@ -104,7 +104,7 @@ export default class CommonplaceView extends Component {
     const books = rootStore.allBooks
 
     const drawer = (
-      <Drawer open={isDrawerOpen} className="bg-washed-blue" containerStyle={{ zIndex: 4000 }} onChange={() => { this.openDrawer() }}>
+      <Drawer open={isDrawerOpen} className="bg-washed-blue" onChange={(open) => { this.toggleDrawer(open) }}>
         <ul className="list center mw6 ba b--light-silver br2" >
           {books.map((book) => (
             <BookCover book={book} key={book.asin} />
@@ -119,7 +119,7 @@ export default class CommonplaceView extends Component {
             <h2 className="f3 lh-title serif">
               {title}
             </h2>
-            <button className="btn" onClick={() => { this.openDrawer() }}>
+            <button className="btn" onClick={() => { this.toggleDrawer(true) }}>
               Filter
             </button>
             {drawer}
@@ -142,7 +142,7 @@ export default class CommonplaceView extends Component {
         </div>
 
         <div className="w-60 bg-light-gray">
-        {!notesStore.loading && <NotesEditor book={commonplace} didAddHighlight={(annotation) => didAddHighlight(annotation)} />}
+          {!notesStore.loading && <NotesEditor book={commonplace} didAddHighlight={(annotation) => didAddHighlight(annotation)} />}
         </div>
       </div>
     );

@@ -27,6 +27,7 @@ export default class BookCover extends React.Component {
   }
 
   clickedCover() {
+    console.log('click book')
     this.setState({
       isSelected: !this.state.isSelected
     })
@@ -41,7 +42,6 @@ export default class BookCover extends React.Component {
     const { title, isKindleBook, asin } = book
     const { isSelected } = this.state
 
-    const tick = (isSelected) ? <div className="red w-50 h-50" /> : null
     let cover
     if (isKindleBook) {
       cover = (
@@ -55,10 +55,9 @@ export default class BookCover extends React.Component {
 
     return (
       <div key={asin} className="w-20-l w-third-m w-500 pa3-ns pb3 f5 v-top flex">
-        <div className="bg-white flex flex-column shadow-1 w-100">
+        <div className={`bg-white flex flex-column shadow-1 w-100 ${(isSelected) ? 'ba bw1 blue' : ''}`}>
           <button className="aspect-ratio aspect-ratio--5x8" onClick={() => this.clickedCover()}>
             {cover}
-            {tick}
           </button>
         </div>
       </div>
