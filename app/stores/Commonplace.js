@@ -49,14 +49,12 @@ export class Commonplace {
     if (this.filter.indexOf(book.asin) === -1) {
       this.filter.push(book.asin)
     }
-    console.log('added book ', this.filter)
   }
 
   removeBookFromFilter(book) {
     const bookIdx = this.filter.indexOf(book.asin)
     if (bookIdx !== -1) {
-      this.filter.splice(bookIdx, 1)
-      console.log('removed book ', this.filter)      
+      this.filter.splice(bookIdx, 1)  
     }
   }
 }
