@@ -115,6 +115,10 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
     copy.location = item.location
     copy.asin = asin
 
+    if (copy.book) {
+      delete copy.book
+    }
+
     return copy
   })
 
