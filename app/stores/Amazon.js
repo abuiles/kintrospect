@@ -3,6 +3,7 @@ import { observable, action, computed } from 'mobx';
 import { ipcRenderer } from 'electron';
 const { BrowserWindow } = require('electron').remote
 const { dialog, nativeImage } = require('electron').remote
+import log from 'electron-log'
 
 import BookStore from './Book'
 
@@ -104,6 +105,7 @@ new Promise(function(resolve) {
   }
 
   @action runCrawler(): void {
+    log.info('Amazon#runCrawler')
     if (this.syncingFromDevice) {
       return this.runKindleCrawler()
     }
@@ -150,7 +152,6 @@ new Promise(function(resolve) {
 
     if (this.syncingFromDevice) {
       this.kindleSignedIn = true
-      this.runCrawler()
     }
   }
 
