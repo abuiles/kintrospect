@@ -41,7 +41,9 @@ export class Commonplace {
   }
 
   addUsedBook(book) {
-    this.usedBooks.push(book.asin)
+    if (this.usedBooks.indexOf(book.asin) === -1) {
+      this.usedBooks.push(book.asin)
+    }
   }
 }
 

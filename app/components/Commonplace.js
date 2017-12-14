@@ -88,7 +88,7 @@ export default class CommonplaceView extends Component {
 
     const didAddHighlight = (annotation) => {
       if (annotation.book.isKindleBook) {
-        commonplace.addUsedBook(annotation.book.isKindleBook)
+        commonplace.addUsedBook(annotation.book)
         rootStore.saveCommonplaces()
       }
     }
