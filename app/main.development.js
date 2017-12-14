@@ -69,7 +69,7 @@ const mergeBooks = (books1, books2) => {
 ipcMain.on('books-crawled', (event, books) => {
 
   const oldBooks = config.get('books') || []
-  const mergedBooks = mergeBooks(books, oldBooks)
+  const mergedBooks = mergeBooks(oldBooks, books)
 
   config.set('books', mergedBooks)
   event.sender.send('books-saved', mergedBooks)
