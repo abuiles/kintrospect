@@ -71,7 +71,7 @@ ipcMain.on('books-crawled', (event, books) => {
   // const oldBooks = config.get('books') || []
   // // Send oldBooks first to preserve annotations
   // const mergedBooks = mergeBooks(oldBooks, books)
-  log.info(`books-crawled ${books.length}`)
+  log.warn(`books-crawled ${books.length}`)
   config.set('books', books)
   event.sender.send('books-loaded', books)
 })
@@ -82,7 +82,7 @@ ipcMain.on('read-from-kindle', (event, path) => {
   const reader = new KindleReader(path)
   const books = reader.getParsedFiles()
 
-  log.info(`read-from-kindle ${books.length}`)
+  log.warn(`read-from-kindle ${books.length}`)
 
   // const oldBooks = config.get('books') || []
   // // Send oldBooks first to preserve annotations
@@ -130,9 +130,9 @@ ipcMain.on('commonplaces-updated', (event, commonplaces) => {
 })
 
 ipcMain.on('load-books', (event) => {
-  log.info('load-books')
+  log.warn('load-books')
   const books = config.get('books') || []
-  log.info(`books in memory ${books.length}`)
+  log.warn(`books in memory ${books.length}`)
 
   event.sender.send('user-preferences-loaded', config.get('userPreferences') || {})
   event.sender.send('books-loaded', books)

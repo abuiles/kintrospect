@@ -33,7 +33,7 @@ const rootStore = new RootStore(booksStore, notesStore, amazonStore)
 amazonStore.setBookStore(booksStore)
 
 ipcRenderer.on('user-preferences-loaded', (event, preferences) => {
-  log.info(`user-preferences-loaded ${JSON.stringify(preferences)}`)
+  log.warn(`user-preferences-loaded ${JSON.stringify(preferences)}`)
   amazonStore.bootstrapPreferences(preferences, false)
 })
 
@@ -42,7 +42,7 @@ ipcRenderer.on('books-loaded', (event, books) => {
     amazonStore.toggleRunning()
   }
 
-  log.info(`books-loaded ${books.length}`)
+  log.warn(`books-loaded ${books.length}`)
   booksStore.addBooks(books)
 })
 
@@ -76,13 +76,13 @@ export default class Root extends React.Component {
 
   componentDidMount() {
     analytics.pageview('https://app.kintrospect.com', '/', 'Root', analytics._machineID)
-    log.info('RootContainer#componentDidMount')
+    log.warn('RootContainer#componentDidMount')
     ipcRenderer.send('load-books')
   }
 
   unstable_handleError({ message }) {
-    log.error('RootContainer#unstable_handleError')
-    log.error(message)
+    log.warn('RootContainer#unstable_handleError')
+    log.warn(message)
   }
 
   render() {
