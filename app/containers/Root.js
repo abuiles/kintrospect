@@ -43,7 +43,11 @@ ipcRenderer.on('books-loaded', (event, books) => {
   }
 
   log.warn(`books-loaded ${books.length}`)
-  booksStore.addBooks(books)
+  try {
+    booksStore.addBooks(books)
+  } catch(e) {
+    log.warn(`books-loaded-bookStore.didError ${e.message}`)
+  }
 })
 
 ipcRenderer.on('notes-loaded', (event, notes) => {
