@@ -76,8 +76,13 @@ export default class Root extends React.Component {
 
   componentDidMount() {
     analytics.pageview('https://app.kintrospect.com', '/', 'Root', analytics._machineID)
-    log.info('RootContainer: componentDidMount')
+    log.info('RootContainer#componentDidMount')
     ipcRenderer.send('load-books')
+  }
+
+  unstable_handleError({ message }) {
+    log.error('RootContainer#unstable_handleError')
+    log.error(message)
   }
 
   render() {
