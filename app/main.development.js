@@ -72,7 +72,7 @@ ipcMain.on('books-crawled', (event, books) => {
   // Send oldBooks first to preserve annotations
   const mergedBooks = mergeBooks(oldBooks, books)
 
-  config.set('books', mergedBooks)
+  config.set('books', books)
   event.sender.send('books-saved', mergedBooks)
   event.sender.send('books-loaded', mergedBooks)
 })
@@ -87,7 +87,7 @@ ipcMain.on('read-from-kindle', (event, path) => {
   // Send oldBooks first to preserve annotations
   const mergedBooks = mergeBooks(oldBooks, books)
 
-  config.set('books', mergedBooks)
+  config.set('books', books)
 
   event.sender.send('books-saved', mergedBooks)
   event.sender.send('books-loaded', mergedBooks)
