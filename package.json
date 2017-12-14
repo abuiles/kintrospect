@@ -201,6 +201,7 @@
   "dependencies": {
     "@sole/kindle-clippings-parser": "^1.1.0",
     "electron-debug": "^1.1.0",
+    "electron-log": "^2.2.12",
     "extract-text-webpack-plugin": "^2.0.0",
     "graphql-client": "^1.1.0",
     "mobiledoc-kit": "^0.10.15",

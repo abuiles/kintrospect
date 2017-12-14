@@ -2846,6 +2846,10 @@ electron-localshortcut@^0.6.0:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/electron-localshortcut/-/electron-localshortcut-0.6.1.tgz#c4e268c38a6e42f40de5618fc906d1ed608f11aa"
 
+electron-log@^2.2.12:
+  version "2.2.12"
+  resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-2.2.12.tgz#47f2acec0a8fc705d9a1d9cbe95060fc18598a0e"
+
 electron-machine-id@^1.0.9:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/electron-machine-id/-/electron-machine-id-1.0.9.tgz#cca93f4a04fac1c479f76db73f4f24a6d0345a7d"
