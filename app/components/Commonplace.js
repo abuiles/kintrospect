@@ -68,7 +68,7 @@ export default class CommonplaceView extends Component {
       fixedWidth: true
     });
 
-    const rowRenderer = (({ key, index, isScrolling, isVisible, style, parent }) => {
+    const rowRenderer = (({ key, index, style, parent }) => {
       const annotation = filteredAnnotations[index]
 
       return (
@@ -107,7 +107,7 @@ export default class CommonplaceView extends Component {
       <Drawer open={isDrawerOpen} className="bg-washed-blue" onChange={(open) => { this.toggleDrawer(open) }}>
         <ul className="list center mw6 ba b--light-silver br2" >
           {books.map((book) => (
-            <BookCover book={book} key={book.asin} />
+            <BookCover book={book} commonplace={commonplace} key={book.asin} />
           ))}
         </ul>
       </Drawer>)

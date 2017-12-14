@@ -9,13 +9,15 @@ import { observer } from 'mobx-react'
 // http://images.amazon.com/images/P/PASTE_ISBN_NUMBER_HERE.01.20TRZZZZ.jpg
 // http://helpful.knobs-dials.com/index.php/Amazon_notes#General
 
+import { Commonplace } from '../stores/Commonplace'
 import { Book } from '../stores/Book'
 import { computed } from 'mobx';
 
 @observer
 export default class BookCover extends React.Component {
   props: {
-    book: Book
+    book: Book,
+    commonplace: Commonplace
   }
 
   state: {
@@ -27,9 +29,15 @@ export default class BookCover extends React.Component {
   }
 
   clickedCover() {
-    console.log('click book')
+    const { commonplace, book } = this.props
     this.setState({
       isSelected: !this.state.isSelected
+    }, () => {
+      if (this.state.isSelected) {
+        commonplace.addBookToFilter(book)
+      } else {
+        commonplace.removeBookFromFilter(book)
+      }
     })
   }
 
