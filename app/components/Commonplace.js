@@ -119,9 +119,11 @@ export default class CommonplaceView extends Component {
             <h2 className="f3 lh-title serif">
               {title}
             </h2>
-            <button className="btn" onClick={() => { this.toggleDrawer(true) }}>
-              Filter
-            </button>
+            {/*
+               <button className="btn" onClick={() => { this.toggleDrawer(true) }}>
+                   Filter
+                   </button>
+               */}
             {drawer}
             <SearchInput className="search-input w-100" onChange={(term) => this.searchUpdated(term)} />
           </div>
