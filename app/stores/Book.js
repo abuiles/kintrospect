@@ -139,7 +139,7 @@ export default class BookStore {
   @observable items = []
   @observable isLoading = false
   @observable appExpired = false
-  @observable appVersion = 1513228128000
+  @observable appVersion = 1513351594000
 
   @computed get all() {
     return this.items
