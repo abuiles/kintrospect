@@ -83,13 +83,13 @@ export default class Login extends Component {
         <p className="f3 mt0 mb5">Please select a data source to get started</p>
         <div className="flex justify-center paragraph center">
           <div className="tc">
-            <FontAwesome name="tablet" className="fa-3 db  f-6 mb1" />
+            <FontAwesome name="tablet" size="5x" className="db f-6 mb1" />
             <icon  />
             <a className="btn mh2 pointer db" onClick={() => { this.fetchFromDevice() }} >Use Kindle Device (Via USB)</a>
           </div>
 
           <div className="tc">
-            <FontAwesome name="cloud" className="fa-3 db f-6 mb1" />
+            <FontAwesome name="cloud" size="5x" className="fa-3 db f-6 mb1" />
             <a className="btn mh2 pointer db" onClick={() => { this.fetchFromCloud() }} >Use Kindle Cloud Reader</a>
           </div>
         </div>
