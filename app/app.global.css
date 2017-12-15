@@ -1,6 +1,5 @@
 @import "~tachyons/css/tachyons.css";
 @import '~font-awesome/css/font-awesome.css';
-@import "~roboto-fontface/css/roboto/roboto-fontface.css"
 @import "~roboto-fontface/css/roboto-slab/roboto-slab-fontface.css"
 
 body {
@@ -48,10 +47,9 @@ button:focus {
   display: inline-block;
 }
 
-
 /*tachyons overwrite*/
 .serif {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Roboto-Slab', serif;
 }
 .shadow-1 {
   box-shadow: 0 0 4px 2px rgba( 0, 0, 0, .07 );
