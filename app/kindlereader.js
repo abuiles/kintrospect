@@ -138,7 +138,7 @@ module.exports = class ParseKindleDirectory {
         highlights.forEach((annotation, index) => {
           const { metadata, text } = annotation
 
-          const location = Math.ceil(parseInt(metadata.substring(metadata.indexOf('Location ') + 9)) / 150)
+          const location = parseInt(metadata.substring(metadata.indexOf('Location ') + 9))
           annotations.push({
             highlight: text,
             location,
