@@ -1,5 +1,7 @@
 @import "~tachyons/css/tachyons.css";
 @import '~font-awesome/css/font-awesome.css';
+@import "~roboto-fontface/css/roboto/roboto-fontface.css"
+@import "~roboto-fontface/css/roboto-slab/roboto-slab-fontface.css"
 
 body {
   font-size: 16px;
