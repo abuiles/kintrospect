@@ -3,10 +3,12 @@ import { observable, action, computed } from 'mobx';
 import { ipcRenderer } from 'electron';
 const { BrowserWindow } = require('electron').remote
 const { dialog, nativeImage } = require('electron').remote
+import log from 'electron-log'
 
 import BookStore from './Book'
 
 const AmazonUrl = 'https://www.amazon.com/ap/signin?openid.assoc_handle=amzn_kweb&openid.return_to=https%3A%2F%2Fread.amazon.com%2F&openid.mode=checkid_setup&openid.ns=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0&openid.identity=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&openid.claimed_id=http%3A%2F%2Fspecs.openid.net%2Fauth%2F2.0%2Fidentifier_select&pageId=amzn_kcr'
+const appIcon = nativeImage.createFromPath('./resources/icon.png')
 
 export const syncOptions = {
   FetchFromDevice: 'fetchFromDevice',
@@ -78,17 +80,18 @@ new Promise(function(resolve) {
     this.webview = webview
 
     if (webview.getURL().match('https://read.amazon.com')) {
-      console.log('logged in')
+      this.syncFromCloud()
       this.kindleSignedIn = true
 
       if (!this.booksStore.all.length) {
         this.runCrawler()
       }
     } else {
-      this.kindleSignedIn = false
-
-      if (this.syncingUnknown) {
-        this.webview = null
+      if (!this.syncingFromDevice) {
+        this.kindleSignedIn = false
+        this.setUserPreferences({
+          syncOption: syncOptions.Unknown
+        })
       }
     }
   }
@@ -102,6 +105,7 @@ new Promise(function(resolve) {
   }
 
   @action runCrawler(): void {
+    log.info('Amazon#runCrawler')
     if (this.syncingFromDevice) {
       return this.runKindleCrawler()
     }
@@ -116,7 +120,6 @@ new Promise(function(resolve) {
         const asin = document.location.hash.split('#/book/')[1]
         const { booksStore } = this
 
-        console.log('load highlights', asin)
         const store = this
 
         this.getHighlights(asin)
@@ -149,39 +152,50 @@ new Promise(function(resolve) {
 
     if (this.syncingFromDevice) {
       this.kindleSignedIn = true
-      this.runCrawler()
     }
   }
 
   signIn() {
-    let win = new BrowserWindow()
+    dialog.showMessageBox({
+      type: 'info',
+      icon: appIcon,
+      buttons: ['Next', 'Cancel'],
+      title: 'Sign in to the Kindle Cloud Reader',
+      message: `Amazon doesn't offer a public API for your Kindle Highlights - as a workaround we need you to sign in to the Kindle Cloud Reader where we'll read the data.`,
+      detail: `We don't have access to your email or password, you are signing in to Amazon directly. Feel free turn on two factor authentication :).`
+    }, (response) => {
+      if (response === 0) {
+        let win = new BrowserWindow()
 
-    win.on('closed', () => {
-      win = null
-      this.win = null
-      this.syncFromCloud()
+        win.on('closed', () => {
+          win = null
+          if (this.webview) {
+            this.webview.reload()
+          }
+        })
 
-      // this.win = null
-      // this.setUserPreferences({
-      //   syncOption: syncOptions.Unknown
-      // })
-      // this.kindleSignedIn = false
-      // this.webview = null
+        win.on('page-title-updated', (evt, title) => {
+          if (title && title.includes('Cloud Reader')) {
+            if (win) win.close()
+            if (this.webview) {
+              this.webview.reload()
+            }
+          }
+        })
+
+        win.loadURL(AmazonUrl)
+      }
     })
-    this.win = win
-
-    win.loadURL('https://read.amazon.com')
   }
 
   @action signOut() {
     const clearSession = 'KindleApp.deregister()'
-    const appIcon = nativeImage.createFromPath('./resources/icon.png')
 
     if (this.webview && this.userPreferences.syncOption === syncOptions.SyncFromCloud) {
       dialog.showMessageBox({
         type: 'info',
         icon: appIcon,
-        buttons: ['Ok', 'Cancel'],
+        buttons: ['Next', 'Cancel'],
         title: 'Signing out',
         message: 'In the next screen, click on the settings icon on the top and then click Sign out .',
         detail: 'Close the window after that.',
@@ -191,14 +205,17 @@ new Promise(function(resolve) {
 
           win.on('closed', () => {
             win = null
-            this.win = null
-            this.setUserPreferences({
-              syncOption: syncOptions.Unknown
-            })
-            this.kindleSignedIn = false
-            this.webview = null
+            this.webview.reload()
           })
-          this.win = win
+
+          win.on('page-title-updated', (evt, title) => {
+            if (title && !title.includes('Cloud Reader')) {
+              win.close()
+              if (this.webview) {
+                this.webview.reload()
+              }
+            }
+          })
 
           win.loadURL('https://read.amazon.com')
         }
@@ -232,7 +249,6 @@ var getBooks = function(resolve)  {
 
 new Promise(function(resolve) {
   setTimeout(function(){
-    console.log('woot');
     getBooks(resolve);
   }, 5000);
 });
@@ -253,7 +269,6 @@ new Promise(function(resolve) {
       const books = Object.keys(asinsToAdd)
             .map((asin) => asinsToAdd[asin])
             .sort((a, b) => b.purchaseDate - a.purchaseDate)
-      console.log(books)
       booksStore.setLoading(false)
       this.toggleRunning()
 
@@ -326,10 +341,8 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
       return;
     }
 
-    console.log('load highlights', asin)
     booksStore.setLoading(true)
     const store = this
-
 
     const loadHighlights = (highlights, meta) => {
       webview.addEventListener('did-finish-load', ({ currentTarget }) => {
@@ -347,7 +360,6 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
             ipcRenderer.send('highlights-crawled', asin, highlights)
             webview.loadURL('https://read.amazon.com')
           } else {
-            console.log('loading more items')
             loadHighlights(highlights, data)
           }
         })

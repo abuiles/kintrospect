@@ -4,6 +4,7 @@ import fs from 'fs'
 import path from 'path'
 import nodeFetch from 'node-fetch'
 import graphClient from 'graphql-client'
+import log from 'electron-log'
 
 import MenuBuilder from './menu'
 import toMarkdown from './markdown'
@@ -72,7 +73,6 @@ ipcMain.on('books-crawled', (event, books) => {
   const mergedBooks = mergeBooks(oldBooks, books)
 
   config.set('books', mergedBooks)
-  event.sender.send('books-saved', mergedBooks)
   event.sender.send('books-loaded', mergedBooks)
 })
 
@@ -87,7 +87,6 @@ ipcMain.on('read-from-kindle', (event, path) => {
 
   config.set('books', mergedBooks)
 
-  event.sender.send('books-saved', mergedBooks)
   event.sender.send('books-loaded', mergedBooks)
 })
 
@@ -114,6 +113,10 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
     copy.location = item.location
     copy.asin = asin
 
+    if (copy.book) {
+      delete copy.book
+    }
+
     return copy
   })
 
@@ -129,8 +132,12 @@ ipcMain.on('commonplaces-updated', (event, commonplaces) => {
 })
 
 ipcMain.on('load-books', (event) => {
+  log.warn('load-books')
+  const books = config.get('books') || []
+  log.warn(`books in memory ${books.length}`)
+
   event.sender.send('user-preferences-loaded', config.get('userPreferences') || {})
-  event.sender.send('books-loaded', config.get('books') || [])
+  event.sender.send('books-loaded', books)
   event.sender.send('notes-loaded', config.get('notes') || {})
   event.sender.send('commonplaces-loaded', config.get('commonplaces') || [])
 

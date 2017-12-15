@@ -6,7 +6,6 @@ import ItemTypes from './ItemTypes';
 
 const highlightSource = {
   beginDrag(props) {
-    console.log('dragging', props.annotation);
     return {
       text: props.annotation.highlight,
       annotation: props.annotation,
@@ -17,7 +16,6 @@ const highlightSource = {
   endDrag(props, monitor) {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
-    console.log('dragging', props.annotation);
 
     if (monitor.didDrop()) {
       // do this in the notes store

@@ -77,7 +77,6 @@ class NotesEditor extends React.Component {
   }
 
   didCreateEditor(editor) {
-    console.log('created editor:', editor);
     const { notesStore } = this.props
     notesStore.setEditor(editor)
   }

@@ -10,6 +10,7 @@ import { ipcRenderer } from 'electron';
 import { observer, Provider } from 'mobx-react'
 import Analytics from 'electron-google-analytics';
 import { machineIdSync } from 'electron-machine-id';
+import log from 'electron-log'
 
 import HomePage from './HomePage'
 import BookPage from './BookPage'
@@ -32,6 +33,7 @@ const rootStore = new RootStore(booksStore, notesStore, amazonStore)
 amazonStore.setBookStore(booksStore)
 
 ipcRenderer.on('user-preferences-loaded', (event, preferences) => {
+  log.warn(`user-preferences-loaded ${JSON.stringify(preferences)}`)
   amazonStore.bootstrapPreferences(preferences, false)
 })
 
@@ -40,7 +42,12 @@ ipcRenderer.on('books-loaded', (event, books) => {
     amazonStore.toggleRunning()
   }
 
-  booksStore.addBooks(books)
+  log.warn(`books-loaded ${books.length}`)
+  try {
+    booksStore.addBooks(books)
+  } catch(e) {
+    log.warn(`books-loaded-bookStore.didError ${e.message}`)
+  }
 })
 
 ipcRenderer.on('notes-loaded', (event, notes) => {
@@ -58,13 +65,10 @@ ipcRenderer.on('notes-loaded', (event, notes) => {
 })
 
 ipcRenderer.on('app-version', (event, version) => {
-  console.log('version', version)
   booksStore.checkAppVersion(version)
 })
 
 notesStore.setLoading(true)
-ipcRenderer.send('load-books')
-
 
 const analytics = new Analytics('UA-99589026-2')
 analytics._machineID = machineIdSync()
@@ -76,6 +80,13 @@ export default class Root extends React.Component {
 
   componentDidMount() {
     analytics.pageview('https://app.kintrospect.com', '/', 'Root', analytics._machineID)
+    log.warn('RootContainer#componentDidMount')
+    ipcRenderer.send('load-books')
+  }
+
+  unstable_handleError({ message }) {
+    log.warn('RootContainer#unstable_handleError')
+    log.warn(message)
   }
 
   render() {

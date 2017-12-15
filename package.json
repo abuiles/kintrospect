@@ -13,7 +13,7 @@
     "lint-fix": "npm run lint -- --fix",
     "hot-server": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack-dev-server/bin/webpack-dev-server --config ./webpack.config.development.js",
     "build-main": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.electron.js --progress --profile --colors",
-    "build-renderer": "cross-env NODE_ENV=production node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress --profile --colors",
+    "build-renderer": "cross-env NODE_ENV=production node --max-old-space-size=8192 --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.production.js --progress --profile --colors ",
     "build": "npm run build-main && npm run build-renderer",
     "start": "cross-env NODE_ENV=production electron ./app/",
     "flow": "flow",
@@ -201,6 +201,7 @@
   "dependencies": {
     "@sole/kindle-clippings-parser": "^1.1.0",
     "electron-debug": "^1.1.0",
+    "electron-log": "^2.2.12",
     "extract-text-webpack-plugin": "^2.0.0",
     "graphql-client": "^1.1.0",
     "mobiledoc-kit": "^0.10.15",
