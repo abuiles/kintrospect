@@ -43,7 +43,6 @@ export default class CommonplaceView extends Component {
     const { selectedBooks } = this.state
     if (!selectedBooks.has(book.asin)) {
       selectedBooks.add(book.asin)
-      console.log('selected books', selectedBooks)
     }
   }
 
@@ -51,7 +50,6 @@ export default class CommonplaceView extends Component {
     const { selectedBooks } = this.state
     if (selectedBooks.has(book.asin)) {
       selectedBooks.delete(book.asin)
-      console.log('deselected books', selectedBooks)
     }
   }
 
