@@ -31,6 +31,7 @@ export class Commonplace {
   @serializable description = ''
   @serializable createdAt = ''
   @serializable(list(primitive())) usedBooks = [];
+  @serializable(list(primitive())) filter = [];
 
   get asin(): string {
     return this.id
@@ -43,6 +44,19 @@ export class Commonplace {
   addUsedBook(book) {
     if (this.usedBooks.indexOf(book.asin) === -1) {
       this.usedBooks.push(book.asin)
+    }
+  }
+
+  addBookToFilter(book) {
+    if (this.filter.indexOf(book.asin) === -1) {
+      this.filter.push(book.asin)
+    }
+  }
+
+  removeBookFromFilter(book) {
+    const bookIdx = this.filter.indexOf(book.asin)
+    if (bookIdx !== -1) {
+      this.filter.splice(bookIdx, 1)  
     }
   }
 }

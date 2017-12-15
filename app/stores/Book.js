@@ -156,6 +156,10 @@ export default class BookStore {
     return annotations;
   }
 
+  @computed get allBooks() {
+    return this.items
+  }
+
   @computed get loading() {
     return this.isLoading
   }
