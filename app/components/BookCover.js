@@ -17,7 +17,8 @@ import { computed } from 'mobx';
 export default class BookCover extends React.Component {
   props: {
     book: Book,
-    commonplace: Commonplace
+    onBookSelection: (book) => void,
+    onBookDeselection: (book) => void
   }
 
   state: {
@@ -29,14 +30,14 @@ export default class BookCover extends React.Component {
   }
 
   clickedCover() {
-    const { commonplace, book } = this.props
+    const { onBookSelection, onBookDeselection, book } = this.props
     this.setState({
       isSelected: !this.state.isSelected
     }, () => {
       if (this.state.isSelected) {
-        commonplace.addBookToFilter(book)
+        onBookSelection(book)
       } else {
-        commonplace.removeBookFromFilter(book)
+        onBookDeselection(book)
       }
     })
   }
