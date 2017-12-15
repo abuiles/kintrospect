@@ -216,6 +216,7 @@
     "react-throttle": "^0.3.0",
     "react-timeago": "^3.4.3",
     "react-virtualized": "^9.13.0",
+    "roboto-fontface": "^0.8.0",
     "serializr": "^1.1.14",
     "slug": "^0.9.1",
     "source-map-support": "^0.4.10",
