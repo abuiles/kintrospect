@@ -5,6 +5,7 @@ import path from 'path'
 import nodeFetch from 'node-fetch'
 import graphClient from 'graphql-client'
 import log from 'electron-log'
+import parameterize from 'parameterize'
 
 import MenuBuilder from './menu'
 import toMarkdown from './markdown'
@@ -148,23 +149,18 @@ ipcMain.on('load-books', (event) => {
 })
 
 ipcMain.on('download-notes', (event, title, asin) => {
-  const dir = app.getPath('downloads')
-  const filePath = path.join(dir, title);
 
-  const mobiledoc = config.get('notes')[asin]
+  const defaultPath = `${parameterize(title)}.md`
 
-  toMarkdown(mobiledoc).then((markdown) => {
-    fs.writeFileSync(filePath, markdown)
+  dialog.showSaveDialog({ title, defaultPath }, (filePath) => {
 
-    if (process.platform === 'darwin') {
-      dialog.showMessageBox(
-        {
-          message: 'The file has been saved in your Downloads folder.',
-          buttons: ['OK']
-        }
-      );
+    if (filePath) {
+      const mobiledoc = config.get('notes')[asin]
+      toMarkdown(mobiledoc).then((markdown) => {
+        fs.writeFileSync(filePath, markdown)
+      });
     }
-  });
+  })
 })
 
 ipcMain.on('publish-notes', (event, asin) => {

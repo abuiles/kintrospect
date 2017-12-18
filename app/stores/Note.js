@@ -2,7 +2,6 @@
 import { observable, action, computed } from 'mobx'
 import { PropTypes } from 'mobx-react'
 import { ipcRenderer } from 'electron'
-import parameterize from 'parameterize'
 
 export const BookArray = PropTypes.observableArray
 
@@ -89,7 +88,7 @@ export default class NoteStore {
   }
 
   download(book) {
-    ipcRenderer.send('download-notes', `${parameterize(book.title)}.md`, book.asin)
+    ipcRenderer.send('download-notes', book.title, book.asin)
   }
 
   publish(book) {
