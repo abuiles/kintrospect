@@ -78,13 +78,17 @@ export default class NoteStore {
 
     sections.push([1, 'p', []])
 
-    return {
+    let notes = {
       version: '0.3.0',
       markups: [],
       atoms: [],
       cards: [],
       sections
     }
+
+    this.saveNotes(book, notes)
+
+    return notes
   }
 
   download(book) {

@@ -93,6 +93,7 @@ ipcMain.on('read-from-kindle', (event, path) => {
 
 
 ipcMain.on('save-notes', (event, asin, doc) => {
+  log.warn(`save-notes - book:${asin}`)
   const notes = config.get('notes') || {}
 
   notes[asin] = doc
