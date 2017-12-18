@@ -1,6 +1,7 @@
 const MobiledocDOMRenderer = require('mobiledoc-dom-renderer')
 const SimpleDOM = require('simple-dom')
 const simpleHtmlTokenizer = require('simple-html-tokenizer')
+const pdf = require('html-pdf');
 
 const document = new SimpleDOM.Document()
 
@@ -44,7 +45,7 @@ const LinkCard = {
   }
 }
 
-module.exports = function (mobiledoc) {
+const toHTML = (mobiledoc) => {
   const renderer = new MobiledocDOMRenderer.default({
     cards: [HighlightCard, LinkCard],
     dom: new SimpleDOM.Document()
@@ -52,7 +53,19 @@ module.exports = function (mobiledoc) {
 
   const rendered = renderer.render(mobiledoc);
   const serializer = new SimpleDOM.HTMLSerializer([]);
-  const html = serializer.serializeChildren(rendered.result);
+  return serializer.serializeChildren(rendered.result);
+}
+
+const toPDF = (mobiledoc, filepath) => {
+  const html = toHTML(mobiledoc)
+  const options = {
+    border: '1.25cm'
+  }
+  pdf.create(html, options).toFile(filepath);
+}
+
+const toMarkdown = (mobiledoc) => {
+  const html = toHTML(mobiledoc)
 
   let und = new upndown();
 
@@ -64,3 +77,32 @@ module.exports = function (mobiledoc) {
 
   return und.convert(html);
 }
+
+module.exports = {
+  toPDF,
+  toHTML,
+  toMarkdown
+}
+
+// module.exports = function (mobiledoc) {
+//   const renderer = new MobiledocDOMRenderer.default({
+//     cards: [HighlightCard, LinkCard],
+//     dom: new SimpleDOM.Document()
+//   })
+
+//   const rendered = renderer.render(mobiledoc);
+//   const serializer = new SimpleDOM.HTMLSerializer([]);
+//   const html = serializer.serializeChildren(rendered.result);
+
+//   // const html = toHTML(mobiledoc)
+
+//   let und = new upndown();
+
+//   const Promesify = promesify({
+//     methods: ['convert']
+//   });
+
+//   und = new Promesify(und)
+
+//   return und.convert(html);
+// }

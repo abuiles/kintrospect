@@ -1,14 +1,14 @@
 // @flow
 import { app, dialog, BrowserWindow } from 'electron'
 import fs from 'fs'
-import path from 'path'
 import nodeFetch from 'node-fetch'
 import graphClient from 'graphql-client'
 import log from 'electron-log'
 import parameterize from 'parameterize'
 
 import MenuBuilder from './menu'
-import toMarkdown from './markdown'
+import { toMarkdown, toPDF } from './markdown'
+import { exportFormat } from './stores/Note'
 
 let mainWindow = null
 
@@ -148,17 +148,25 @@ ipcMain.on('load-books', (event) => {
   })
 })
 
-ipcMain.on('download-notes', (event, title, asin) => {
-
-  const defaultPath = `${parameterize(title)}.md`
+ipcMain.on('download-notes', (event, title, asin, format) => {
+  const defaultPath = `${parameterize(title)}.${format}`
 
   dialog.showSaveDialog({ title, defaultPath }, (filePath) => {
-
     if (filePath) {
       const mobiledoc = config.get('notes')[asin]
-      toMarkdown(mobiledoc).then((markdown) => {
-        fs.writeFileSync(filePath, markdown)
-      });
+
+      let file
+      switch (format) {
+        case exportFormat.markdown:
+          file = toMarkdown(mobiledoc)
+          fs.writeFileSync(filePath, file)
+          break
+        case exportFormat.pdf:
+          toPDF(mobiledoc, filePath)
+          break
+        default:
+          file = null
+      }
     }
   })
 })

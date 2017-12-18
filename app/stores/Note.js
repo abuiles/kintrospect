@@ -5,6 +5,12 @@ import { ipcRenderer } from 'electron'
 
 export const BookArray = PropTypes.observableArray
 
+export const exportFormat = {
+  pdf: 'pdf',
+  markdown: 'md',
+  Unknown: ''
+}
+
 export default class NoteStore {
   @observable notes = {}
   @observable isLoading = false
@@ -88,7 +94,32 @@ export default class NoteStore {
   }
 
   download(book) {
-    ipcRenderer.send('download-notes', book.title, book.asin)
+    const { dialog, nativeImage } = require('electron').remote
+
+    const appIcon = nativeImage.createFromPath('./resources/icon.png')
+
+    let format = exportFormat.Unknown
+
+    dialog.showMessageBox({
+      type: 'question',
+      icon: appIcon,
+      buttons: ['Markdown', 'PDF', 'Cancel'],
+      title: 'Export Format',
+      message: 'Pick how you want your file to be saved.',
+    }, (response) => {
+      switch (response) {
+        case 0:
+          format = exportFormat.markdown
+          break
+        case 1:
+          format = exportFormat.pdf
+          break
+        default:
+          format = exportFormat.Unknown
+      }
+
+      ipcRenderer.send('download-notes', book.title, book.asin, format)
+    })
   }
 
   publish(book) {
