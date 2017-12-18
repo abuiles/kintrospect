@@ -22,12 +22,14 @@ export default class CommonplaceView extends Component {
   state: {
     searchTerm: string,
     selectedAnnotation: any,
+    selectedBooks: any,
     isDrawerOpen: boolean
   }
 
   state = {
     searchTerm: '',
     selectedAnnotation: null,
+    selectedBooks: new Set([]),
     isDrawerOpen: false
   }
 
@@ -35,6 +37,20 @@ export default class CommonplaceView extends Component {
     commonplace: Commonplace,
     notesStore: NoteStore,
     rootStore: RootStore
+  }
+
+  onBookSelection = (book) => {
+    const { selectedBooks } = this.state
+    if (!selectedBooks.has(book.asin)) {
+      selectedBooks.add(book.asin)
+    }
+  }
+
+  onBookDeselection = (book) => {
+    const { selectedBooks } = this.state
+    if (selectedBooks.has(book.asin)) {
+      selectedBooks.delete(book.asin)
+    }
   }
 
   searchUpdated(term: string) {
@@ -107,7 +123,7 @@ export default class CommonplaceView extends Component {
       <Drawer open={isDrawerOpen} className="bg-washed-blue" onChange={(open) => { this.toggleDrawer(open) }}>
         <ul className="list center mw6 ba b--light-silver br2" >
           {books.map((book) => (
-            <BookCover book={book} commonplace={commonplace} key={book.asin} />
+            <BookCover book={book} onBookSelection={this.onBookSelection} onBookDeselection={this.onBookDeselection} key={book.asin} />
           ))}
         </ul>
       </Drawer>)
