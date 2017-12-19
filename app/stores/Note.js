@@ -103,9 +103,9 @@ export default class NoteStore {
     dialog.showMessageBox({
       type: 'question',
       icon: appIcon,
-      buttons: ['Markdown', 'PDF', 'Cancel'],
+      buttons: ['Markdown', 'PDF Document', 'Cancel'],
       title: 'Export Format',
-      message: 'Pick how you want your file to be saved.',
+      message: 'Select your file format.',
     }, (response) => {
       switch (response) {
         case 0:
