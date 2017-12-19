@@ -22,14 +22,14 @@ export default class CommonplaceView extends Component {
   state: {
     searchTerm: string,
     selectedAnnotation: any,
-    selectedBooks: any,
+    selectedBooks: Set<string>,
     isDrawerOpen: boolean
   }
 
   state = {
     searchTerm: '',
     selectedAnnotation: null,
-    selectedBooks: new Set([]),
+    selectedBooks: new Set(),
     isDrawerOpen: false
   }
 
@@ -42,8 +42,9 @@ export default class CommonplaceView extends Component {
   onBookSelection = (book) => {
     const { selectedBooks } = this.state
     if (!selectedBooks.has(book.asin)) {
-      selectedBooks.add(book.asin)
-      console.log('selected books', selectedBooks)
+      this.setState({
+        selectedBooks: selectedBooks.add(book.asin)
+      })
     }
   }
 
@@ -51,7 +52,6 @@ export default class CommonplaceView extends Component {
     const { selectedBooks } = this.state
     if (selectedBooks.has(book.asin)) {
       selectedBooks.delete(book.asin)
-      console.log('deselected books', selectedBooks)
     }
   }
 
@@ -75,10 +75,10 @@ export default class CommonplaceView extends Component {
 
   render() {
     const { commonplace, notesStore, rootStore } = this.props
-    const { searchTerm, selectedAnnotation, isDrawerOpen } = this.state
+    const { searchTerm, selectedAnnotation, isDrawerOpen, selectedBooks } = this.state
     const { title } = commonplace
 
-    const annotations = rootStore.allAnnotations
+    const annotations = rootStore.allAnnotations(selectedBooks)
 
     const filteredAnnotations = annotations.filter(createFilter(searchTerm, KEYS_TO_FILTERS))
 

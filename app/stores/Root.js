@@ -13,8 +13,8 @@ export default class RootStore {
     this.amazonStore = amazon
   }
 
-  @computed get allAnnotations() {
-    return this.bookStore.allAnnotations;
+  allAnnotations(selectedBooks: Set<string> = new Set([])) {
+    return this.bookStore.allAnnotations(selectedBooks);
   }
 
   @computed get allBooks() {

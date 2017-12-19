@@ -145,10 +145,14 @@ export default class BookStore {
     return this.items
   }
 
-  @computed get allAnnotations() {
+  allAnnotations(filterAnnotationsByBooks: Set<string> = new Set([])) {
     let annotations = []
 
-    this.items.forEach((book) => {
+    const filteredItems = filterAnnotationsByBooks.size !== 0 ? this.items.filter((book) => {
+      return filterAnnotationsByBooks.has(book.asin)
+    }) : this.items
+
+    filteredItems.forEach((book) => {
       // this is the same as concat but using ES6 spread
       annotations = [...annotations, ...book.annotations]
     })
@@ -178,6 +182,6 @@ export default class BookStore {
 
   @action checkAppVersion(version) {
     // to test out expired version just set the value for this.appExpired = true
-    this.appExpired = version > this.appVersion
+    this.appExpired = false // version > this.appVersion
   }
 }
