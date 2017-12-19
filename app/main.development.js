@@ -172,6 +172,10 @@ function toPDF(mobiledoc, filepath) {
 }
 
 ipcMain.on('download-notes', (event, title, asin, format) => {
+  if (format === exportFormat.Unknown) {
+    return
+  }
+
   const defaultPath = `${parameterize(title)}.${format}`
 
   dialog.showSaveDialog({ title, defaultPath }, (filePath) => {
