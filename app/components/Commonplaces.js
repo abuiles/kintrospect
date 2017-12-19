@@ -101,6 +101,15 @@ export default class Home extends Component {
       </button>
     ))
 
+    const Cta = () => (
+      <div>
+        <h2>Create your first commonplace by clicking the button below </h2>
+        <button className="btn" onClick={() => this.setState({ modalIsOpen: true })}>
+          <i className="fa fa-plus white" aria-hidden="true" />&nbsp;New commonplace book
+        </button>
+      </div>
+    )
+
     return (
       <div className="h-100 flex flex-column ph3 bl b--near-white bg-light-gray relative">
         <header className="pv4 ph3 flex cf">
@@ -116,7 +125,7 @@ export default class Home extends Component {
             {filtered.map((commonplace) => (
               <CommonplaceCard commonplace={commonplace} key={commonplace.createdAt} />
             ))}
-            {!filtered && <h2>Create some commonplaces first </h2>}
+            {filtered.length === 0 && <Cta />}
           </div>
         </div>
         <Modal
