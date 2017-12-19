@@ -1,7 +1,6 @@
 const MobiledocDOMRenderer = require('mobiledoc-dom-renderer')
 const SimpleDOM = require('simple-dom')
 const simpleHtmlTokenizer = require('simple-html-tokenizer')
-const pdf = require('html-pdf');
 
 const document = new SimpleDOM.Document()
 
