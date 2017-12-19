@@ -5,9 +5,10 @@ import nodeFetch from 'node-fetch'
 import graphClient from 'graphql-client'
 import log from 'electron-log'
 import parameterize from 'parameterize'
+import tmp from 'tmp'
 
 import MenuBuilder from './menu'
-import { toMarkdown, toPDF } from './markdown'
+import { toMarkdown, toHTML } from './markdown'
 import { exportFormat } from './stores/Note'
 
 let mainWindow = null
@@ -147,6 +148,28 @@ ipcMain.on('load-books', (event) => {
     response.json().then(({ epoch }) => event.sender.send('app-version', epoch))
   })
 })
+
+function toPDF(mobiledoc, filepath) {
+  const html = toHTML(mobiledoc)
+  const doc = tmp.fileSync();
+
+  fs.writeSync(doc.fd, html)
+
+  const win = new BrowserWindow({width: 0, height: 0})
+  win.loadURL(`file://${doc.name}`)
+  win.webContents.on("did-finish-load", function() {
+    win.webContents.printToPDF({}, function(error, data) {
+      if (error) throw error
+      fs.writeFile(filepath, data, function(error) {
+        if (error)
+          log.warm('write pdf file error', error)
+        win.close()
+        doc.removeCallback()
+      })
+
+    })
+  })
+}
 
 ipcMain.on('download-notes', (event, title, asin, format) => {
   const defaultPath = `${parameterize(title)}.${format}`

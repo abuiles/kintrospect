@@ -56,14 +56,6 @@ const toHTML = (mobiledoc) => {
   return serializer.serializeChildren(rendered.result);
 }
 
-const toPDF = (mobiledoc, filepath) => {
-  const html = toHTML(mobiledoc)
-  const options = {
-    border: '1.25cm'
-  }
-  pdf.create(html, options).toFile(filepath);
-}
-
 const toMarkdown = (mobiledoc) => {
   const html = toHTML(mobiledoc)
 
@@ -79,7 +71,6 @@ const toMarkdown = (mobiledoc) => {
 }
 
 module.exports = {
-  toPDF,
   toHTML,
   toMarkdown
 }
