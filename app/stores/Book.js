@@ -145,12 +145,10 @@ export default class BookStore {
     return this.items
   }
 
-  allAnnotations(filterAnnotationsByBooks: Set<string> = new Set([])) {
+  allAnnotations(selectedBooks = []) {
     let annotations = []
 
-    const filteredItems = filterAnnotationsByBooks.size !== 0 ? this.items.filter((book) => {
-      return filterAnnotationsByBooks.has(book.asin)
-    }) : this.items
+    const filteredItems = selectedBooks.length > 0 ? selectedBooks : this.items
 
     filteredItems.forEach((book) => {
       // this is the same as concat but using ES6 spread

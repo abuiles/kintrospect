@@ -13,7 +13,7 @@ export default class RootStore {
     this.amazonStore = amazon
   }
 
-  allAnnotations(selectedBooks: Set<string> = new Set([])) {
+  allAnnotations(selectedBooks = []) {
     return this.bookStore.allAnnotations(selectedBooks);
   }
 

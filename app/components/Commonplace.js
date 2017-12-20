@@ -22,14 +22,14 @@ export default class CommonplaceView extends Component {
   state: {
     searchTerm: string,
     selectedAnnotation: any,
-    selectedBooks: Set<string>,
+    selectedBooks: [],
     isDrawerOpen: boolean
   }
 
   state = {
     searchTerm: '',
     selectedAnnotation: null,
-    selectedBooks: new Set(),
+    selectedBooks: [],
     isDrawerOpen: false
   }
 
@@ -41,17 +41,16 @@ export default class CommonplaceView extends Component {
 
   onBookSelection = (book) => {
     const { selectedBooks } = this.state
-    if (!selectedBooks.has(book.asin)) {
-      this.setState({
-        selectedBooks: selectedBooks.add(book.asin)
-      })
+    if (!selectedBooks.includes(book)) {
+      selectedBooks.push(book)
     }
   }
 
   onBookDeselection = (book) => {
     const { selectedBooks } = this.state
-    if (selectedBooks.has(book.asin)) {
-      selectedBooks.delete(book.asin)
+    const idx = selectedBooks.indexOf(book)
+    if (idx !== -1) {
+      selectedBooks.splice(idx, 1)
     }
   }
 

@@ -1,25 +1,15 @@
 // @flow
 import React from 'react';
-import {
-  Link
-} from 'react-router-dom'
 import { observer } from 'mobx-react'
 
 // http://stackoverflow.com/questions/33886418/how-to-get-book-cover-image-url-using-isbn
 // http://images.amazon.com/images/P/PASTE_ISBN_NUMBER_HERE.01.20TRZZZZ.jpg
 // http://helpful.knobs-dials.com/index.php/Amazon_notes#General
 
-import { Commonplace } from '../stores/Commonplace'
 import { Book } from '../stores/Book'
-import { computed } from 'mobx';
 
 @observer
 export default class BookCover extends React.Component {
-  props: {
-    book: Book,
-    onBookSelection: (book) => void,
-    onBookDeselection: (book) => void
-  }
 
   state: {
     isSelected: boolean
@@ -27,6 +17,12 @@ export default class BookCover extends React.Component {
 
   state = {
     isSelected: false
+  }
+  
+  props: {
+    book: Book,
+    onBookSelection: (book) => void,
+    onBookDeselection: (book) => void
   }
 
   clickedCover() {
@@ -42,7 +38,7 @@ export default class BookCover extends React.Component {
     })
   }
 
-  @computed get isSelected() {
+  isSelected() {
     return this.state.isSelected
   }
 
