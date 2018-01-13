@@ -1,9 +1,8 @@
 @import "~tachyons/css/tachyons.css";
 @import '~font-awesome/css/font-awesome.css';
 @import "~roboto-fontface/css/roboto-slab/roboto-slab-fontface.css";
-@import "~draft-js-static-toolbar-plugin/lib/plugin.css";
 @import '~draft-js-linkify-plugin/lib/plugin.css';
-@import '~draft-js-inline-toolbar-plugin/lib/plugin.css';
+@import '~draft-js-static-toolbar-plugin/lib/plugin.css';
 
 body {
   font-size: 16px;

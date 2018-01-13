@@ -3,7 +3,9 @@ import React, { Component } from 'react'
 import Editor, { createEditorStateWithText } from 'draft-js-plugins-editor'
 import createInlineToolbarPlugin, { Separator } from 'draft-js-inline-toolbar-plugin'
 import createLinkifyPlugin from 'draft-js-linkify-plugin'
-import createLinkPlugin from 'draft-js-anchor-plugin';
+// import createLinkPlugin from 'draft-js-anchor-plugin';
+import createToolbarPlugin from 'draft-js-static-toolbar-plugin';
+import createToolbarLinkPlugin from 'draft-js-toolbar-link-plugin'
 
 import {
   convertFromRaw,
@@ -48,9 +50,27 @@ const boxTarget = {
 
 import editorStyles from './Editor.css'
 
-const linkPlugin = createLinkPlugin();
+// const linkPlugin = createLinkPlugin()
 
-const inlineToolbarPlugin = createInlineToolbarPlugin({
+const linkifyPlugin = createLinkifyPlugin()
+
+const toolbarLinkPlugin = createToolbarLinkPlugin()
+const { LinkButton } = toolbarLinkPlugin
+
+@inject('notesStore', 'analytics')
+class ExportButton extends React.Component {
+  downloadNotes() {}
+  render() {
+    return  (
+      <button className="" onClick={() => this.downloadNotes()}>
+        Export Notes
+      </button>
+    )
+  }
+}
+
+
+const staticToolbarPlugin = createToolbarPlugin({
   structure: [
     BoldButton,
     ItalicButton,
@@ -60,15 +80,14 @@ const inlineToolbarPlugin = createInlineToolbarPlugin({
     HeadlineThreeButton,
     UnorderedListButton,
     OrderedListButton,
-    linkPlugin.LinkButton,
-    BlockquoteButton
+    LinkButton,
+    BlockquoteButton,
+    ExportButton
   ]
 });
+const { Toolbar } = staticToolbarPlugin;
 
-const { InlineToolbar } = inlineToolbarPlugin;
-const linkifyPlugin = createLinkifyPlugin()
-
-const plugins = [inlineToolbarPlugin, linkifyPlugin, linkPlugin]
+const plugins = [staticToolbarPlugin, linkifyPlugin, toolbarLinkPlugin]
 
 @inject('notesStore', 'analytics')
 @observer
@@ -126,16 +145,9 @@ class NotesEditor extends React.Component {
 
     return connectDropTarget(
       <div className="h-100 pa3">
-        <div className="flex flex-column w-100 h-100 bg-white pa2">
-          <div className="bb b--light-gray pv2 flex items-center justify-between cf w-100">
-            <div className="w-100 flex justify-end">
-              <button className="btn f6" onClick={() => this.downloadNotes()}>
-                Export Notes
-              </button>
-            </div>
-          </div>
-
+        <div className="flex flex-column w-100 h-100 bg-white">
           <div className={`h-100 overflow-y-auto ${editorStyles.editor}`} onClick={() => this.focus()}>
+            <Toolbar className="mb3" />
             <Editor
               className="pa4 outline-0 h-100"
               editorState={this.state.editorState}
@@ -144,7 +156,6 @@ class NotesEditor extends React.Component {
               plugins={plugins}
               ref={(element) => { this.setEditor(element) }}
               />
-              <InlineToolbar />
           </div>
         </div>
       </div>
