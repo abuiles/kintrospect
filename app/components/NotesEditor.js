@@ -4,6 +4,7 @@ import { Container, Editor, MarkupButton, SectionButton, LinkButton } from 'reac
 import { observer, inject } from 'mobx-react'
 import { DropTarget } from 'react-dnd';
 import { Debounce } from 'react-throttle';
+import { PortalWithState } from 'react-portal';
 import { Annotation } from '../stores/Book';
 import NoteStore from '../stores/Note';
 
@@ -118,13 +119,25 @@ class NotesEditor extends React.Component {
                   </MarkupButton>
                 </li>
                 <li className="dib mr4">
-                  <button
-                    className="bn pa0 bg-inherit lh-solid"
-                    onClick={() => this.addLink()}
-                  >
-                    <i className="silver fa fa-link" aria-hidden="true" />
-
-                  </button>
+                  <PortalWithState closeOnOutsideClick closeOnEsc>
+                    {({ openPortal, closePortal, portal }) => (
+                      <div>
+                        <button
+                          className="bn pa0 bg-inherit lh-solid"
+                          onClick={openPortal}
+                          >
+                          <i className="silver fa fa-link" aria-hidden="true" />
+                        </button>
+                        {portal(
+                          <p>
+                            This is more advanced Portal. It handles its own state.{' '}
+                            <button onClick={closePortal}>Close me!</button>, hit ESC or
+                          click outside of me.
+                            </p>
+                        )}
+                      </div>
+                    )}
+                  </PortalWithState>
                 </li>
                 <li className="dib mr4">
                   <SectionButton tag="h1" className="bn pa0 bg-inherit lh-solid">
