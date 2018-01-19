@@ -13,6 +13,7 @@ import SearchInput, { createFilter } from 'react-search-input'
 const KEYS_TO_FILTERS = ['highlight', 'name']
 
 import NotesEditor from './NotesEditor';
+import Editor from './Editor';
 import AnnotationView from './Annotation';
 import { Book, Annotation } from '../stores/Book'
 import AmazonStore from '../stores/Amazon'
@@ -109,7 +110,7 @@ export default class BookView extends React.Component {
         </div>
 
         <div className="w-60 bg-light-gray">
-          {!notesStore.loading && <NotesEditor book={book} />}
+          {!notesStore.loading && <Editor book={book} />}
         </div>
       </div>
     );
