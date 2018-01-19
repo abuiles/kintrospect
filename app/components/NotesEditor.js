@@ -6,6 +6,8 @@ import { observer, inject } from 'mobx-react'
 import { DropTarget } from 'react-dnd';
 import { Debounce } from 'react-throttle';
 import { PortalWithState } from 'react-portal';
+const { shell } = require('electron').remote
+
 import { Annotation } from '../stores/Book';
 import NoteStore from '../stores/Note';
 
@@ -41,10 +43,12 @@ class NotesEditor extends React.Component {
   state: {
     currentLink: string,
     linkPortalStyle: any,
+    linkTooltip: any,
     range: any
   }
 
   state = {
+    linkTooltip: null,
     currentLink: '',
     linkPortalStyle: null
   }
@@ -99,6 +103,10 @@ class NotesEditor extends React.Component {
 
     if (editor.hasActiveMarkup('a')) {
       editor.toggleMarkup('a');
+      this.setState({
+        activeLink: null,
+        linkTooltip: null
+      })
     } else {
       this.setLinkPortalPosition()
     }
@@ -143,8 +151,36 @@ class NotesEditor extends React.Component {
     this.setLinkPortalPosition(false)
   }
 
+  showLinkIfPresent(editor) {
+    if (editor.hasActiveMarkup('a')) {
+      const position = editor.range.head.section.renderNode.element.getBoundingClientRect()
+      const activeLink = editor.activeMarkups.find((m) => m.tagName === 'a').attributes.href
+
+      const linkTooltip = {
+        position: 'absolute',
+        left: position.left - 10,
+        top: position.bottom + 18
+      };
+
+      this.setState({
+        activeLink,
+        linkTooltip
+      })
+    } else {
+      this.setState({
+        activeLink: null,
+        linkTooltip: null
+      })
+    }
+  }
+
   didCreateEditor(editor) {
     const { notesStore } = this.props
+
+    editor.cursorDidChange(() => {
+      this.showLinkIfPresent(editor)
+    })
+
     notesStore.setEditor(editor)
   }
 
@@ -154,7 +190,7 @@ class NotesEditor extends React.Component {
 
     const doc = notesStore.findNotes(book)
 
-    const { linkPortalStyle, currentLink } = this.state
+    const { activeLink, linkTooltip, linkPortalStyle, currentLink } = this.state
 
     let backgroundColor = ''
 
@@ -175,8 +211,16 @@ class NotesEditor extends React.Component {
       </div>
     )
 
+    const LinkTooltip = (
+      <div className="bg-white ba pa1" style={linkTooltip}>
+        <a>{activeLink}</a>
+        <button onClick={() => shell.openExternal(activeLink) }>Open</button>
+      </div>
+    )
+
     return connectDropTarget(
       <div className="h-100 pa3">
+        {linkTooltip && LinkTooltip}
         {linkPortalStyle && LinkForm}
         <Debounce time="500" handler="onChange">
           <Container
