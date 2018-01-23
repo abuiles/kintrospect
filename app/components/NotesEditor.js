@@ -137,7 +137,11 @@ class NotesEditor extends React.Component {
     })
   }
 
-  setLink() {
+  setLink(event = null) {
+    if (event) {
+      event.preventDefault()
+    }
+
     const { currentLink, range } = this.state
 
     const { mobiledocEditor } = this.props.notesStore
@@ -199,22 +203,22 @@ class NotesEditor extends React.Component {
     }
 
     const LinkForm = (
-      <div className="bg-white ba pa1" style={linkPortalStyle}>
-        <form onSubmit={(event) => event.preventDefault()} acceptCharset="utf-8">
-          <label className="lh-copy f6 mb1" htmlFor="link">Link</label>
-          <input className="w-100 mb3 pa2 ba b--gray" name="link" type="text" value={currentLink} onChange={(event) => this.setState({ currentLink: event.target.value })} />
+      <div className="bg-white ba b--near-white pv3 ph4 shadow-4" style={linkPortalStyle}>
+        <form onSubmit={(event) => this.setLink(event)} acceptCharset="utf-8">
+          <label className="db lh-copy f6 mb1" htmlFor="link">Link</label>
+          <input className="w-100 mb3 pa2 ba b--silver" name="link" type="text" value={currentLink} onChange={(event) => this.setState({ currentLink: event.target.value })} />
             <div className="tc">
-              <button className="btn mh2" onClick={() => this.setLink()}>Apply</button>
               <button className="btn mh2" onClick={() => this.setLinkPortalPosition(false)}>Cancel</button>
+              <button className="btn mh2">Apply</button>
             </div>
         </form>
       </div>
     )
 
     const LinkTooltip = (
-      <div className="bg-white ba pa1" style={linkTooltip}>
+      <div className="bg-white ba b--near-white pv3 ph4 shadow-4" style={linkTooltip}>
         <a>{activeLink}</a>
-        <button onClick={() => shell.openExternal(activeLink) }>Open</button>
+        <button className="btn ml3" onClick={() => shell.openExternal(activeLink) }>Open</button>
       </div>
     )
 
