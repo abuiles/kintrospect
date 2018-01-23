@@ -72,3 +72,7 @@ button:focus {
   max-width:30em;
   margin-botton: 1rem;
 }
+
+.no-outline:focus {
+  outline: 0;
+}
