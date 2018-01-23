@@ -1,9 +1,13 @@
 // @flow
 import React from 'react';
 import { Container, Editor, MarkupButton, SectionButton, LinkButton } from 'react-mobiledoc-editor';
+import { UI } from 'mobiledoc-kit';
 import { observer, inject } from 'mobx-react'
 import { DropTarget } from 'react-dnd';
 import { Debounce } from 'react-throttle';
+import { PortalWithState } from 'react-portal';
+const { shell } = require('electron').remote
+
 import { Annotation } from '../stores/Book';
 import NoteStore from '../stores/Note';
 
@@ -36,6 +40,19 @@ const boxTarget = {
 @inject('notesStore', 'analytics')
 @observer
 class NotesEditor extends React.Component {
+  state: {
+    currentLink: string,
+    linkPortalStyle: any,
+    linkTooltip: any,
+    range: any
+  }
+
+  state = {
+    linkTooltip: null,
+    currentLink: '',
+    linkPortalStyle: null
+  }
+
   componentWillUnmount() {
     const { notesStore } = this.props
     notesStore.setEditor(null)
@@ -76,8 +93,98 @@ class NotesEditor extends React.Component {
     analytics.event('Notes', 'downloaded', { evLabel: book.asin, clientID: analytics._machineID })
   }
 
+  openLinkPortal(e) {
+    const { mobiledocEditor } = this.props.notesStore
+    const editor = mobiledocEditor
+
+    if (!editor.hasCursor()) {
+      return;
+    }
+
+    if (editor.hasActiveMarkup('a')) {
+      editor.toggleMarkup('a');
+      this.setState({
+        activeLink: null,
+        linkTooltip: null
+      })
+    } else {
+      this.setLinkPortalPosition()
+    }
+  }
+
+  setLinkPortalPosition(opening = true) {
+    if (!opening) {
+      return this.setState({
+        currentLink: '',
+        linkPortalStyle: null
+      })
+    }
+
+    const position =  window.getSelection().getRangeAt(0).getBoundingClientRect()
+
+    const linkStyle = {
+      position: 'absolute',
+      left: position.left - 10,
+      top: position.bottom + 18
+    };
+
+    const { mobiledocEditor } = this.props.notesStore
+    const editor = mobiledocEditor
+
+    this.setState({
+      linkPortalStyle: linkStyle,
+      range: editor.range
+    })
+  }
+
+  setLink(event = null) {
+    if (event) {
+      event.preventDefault()
+    }
+
+    const { currentLink, range } = this.state
+
+    const { mobiledocEditor } = this.props.notesStore
+    const editor = mobiledocEditor
+
+    editor.run(function (postEditor) {
+      const markup = postEditor.builder.createMarkup('a', { href: currentLink });
+      postEditor.addMarkupToRange(range, markup);
+    });
+
+    this.setLinkPortalPosition(false)
+  }
+
+  showLinkIfPresent(editor) {
+    if (editor.hasActiveMarkup('a')) {
+      const position = editor.range.head.section.renderNode.element.getBoundingClientRect()
+      const activeLink = editor.activeMarkups.find((m) => m.tagName === 'a').attributes.href
+
+      const linkTooltip = {
+        position: 'absolute',
+        left: position.left - 10,
+        top: position.bottom + 18
+      };
+
+      this.setState({
+        activeLink,
+        linkTooltip
+      })
+    } else {
+      this.setState({
+        activeLink: null,
+        linkTooltip: null
+      })
+    }
+  }
+
   didCreateEditor(editor) {
     const { notesStore } = this.props
+
+    editor.cursorDidChange(() => {
+      this.showLinkIfPresent(editor)
+    })
+
     notesStore.setEditor(editor)
   }
 
@@ -87,14 +194,38 @@ class NotesEditor extends React.Component {
 
     const doc = notesStore.findNotes(book)
 
+    const { activeLink, linkTooltip, linkPortalStyle, currentLink } = this.state
+
     let backgroundColor = ''
 
     if (isActive) {
       backgroundColor = 'bg-yellow'
     }
 
+    const LinkForm = (
+      <div className="bg-white ba b--near-white pv3 ph4 shadow-4" style={linkPortalStyle}>
+        <form onSubmit={(event) => this.setLink(event)} acceptCharset="utf-8">
+          <label className="db lh-copy f6 mb1" htmlFor="link">Link</label>
+          <input className="w-100 mb3 pa2 ba b--silver" name="link" type="text" value={currentLink} onChange={(event) => this.setState({ currentLink: event.target.value })} />
+            <div className="tc">
+              <button className="btn mh2" onClick={() => this.setLinkPortalPosition(false)}>Cancel</button>
+              <button className="btn mh2">Apply</button>
+            </div>
+        </form>
+      </div>
+    )
+
+    const LinkTooltip = (
+      <div className="bg-white ba b--near-white pv3 ph4 shadow-4" style={linkTooltip}>
+        <a>{activeLink}</a>
+        <button className="btn ml3" onClick={() => shell.openExternal(activeLink) }>Open</button>
+      </div>
+    )
+
     return connectDropTarget(
       <div className="h-100 pa3">
+        {linkTooltip && LinkTooltip}
+        {linkPortalStyle && LinkForm}
         <Debounce time="500" handler="onChange">
           <Container
             className="flex flex-column w-100 h-100 bg-white pa2"
@@ -120,10 +251,9 @@ class NotesEditor extends React.Component {
                 <li className="dib mr4">
                   <button
                     className="bn pa0 bg-inherit lh-solid"
-                    onClick={() => this.addLink()}
+                    onClick={(e) => this.openLinkPortal(e)}
                   >
                     <i className="silver fa fa-link" aria-hidden="true" />
-
                   </button>
                 </li>
                 <li className="dib mr4">

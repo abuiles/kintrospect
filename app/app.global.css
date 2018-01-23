@@ -51,12 +51,16 @@ button:focus {
 .serif {
   font-family: 'Roboto-Slab', serif;
 }
+
+.sans-serif {
+  font-family: 'Roboto', sans-serif;
+}
 .shadow-1 {
   box-shadow: 0 0 4px 2px rgba( 0, 0, 0, .07 );
 }
 
 .notes-editor blockquote {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Roboto-Slab', serif;
   padding-left: 2rem;
   border-left-style:solid;
   border-left-width:1px;
@@ -67,4 +71,8 @@ button:focus {
   line-height:1.5;
   max-width:30em;
   margin-botton: 1rem;
+}
+
+.no-outline:focus {
+  outline: 0;
 }

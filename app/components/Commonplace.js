@@ -137,6 +137,7 @@ export default class CommonplaceView extends Component {
                   rowHeight={cache.rowHeight}
                   rowCount={filteredAnnotations.length}
                   rowRenderer={rowRenderer}
+                  className="no-outline"
                 />
               )}
             </AutoSizer>

@@ -122,7 +122,7 @@ export default class Home extends Component {
             <NewButton />
           </div>
         </header>
-        <div className="overflow-y-auto h-100">
+        <div className="overflow-y-auto h-100 ph3">
           <div className="f0 flex flex-wrap">
             {filtered.map((commonplace) => (
               <CommonplaceCard commonplace={commonplace} key={commonplace.createdAt} />
