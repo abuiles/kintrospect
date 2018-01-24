@@ -30,7 +30,7 @@
   "browserslist": "electron 1.4",
   "build": {
     "productName": "Kintrospect",
-    "appId": "com.kintrospect.kintrospect",
+    "appId": "com.kintrospect.Kintrospect",
     "category": "public.app-category.tools",
     "dmg": {
       "contents": [
