@@ -6,6 +6,8 @@ import {
   Link
 } from 'react-router-dom';
 
+import WebView from 'react-electron-web-view'
+
 import { observer, inject } from 'mobx-react'
 
 import SearchInput, { createFilter } from 'react-search-input'

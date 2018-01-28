@@ -131,6 +131,10 @@ export class Book {
     this.highlightsUpdatedAt = highlightsUpdatedAt
     this.annotations = annotations ? annotations.map((annotation) => new Annotation(annotation, this)) : []
   }
+
+  set updateHighlightsUpdatedAt(date) {
+    this.highlightsUpdatedAt = date
+  }
 }
 
 export const BookArray = PropTypes.observableArray
@@ -179,5 +183,10 @@ export default class BookStore {
   @action checkAppVersion(version) {
     // to test out expired version just set the value for this.appExpired = true
     this.appExpired = version > this.appVersion
+  }
+
+  @action updateHighlightsDate(asin) {
+    const book = this.all.find((b) => b.asin === asin)
+    book.updateHighlightsUpdatedAt = new Date().toISOString()
   }
 }

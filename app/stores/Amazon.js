@@ -20,6 +20,7 @@ export default class AmazonStore {
   @observable running = false
   @observable kindleSignedIn = false
   @observable webview = null
+  @observable bookWebview = null
   @observable booksStore: ?BookStore = null
   @observable analytics = null
   @observable userPreferences = {
@@ -94,6 +95,10 @@ new Promise(function(resolve) {
         })
       }
     }
+  }
+
+  @action setBookWebview(webview) {
+    this.bookWebview = webview
   }
 
   @action toggleRunning(): void {
@@ -333,13 +338,17 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
   }
 
   extracHighlightsFromNotebook(asin) {
-    const { webview, analytics } = this
+    const { bookWebview, analytics } = this
     const { booksStore } = this
+
+    const webview = bookWebview
 
     if (!webview) {
       this.toggleRunning()
       return;
     }
+
+    this.toggleRunning()
 
     booksStore.setLoading(true)
     const store = this
@@ -358,8 +367,8 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
               analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
             }
             log.info('Amazon#extracHighlightsFromNotebook - crawler done, sending highlights')
+            booksStore.updateHighlightsDate(asin)
             ipcRenderer.send('highlights-crawled', asin, highlights)
-            webview.loadURL('https://read.amazon.com')
           } else {
             loadHighlights(highlights, data)
           }
