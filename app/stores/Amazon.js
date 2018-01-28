@@ -347,7 +347,7 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
     const loadHighlights = (highlights, meta) => {
       webview.addEventListener('did-finish-load', ({ currentTarget }) => {
         currentTarget.executeJavaScript(this.newExtraCode(), false, (result) => {
-          result;
+          log.info('Amazon#extracHighlightsFromNotebook - highlights extracted')
           const data = JSON.parse(result)
           highlights = highlights.concat(data.highlights)
 
