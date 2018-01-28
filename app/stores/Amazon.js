@@ -116,17 +116,12 @@ new Promise(function(resolve) {
     }
 
     if (!this.running) {
-      this.toggleRunning()
-      const { webview, analytics } = this
-
       if (document.location.hash === '#/') {
+        this.toggleRunning()
         this.getBooksData()
       } else if (document.location.hash.match('#/book/')) {
         const asin = document.location.hash.split('#/book/')[1]
         const { booksStore } = this
-
-        const store = this
-
         this.getHighlights(asin)
       }
     }
