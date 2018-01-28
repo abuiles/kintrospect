@@ -28,7 +28,10 @@ class BookPage extends Component {
     if (book) {
       analytics.pageview('https://app.kintrospect.com', `/book/${book.asin}`, book.title, analytics._machineID)
     }
-    amazonStore.toggleRunning()
+
+    if (!book.highlightsUpdatedAt) {
+      amazonStore.toggleRunning()
+    }
   }
 
   registerWebview({ currentTarget }) {
@@ -36,7 +39,9 @@ class BookPage extends Component {
     const book = booksStore.all.find((b) => b.asin === match.params.asin)
 
     if (!amazonStore.bookWebview) {
-      amazonStore.toggleRunning()
+      if (amazonStore.isRunning) {
+        amazonStore.toggleRunning()
+      }
       amazonStore.setBookWebview(currentTarget)
     }
 
