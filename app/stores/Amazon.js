@@ -357,6 +357,7 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
             if (analytics) {
               analytics.event('Highlight', 'crawled', { evValue: highlights.length, evLabel: asin, clientID: analytics._machineID })
             }
+            log.info('Amazon#extracHighlightsFromNotebook - crawler done, sending highlights')
             ipcRenderer.send('highlights-crawled', asin, highlights)
             webview.loadURL('https://read.amazon.com')
           } else {
@@ -373,6 +374,7 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
         url = `${url}&contentLimitState=`
       }
 
+      log.info('Amazon#extracHighlightsFromNotebook - loading initial url')
       webview.loadURL(url)
     }
 
@@ -381,6 +383,8 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
 
 
   getHighlights(asin) {
+    log.info('Amazon#getHighlights')
     this.extracHighlightsFromNotebook(asin)
+    log.info('Amazon#getHighlights-finish')
   }
 }

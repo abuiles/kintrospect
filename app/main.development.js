@@ -106,6 +106,8 @@ ipcMain.on('save-user-preferences', (event, userPreferences) => {
 })
 
 ipcMain.on('highlights-crawled', (event, asin, items) => {
+  log.info('Main#highlights-crawled - received highlights')
+
   const books = config.get('books')
   const book = books.find((b) => b.asin === asin)
 
@@ -124,7 +126,9 @@ ipcMain.on('highlights-crawled', (event, asin, items) => {
 
   book.highlightsUpdatedAt = new Date()
 
+  log.info('Main#highlights-crawled - saving highlights')
   config.set('books', books)
+  log.info('Main#highlights-crawled - highlights saved')
   event.sender.send('books-saved', books)
   event.sender.send('books-loaded', books)
 })
