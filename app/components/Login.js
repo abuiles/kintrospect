@@ -106,7 +106,7 @@ export default class Login extends Component {
     }
 
     return (
-      <div className={`bg-near-white vh-100 tc ${(kindleSignedIn && hasWebview) ? 'dn' : 'db'}`} >
+      <div className={`bg-near-white vh-100 tc ${(amazonStore.isRunning) ? 'dn' : 'db'}`} >
         {backArrow}
         <header className="mw-100 center tc pt5">
           <h2 className="f1 serif mb3">Welcome to Kintrospect!</h2>
