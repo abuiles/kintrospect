@@ -373,12 +373,12 @@ JSON.stringify({highlights: highlights, nextPage: nextPage, limitState: limitSta
       let url = `https://read.amazon.com/notebook?asin=${asin}`
 
       if (meta) {
-        url = `${url}&contentLimitState=${meta.limitState}&index=${meta.nextPage}`
+        url = `${url}&contentLimitState=${meta.limitState}&token=${meta.nextPage}`
       } else {
         url = `${url}&contentLimitState=`
       }
 
-      log.info('Amazon#extracHighlightsFromNotebook - loading initial url')
+      // log.info('Amazon#extracHighlightsFromNotebook - loading initial url', url)
       webview.loadURL(url)
     }
 
